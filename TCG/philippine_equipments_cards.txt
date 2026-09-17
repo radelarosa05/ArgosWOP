@@ -1,0 +1,508 @@
+================================================================================
+           PHILIPPINE HEROES CARD GAME - 100 EQUIPMENTS & RELICS               
+================================================================================
+Card Type: Event / Equipment Cards
+Mechanics: Applied directly onto units to provide flat Stat Boosts (ATK/DEF/HP)
+           and duration-based Passive Abilities / Status Immunities.
+================================================================================
+
+[1] SIBAT NI PANGANORON (Divine Spear)
+    Lore         : The fateful spear thrown by the warrior Panganoron to save his beloved Daragang Magayon. Its tip radiates eternal heat born of tragic love and mountain fire.
+    Stat Boosts  : +5 ATK | +0 DEF | +0 HP
+    Passive      : Pierces through enemy defense, dealing full ATK damage directly to enemy HP (3 Turns).
+--------------------------------------------------------------------------------
+[2] HABAGAT AT AMIHAN (Twin Divine Ringblades)
+    Lore         : Forged from opposing seasonal monsoon winds. These twin blades dance around the wielder, slicing through enemy formations.
+    Stat Boosts  : +4 ATK | +2 DEF | +0 HP
+    Passive      : Grants total immunity to Paralysed and Sleep status effects (2 Turns).
+--------------------------------------------------------------------------------
+[3] BALUTI NI CARPIO (Living Divine Armor)
+    Lore         : Heavy stone armor encrusted with mountain rocks that once trapped the titan Bernardo Carpio. It hardens when struck.
+    Stat Boosts  : +0 ATK | +10 DEF | +10 HP
+    Passive      : Increases DEF by an additional +2 at the start of every turn (3 Turns).
+--------------------------------------------------------------------------------
+[4] ALON AT DALUYONG (Twin Divine Orbs)
+    Lore         : Glowing oceanic spheres containing compressed deep-sea currents, used by coastal shamans to calm raging tides.
+    Stat Boosts  : +2 ATK | +4 DEF | +15 HP
+    Passive      : Complete immunity to Poison and Vampiric Bleed while cleansing current debuffs upon use (2 Turns).
+--------------------------------------------------------------------------------
+[5] SINAG (Divine Moon Staff)
+    Lore         : A radiant staff fashioned from moonlight, passed down through high babaylan priestesses to ward off dark spirits.
+    Stat Boosts  : +3 ATK | +5 DEF | +5 HP
+    Passive      : The equipped unit and adjacent allies remain immune to Sleep and Paralysed (3 Turns).
+--------------------------------------------------------------------------------
+[6] PANGIL NG PITONG LASON (Divine Venom Dagger)
+    Lore         : A jagged curved dagger dipped in the venom of seven mythic serpents.
+    Stat Boosts  : +6 ATK | +0 DEF | +0 HP
+    Passive      : Attacks apply Poison (4 damage/turn for 2 turns) and Paralysed for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[7] KAMPILAN NI LAPU-LAPU (Chieftain's Blade)
+    Lore         : The heavy single-edged sword wielded by the Chieftain of Mactan, bathed in saltwater and tempered for heavy swings.
+    Stat Boosts  : +8 ATK | +2 DEF | +0 HP
+    Passive      : Automatically strikes back dealing 50% ATK damage when attacked (2 Turns).
+--------------------------------------------------------------------------------
+[8] KALASAG NI KUDARAT (Sultan's Shield)
+    Lore         : A giant hardwood and brass shield decorated with royal Maguindanao engravings, built to withstand heavy siege fire.
+    Stat Boosts  : +0 ATK | +12 DEF | +5 HP
+    Passive      : Prevents enemy card skills or direct targeted events from affecting the unit (3 Turns).
+--------------------------------------------------------------------------------
+[9] AGIMAT NG SANTISIMA (Sacred Amulet)
+    Lore         : An ancient brass medallion inscribed with esoteric scripts, believed to render the wearer invulnerable to blades.
+    Stat Boosts  : +1 ATK | +3 DEF | +10 HP
+    Passive      : The equipped unit cannot be reduced below 1 HP by enemy attacks or effects (2 Turns).
+--------------------------------------------------------------------------------
+[10] SALAKOT NI DAGOHOY (Rebel's Crown)
+    Lore         : A woven bamboo hat imbued with mountain spirits that protected Boholano rebels during their 85-year war.
+    Stat Boosts  : +2 ATK | +6 DEF | +0 HP
+    Passive      : Grants immunity to single-target enemy attack targeting (3 Turns).
+--------------------------------------------------------------------------------
+[11] LANTAKA NI PANDAY PIRA (Brass Cannon)
+    Lore         : Heavy swivel cannon forged in Manila's ancient foundries, loaded with iron grapeshot.
+    Stat Boosts  : +7 ATK | +0 DEF | +0 HP
+    Passive      : Attacks deal 50% splash damage to cards adjacent to the main target (2 Turns).
+--------------------------------------------------------------------------------
+[12] BOLO NI BONIFACIO (Blade of the Katipunan)
+    Lore         : A broad working blade repurposed into a symbol of revolution, sharpened for close-quarters fighting.
+    Stat Boosts  : +6 ATK | +1 DEF | +0 HP
+    Passive      : Gains +2 ATK every time an allied card is sent to the Graveyard (3 Turns).
+--------------------------------------------------------------------------------
+[13] PLUMA NI RIZAL (The Awakening Pen)
+    Lore         : A quill pen infused with poetic fire, capable of piercing psychological barriers.
+    Stat Boosts  : +1 ATK | +5 DEF | +5 HP
+    Passive      : Inflicts Sleep on any card that attempts to attack the equipped unit (2 Turns).
+--------------------------------------------------------------------------------
+[14] KABAYONG PUTI NI GABRIELA (White Stallion Reins)
+    Lore         : Sacred reins belonging to the charger ridden by Gabriela Silang across the Ilocos mountains.
+    Stat Boosts  : +3 ATK | +3 DEF | +10 HP
+    Passive      : Ignores movement penalties and grants total immunity to Paralysed (2 Turns).
+--------------------------------------------------------------------------------
+[15] SILYA NI MABINI (Strategist's Rest)
+    Lore         : The wooden chair of the Sublime Paralytic, radiating deep intellectual resolve.
+    Stat Boosts  : +0 ATK | +8 DEF | +12 HP
+    Passive      : Increases adjacent allies' DEF by +4 and cleanses Sleep every turn (3 Turns).
+--------------------------------------------------------------------------------
+[16] TELESKOPYO NI LUNA (General's Spyglass)
+    Lore         : Antonio Luna’s brass field glass, allowing precision strikes before enemy lines can form.
+    Stat Boosts  : +4 ATK | +2 DEF | +0 HP
+    Passive      : Attacks bypass enemy front-line Guard units to hit back-line targets directly (2 Turns).
+--------------------------------------------------------------------------------
+[17] BANDILA NG BALINTAWAK (Revolutionary Banner)
+    Lore         : The hand-stitched flag raised during the Cry of Balintawak, inspiring loyalty in all who behold it.
+    Stat Boosts  : +2 ATK | +4 DEF | +10 HP
+    Passive      : Restores 3 HP to all allied cards on the field at the start of each turn (3 Turns).
+--------------------------------------------------------------------------------
+[18] BARIL NI DEL PILAR (Pass Guardian Rifle)
+    Lore         : Mauser rifle used at Tirad Pass, tuned for high-elevation marksmanship.
+    Stat Boosts  : +6 ATK | +2 DEF | +0 HP
+    Passive      : Crits for double ATK damage against targets affected by Paralysed or Sleep (2 Turns).
+--------------------------------------------------------------------------------
+[19] AGIMAT NI SAKAY (Guerrilla Vest)
+    Lore         : A vest lined with sacred cloth and Latin prayers worn deep within the mountain hideouts of Luzon.
+    Stat Boosts  : +2 ATK | +6 DEF | +5 HP
+    Passive      : Renders unit immune to Vampiric Bleed and Poison (2 Turns).
+--------------------------------------------------------------------------------
+[20] BANDAHALA NI SULAYMAN (Royal Standard)
+    Lore         : Royal crest of Maynila, symbolizing resistance against foreign domination.
+    Stat Boosts  : +5 ATK | +5 DEF | +0 HP
+    Passive      : Deals 3 recoil damage to any attacker hitting this card (2 Turns).
+--------------------------------------------------------------------------------
+[21] MUTYA NG SAGING (Pearl of the Banana Heart)
+    Lore         : A glowing gemstone dropped by a banana blossom at midnight, caught only by the bravest warriors.
+    Stat Boosts  : +3 ATK | +3 DEF | +15 HP
+    Passive      : Regains 4 HP at the start of every turn (2 Turns).
+--------------------------------------------------------------------------------
+[22] GITING NG ANITO (Totem of the Ancestors)
+    Lore         : Carved hardwood ancestral statuette infused with protective forest spirits.
+    Stat Boosts  : +1 ATK | +7 DEF | +5 HP
+    Passive      : Renders unit completely immune to Poison (3 Turns).
+--------------------------------------------------------------------------------
+[23] BAYANIHAN POLE (Community Carrier)
+    Lore         : Bamboo poles used to carry houses, representing collective strength and shared burden.
+    Stat Boosts  : +0 ATK | +6 DEF | +10 HP
+    Passive      : Redirects 50% of damage taken by adjacent allies to this card (2 Turns).
+--------------------------------------------------------------------------------
+[24] ATINGAW NI TAMBLOT (Sacred Gong)
+    Lore         : A brass gong whose reverberations clear the air of dark hexes and mental haze.
+    Stat Boosts  : +2 ATK | +4 DEF | +5 HP
+    Passive      : Cleanses all Sleep and Paralysed statuses from all field units upon use (2 Turns).
+--------------------------------------------------------------------------------
+[25] LANA NG LANGIS (Consecrated Oil)
+    Lore         : Coconut oil herbal concoction prepared during Holy Week to cure unnatural ailments.
+    Stat Boosts  : +0 ATK | +2 DEF | +10 HP
+    Passive      : Immediately cures Poison and Bleed, granting immunity to both (3 Turns).
+--------------------------------------------------------------------------------
+[26] KALIS NI PRINCESS URDUJA (Amazon Saber)
+    Lore         : Curved wave-bladed sword carried by the warrior princess of Pangasinan.
+    Stat Boosts  : +7 ATK | +3 DEF | +0 HP
+    Passive      : Disables enemy passive skills during battle engagement (2 Turns).
+--------------------------------------------------------------------------------
+[27] BALABAL NG BABAYLAN (Priestess Shawl)
+    Lore         : Hand-woven textile infused with sacred chants that deflect negative energy.
+    Stat Boosts  : +1 ATK | +8 DEF | +5 HP
+    Passive      : Negates incoming status-inflicting events (3 Turns).
+--------------------------------------------------------------------------------
+[28] PANG-ORASYON (Incantation Scroll)
+    Lore         : Birch bark scroll written in ancient Baybayin scripts containing warding spells.
+    Stat Boosts  : +3 ATK | +3 DEF | +5 HP
+    Passive      : Grants immunity to Sleep and Poison (2 Turns).
+--------------------------------------------------------------------------------
+[29] SUNGAY NG KALABAW (Horn of Strength)
+    Lore         : Polished horn of a giant carabao, blown to rally defenders during village raids.
+    Stat Boosts  : +4 ATK | +4 DEF | +0 HP
+    Passive      : Increases ATK of all friendly units on field by +2 (2 Turns).
+--------------------------------------------------------------------------------
+[30] TUNGKOD NI BANKAW (Elder Staff)
+    Lore         : Carved driftwood staff passed down by ancient chieftains to maintain territorial protection.
+    Stat Boosts  : +2 ATK | +6 DEF | +8 HP
+    Passive      : Enemy units attacking this card have their ATK reduced by -2 (3 Turns).
+--------------------------------------------------------------------------------
+[31] KORONA NG BAKUNAWA (Moon-Eater's Crown)
+    Lore         : Scales harvested from the giant sea serpent that attempts to devour the seven moons.
+    Stat Boosts  : +6 ATK | +4 DEF | +0 HP
+    Passive      : Normal attacks inflict Sleep for 1 turn on hit targets (2 Turns).
+--------------------------------------------------------------------------------
+[32] BUHOK NG DUYONG (Mermaid's Strand)
+    Lore         : Shimmering hair strand of a sea siren, holding power over ocean currents.
+    Stat Boosts  : +2 ATK | +5 DEF | +10 HP
+    Passive      : Immunity to Vampiric Bleed and heals 2 HP per turn (3 Turns).
+--------------------------------------------------------------------------------
+[33] BATO NG TIKBALANG (Stallion's Gem)
+    Lore         : Golden stone taken from the mane of a Tikbalang, forcing the horse-beast into servitude.
+    Stat Boosts  : +5 ATK | +2 DEF | +0 HP
+    Passive      : Normal attacks inflict Paralysed for 1 turn on hit targets (2 Turns).
+--------------------------------------------------------------------------------
+[34] PAPAK NG MINOKAWA (Dragon Feathers)
+    Lore         : Iron-hard feathers of the colossal sky bird that swallows the sun.
+    Stat Boosts  : +4 ATK | +6 DEF | +0 HP
+    Passive      : Bypasses enemy counter-attack mechanics (2 Turns).
+--------------------------------------------------------------------------------
+[35] GITING NI SARIMANOK (Feather of Fortune)
+    Lore         : Radiantly colored feather of the mythic bird, bringing good fortune to warriors.
+    Stat Boosts  : +3 ATK | +3 DEF | +10 HP
+    Passive      : Draws 1 card from deck when equipped, grants Sleep immunity (3 Turns).
+--------------------------------------------------------------------------------
+[36] PANGIL NG AMALANHIG (Fang of the Stalker)
+    Lore         : Extracted tooth of an undead stalker, dripping with reanimating dark energy.
+    Stat Boosts  : +5 ATK | +0 DEF | +0 HP
+    Passive      : Attacks apply Vampiric Bleed (3 damage/turn for 2 turns, healing user equal to damage) (2 Turns).
+--------------------------------------------------------------------------------
+[37] PUSOD NG BAGYO (Heart of the Storm)
+    Lore         : Swirling vortex trapped in an amber orb by mountain shamans.
+    Stat Boosts  : +6 ATK | +1 DEF | +0 HP
+    Passive      : Knocks back hit targets, placing them in Paralysed status for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[38] BAYAN NG NALANDANGAN (Heavenly Cloak)
+    Lore         : Golden thread cloak worn by the epic hero Agyu, woven in the realm of perpetual abundance.
+    Stat Boosts  : +1 ATK | +9 DEF | +10 HP
+    Passive      : Completely immune to Poison, Sleep, and Paralysed (3 Turns).
+--------------------------------------------------------------------------------
+[39] SULO NI SANTELMO (St. Elmo's Flame)
+    Lore         : Bound spirit orb of floating fire that wanders desolate swamps.
+    Stat Boosts  : +5 ATK | +2 DEF | +0 HP
+    Passive      : Burns target for 3 damage at the start of their turn (2 Turns).
+--------------------------------------------------------------------------------
+[40] TINING NG DIWATA (Goddess Blessing)
+    Lore         : Flower garland presented by Maria Makiling to those who protect forest wildlife.
+    Stat Boosts  : +0 ATK | +5 DEF | +15 HP
+    Passive      : Cleanses all debuffs and grants HP regeneration (+3 HP/turn) (3 Turns).
+--------------------------------------------------------------------------------
+[41] LASON NG SIGBIN (Shadow Beast Poison)
+    Lore         : Vials containing the foul secretions of a Sigbin’s tail.
+    Stat Boosts  : +4 ATK | +0 DEF | +0 HP
+    Passive      : Attacks apply Poison (5 damage/turn for 2 turns) (3 Turns).
+--------------------------------------------------------------------------------
+[42] UGAT NG BALETE (Roots of the Sacred Tree)
+    Lore         : Entangled roots of a Balete tree, holding supernatural grounding power.
+    Stat Boosts  : +0 ATK | +8 DEF | +10 HP
+    Passive      : Traps attackers in place, inflicting Paralysed for 1 turn when hit (2 Turns).
+--------------------------------------------------------------------------------
+[43] BUNGA NG KAWAYAN (Bamboo Heart)
+    Lore         : Flexible bamboo sheath that bends under immense pressure without snapping.
+    Stat Boosts  : +2 ATK | +6 DEF | +5 HP
+    Passive      : Reduces incoming physical damage by 3 points (3 Turns).
+--------------------------------------------------------------------------------
+[44] TUBIG NG BUKAL (Spring of Healing)
+    Lore         : Sacred spring water collected from Mount Banahaw during a full moon.
+    Stat Boosts  : +0 ATK | +3 DEF | +20 HP
+    Passive      : Heals 5 HP instantly upon use and provides Poison immunity (2 Turns).
+--------------------------------------------------------------------------------
+[45] BATO NG PUNSO (Mound Gem)
+    Lore         : Small stone taken from a Nuno's earth mound, glowing with subterranean magic.
+    Stat Boosts  : +3 ATK | +4 DEF | +0 HP
+    Passive      : Retaliates with Poison (2 damage/turn) when hit (2 Turns).
+--------------------------------------------------------------------------------
+[46] ABANIKO NG HANGIN (Wind Fan)
+    Lore         : Woven palm leaf fan enchanted by wind spirits to blow away noxious fumes.
+    Stat Boosts  : +1 ATK | +4 DEF | +5 HP
+    Passive      : Grants team immunity to airborne status effects (Poison, Sleep) (3 Turns).
+--------------------------------------------------------------------------------
+[47] SUMPA NG MANGKUKULAM (Sorcerer's Doll)
+    Lore         : Straw doll bound with black thread, used to transmit pain to targets.
+    Stat Boosts  : +4 ATK | +1 DEF | +0 HP
+    Passive      : Reflects 30% of incoming damage back to the attacker (2 Turns).
+--------------------------------------------------------------------------------
+[48] KISKIS NG SIRENA (Scales of the Deep)
+    Lore         : Iridescent fish scales that form a slick defensive layer over armor.
+    Stat Boosts  : +0 ATK | +7 DEF | +5 HP
+    Passive      : Causes 25% of physical attacks to miss (2 Turns).
+--------------------------------------------------------------------------------
+[49] PUNO NG NIYOG (Palm Shielding)
+    Lore         : Hardened coconut husks strapped together to form lightweight chest armor.
+    Stat Boosts  : +1 ATK | +5 DEF | +5 HP
+    Passive      : Provides +2 DEF stack every time the unit is hit (3 Turns).
+--------------------------------------------------------------------------------
+[50] APOY NG BULKAN (Volcanic Ember)
+    Lore         : Ever-burning ember harvested from the crater rim of Mount Mayon.
+    Stat Boosts  : +6 ATK | +0 DEF | +0 HP
+    Passive      : Weapon burns targets for +2 additional damage per hit (2 Turns).
+--------------------------------------------------------------------------------
+[51] TALARO NI LAM-ANG (Epic Spear)
+    Lore         : Magic spear wielded by Lam-Ang, which never misses its mark and returns to the hand.
+    Stat Boosts  : +8 ATK | +2 DEF | +0 HP
+    Passive      : Attacks cannot be blocked or dodged (2 Turns).
+--------------------------------------------------------------------------------
+[52] ASWANG CLAWS (Fangs of the Night)
+    Lore         : Severed claws of a nocturnal shapeshifter, still twitching with predatory instinct.
+    Stat Boosts  : +7 ATK | +0 DEF | +0 HP
+    Passive      : Attacks deal Vampiric Bleed (4 damage/turn for 2 turns, healing user) (2 Turns).
+--------------------------------------------------------------------------------
+[53] KAMPILAN NI HANDYONG (Monster Slayer Blade)
+    Lore         : The legendary giant sword used to clear the beasts of Ibalon.
+    Stat Boosts  : +8 ATK | +4 DEF | +0 HP
+    Passive      : Deals double damage against non-human/beast cards (2 Turns).
+--------------------------------------------------------------------------------
+[54] GIRDLE OF LABAW DONGGON (Magic Sash)
+    Lore         : Enchanted waist sash giving demigod strength to overcome mythical beasts.
+    Stat Boosts  : +5 ATK | +5 DEF | +10 HP
+    Passive      : Immunity to Paralysed and increases ATK by +3 (2 Turns).
+--------------------------------------------------------------------------------
+[55] BOW OF BANTONG (Stealth Bow)
+    Lore         : Cunningly crafted hunting bow used to strike down Rabot from the shadows.
+    Stat Boosts  : +6 ATK | +1 DEF | +0 HP
+    Passive      : Can attack without triggering enemy counter-attack traits (2 Turns).
+--------------------------------------------------------------------------------
+[56] SHIELD OF BALTOG (Boar-Tusk Shield)
+    Lore         : Shield crafted from the hide and tusks of the giant wild boar Tandayag.
+    Stat Boosts  : +0 ATK | +11 DEF | +5 HP
+    Passive      : Reflects physical damage back to attacker (2 flat damage) (3 Turns).
+--------------------------------------------------------------------------------
+[57] FLYING SWORD OF INDARAPATRA (Self-Striking Blade)
+    Lore         : Enchanted sword that flies through the air on command to strike targets.
+    Stat Boosts  : +7 ATK | +1 DEF | +0 HP
+    Passive      : Hits remote targets regardless of front-line Guards (2 Turns).
+--------------------------------------------------------------------------------
+[58] RING OF HUMADAPNON (Sorcery Ring)
+    Lore         : Gold ring providing resistance against dark enchantments and siren calls.
+    Stat Boosts  : +2 ATK | +4 DEF | +8 HP
+    Passive      : Complete immunity to Sleep and mental debuffs (3 Turns).
+--------------------------------------------------------------------------------
+[59] THUNDER ARMOR OF MANGOVARNA (Lightning Mail)
+    Lore         : Celestial armor forged from pure thunderbolts.
+    Stat Boosts  : +3 ATK | +8 DEF | +0 HP
+    Passive      : Attackers take Paralysed for 1 turn upon striking this card (2 Turns).
+--------------------------------------------------------------------------------
+[60] HEADHUNTER SPEAR OF BANNA (Kalinga Spear)
+    Lore         : Spear adorned with warrior feathers, gaining power with every victory.
+    Stat Boosts  : +6 ATK | +2 DEF | +0 HP
+    Passive      : Gains +2 ATK each time an enemy unit is destroyed (3 Turns).
+--------------------------------------------------------------------------------
+[61] TRINCHERA TRENCH SHIELD (Fortified Wall)
+    Lore         : Earthen reinforced timber shield built in revolutionary trenches.
+    Stat Boosts  : +0 ATK | +10 DEF | +10 HP
+    Passive      : Protects adjacent cards, taking 30% of their damage (3 Turns).
+--------------------------------------------------------------------------------
+[62] SUMPIT NG KATIPUNAN (Blowgun Dart)
+    Lore         : Silent bamboo blowgun firing darts tipped with jungle poisons.
+    Stat Boosts  : +4 ATK | +0 DEF | +0 HP
+    Passive      : Applies Poison (3 damage/turn for 3 turns) on hit (2 Turns).
+--------------------------------------------------------------------------------
+[63] LASON SA TANIMAN (Crop Poisoning Kit)
+    Lore         : Toxic mixtures used by guerrillas to disrupt enemy supply lines.
+    Stat Boosts  : +2 ATK | +2 DEF | +0 HP
+    Passive      : All enemy units take 2 Poison damage at the start of their turn (2 Turns).
+--------------------------------------------------------------------------------
+[64] KAPA NG HENERAL (Commander's Cloak)
+    Lore         : Heavy felt cloak worn by high-ranking officers, inspiring discipline.
+    Stat Boosts  : +1 ATK | +6 DEF | +5 HP
+    Passive      : Protect unit from being placed in Sleep or Paralysed (3 Turns).
+--------------------------------------------------------------------------------
+[65] TAMBULI NG DATU (Conch Signal Horn)
+    Lore         : Large sea snail shell blown to coordinate simultaneous battlefield charges.
+    Stat Boosts  : +3 ATK | +3 DEF | +0 HP
+    Passive      : Increases ATK of all allied units by +2 (2 Turns).
+--------------------------------------------------------------------------------
+[66] KADENANG BAKAL (Chains of Montalban)
+    Lore         : Heavy iron chains salvaged from ancient mountain prisons.
+    Stat Boosts  : +3 ATK | +5 DEF | +0 HP
+    Passive      : Normal attacks apply Paralysed to the target for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[67] ESPADA Y DAGA (Sword & Dagger Duo)
+    Lore         : Traditional Spanish-influenced fighting pair used in Eskrima/Arnis martial arts.
+    Stat Boosts  : +6 ATK | +3 DEF | +0 HP
+    Passive      : Grants 1 extra attack action per round (2 Turns).
+--------------------------------------------------------------------------------
+[68] SIBAK NA KAWAYAN (Bamboo Traps)
+    Lore         : Sharpened bamboo stakes hidden in shallow covered pits.
+    Stat Boosts  : +4 ATK | +2 DEF | +0 HP
+    Passive      : Inflicts Vampiric Bleed (2 damage/turn) on any card attacking this unit (2 Turns).
+--------------------------------------------------------------------------------
+[69] YANTOK NG ARNIS (Rattan Fighting Sticks)
+    Lore         : Hardened rattan sticks used in lightning-fast martial combat.
+    Stat Boosts  : +5 ATK | +3 DEF | +0 HP
+    Passive      : 20% chance to disarm the enemy, disabling their equipment (2 Turns).
+--------------------------------------------------------------------------------
+[70] MASCOTA BRIDLE (Cavalry Harness)
+    Lore         : Leather tack used by Visayan cavalry units in mounted ambushes.
+    Stat Boosts  : +3 ATK | +4 DEF | +5 HP
+    Passive      : Unit can attack immediately upon deployment and gains Paralysed immunity (2 Turns).
+--------------------------------------------------------------------------------
+[71] MAHIWAGANG SAGWAN (Magic Oar)
+    Lore         : Carved hardwood paddle capable of churning still waters into whirlpools.
+    Stat Boosts  : +4 ATK | +4 DEF | +0 HP
+    Passive      : Knocks back target, forcing them into Sleep for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[72] NYLON NG MANGINGISDA (Enchanted Net)
+    Lore         : Heavy weighted net used to trap sea creatures and shoreline invaders.
+    Stat Boosts  : +1 ATK | +6 DEF | +0 HP
+    Passive      : Traps target enemy, inflicting Paralysed status for 2 turns (2 Turns).
+--------------------------------------------------------------------------------
+[73] ANCORA NG KARAKOA (Warship Anchor)
+    Lore         : Massive ironwood anchor used to hold giant pre-colonial war vessels in place.
+    Stat Boosts  : +2 ATK | +9 DEF | +5 HP
+    Passive      : Unit cannot be forced to move or swap positions (3 Turns).
+--------------------------------------------------------------------------------
+[74] LAWA NG SUGBO (Saltwater Flask)
+    Lore         : Flask filled with consecrated ocean water used to repel supernatural stalkers.
+    Stat Boosts  : +0 ATK | +3 DEF | +10 HP
+    Passive      : Instantly cures Bleed and Poison, granting immunity (2 Turns).
+--------------------------------------------------------------------------------
+[75] LAYAG NG KARAKOA (War Sail)
+    Lore         : Woven palm sails that catch even the faintest sea breeze.
+    Stat Boosts  : +2 ATK | +4 DEF | +5 HP
+    Passive      : Increases unit speed/turn priority and grants immunity to Sleep (2 Turns).
+--------------------------------------------------------------------------------
+[76] PERLAS NG SULU (Pearl of the South Seas)
+    Lore         : Massive iridescent pearl harvested from deep trenches, radiating peaceful light.
+    Stat Boosts  : +0 ATK | +5 DEF | +15 HP
+    Passive      : Restores 3 HP to unit and adjacent allies every turn (3 Turns).
+--------------------------------------------------------------------------------
+[77] SUMPIT NG SEA GYPSY (Reef Dart)
+    Lore         : Bone-tipped blowgun darts used by Bajau divers to immobilize marine prey.
+    Stat Boosts  : +5 ATK | +0 DEF | +0 HP
+    Passive      : Applies Poison (3 damage/turn) and Paralysed for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[78] BALUTI NG PAWIKAN (Turtle Shell Armor)
+    Lore         : Polished shell of a giant sea turtle, virtually impenetrable to light blades.
+    Stat Boosts  : +0 ATK | +12 DEF | +0 HP
+    Passive      : Reduces all incoming critical hit damage by 50% (3 Turns).
+--------------------------------------------------------------------------------
+[79] HARPON NG MANDARAGAT (Whaler's Harpoon)
+    Lore         : Heavy barbed harpoon attached to a thick rope for bringing down giant sea beasts.
+    Stat Boosts  : +7 ATK | +1 DEF | +0 HP
+    Passive      : Pulls targeted back-line enemy unit into the front line upon hit (2 Turns).
+--------------------------------------------------------------------------------
+[80] GUINTO NG PANAY (Gold Necklet)
+    Lore         : Heavy gold neck collar worn by Visayan nobility as a status of power and spiritual protection.
+    Stat Boosts  : +2 ATK | +5 DEF | +8 HP
+    Passive      : Provides complete immunity to Sleep and mental debuffs (3 Turns).
+--------------------------------------------------------------------------------
+[81] MATA NG ASWANG (Sight of the Night Stalker)
+    Lore         : Preserved eye of an Aswang, allowing the wearer to see through illusions.
+    Stat Boosts  : +4 ATK | +2 DEF | +0 HP
+    Passive      : Reveals stealth units and bypasses dodge mechanics (2 Turns).
+--------------------------------------------------------------------------------
+[82] DUGO NG BAKUNAWA (Serpent's Blood)
+    Lore         : Boiling dark blood collected during an eclipse.
+    Stat Boosts  : +6 ATK | +0 DEF | +-5 HP
+    Passive      : Doubles physical ATK but drains 2 HP from user each turn (2 Turns).
+--------------------------------------------------------------------------------
+[83] ABONO NG KAPRE (Giant's Tobacco Ash)
+    Lore         : Glowing embers from a Kapre's cigar, emitting thick disorienting smoke.
+    Stat Boosts  : +2 ATK | +4 DEF | +0 HP
+    Passive      : Emits smoke cloud that inflicts Sleep on adjacent enemies for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[84] PAA NG TIYANAK (Grave Dust)
+    Lore         : Soil taken from the burial site of a demon infant, heavy with sorrow.
+    Stat Boosts  : +3 ATK | +2 DEF | +0 HP
+    Passive      : Inflicts Sleep and Bleed (2 damage/turn) on hit target (2 Turns).
+--------------------------------------------------------------------------------
+[85] BATIK NG BATIBAT (Nightmare Cloth)
+    Lore         : Fabric woven from dark dreams that smothers sleeping victims.
+    Stat Boosts  : +1 ATK | +7 DEF | +0 HP
+    Passive      : Targets struck are placed under Sleep and Paralysed for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[86] LANGIS NG MANGKUKULAM (Curse Oil)
+    Lore         : Black oil smeared on weapons to deliver lingering decay.
+    Stat Boosts  : +5 ATK | +0 DEF | +0 HP
+    Passive      : Applies Poison (4 damage/turn for 2 turns) on hit targets (3 Turns).
+--------------------------------------------------------------------------------
+[87] SINGSING NG NUNO (Goblin Ring)
+    Lore         : Tarnished silver ring found inside an ant mound.
+    Stat Boosts  : +2 ATK | +4 DEF | +5 HP
+    Passive      : Reflects Poison back to any attacker who applies it (2 Turns).
+--------------------------------------------------------------------------------
+[88] PAKPAK NG MANANANGGAL (Viscera Wings)
+    Lore         : Leathery bat-like wings torn from a severed upper torso.
+    Stat Boosts  : +5 ATK | +1 DEF | +0 HP
+    Passive      : Grants flight (bypasses ground obstacles) and applies Bleed (2 damage/turn) on hit (2 Turns).
+--------------------------------------------------------------------------------
+[89] BUHOK NG AMALANHIG (Corpse Strand)
+    Lore         : Coarse hair taken from an unburied corpse, radiating unnatural cold.
+    Stat Boosts  : +3 ATK | +3 DEF | +0 HP
+    Passive      : Normal attacks slow target, applying Paralysed status for 1 turn (2 Turns).
+--------------------------------------------------------------------------------
+[90] ULO NG BUNGISNGIS (Cyclops Skull)
+    Lore         : Huge single-eyed skull that radiates intimidating laughter.
+    Stat Boosts  : +4 ATK | +5 DEF | +0 HP
+    Passive      : Reduces ATK of all adjacent enemy units by -3 (2 Turns).
+--------------------------------------------------------------------------------
+[91] MAHARLIKA CROWN (Noble Diadem)
+    Lore         : Ancient gold crown worn by paramount datus of Luzon, symbolizing royal sovereignty.
+    Stat Boosts  : +3 ATK | +6 DEF | +10 HP
+    Passive      : Grants team-wide immunity to Paralysed and Sleep (3 Turns).
+--------------------------------------------------------------------------------
+[92] GINTO NG SURIGAO (Royal Golden Sash)
+    Lore         : Heavy woven gold sash from ancient Surigao treasuries, deflecting dark energy.
+    Stat Boosts  : +2 ATK | +8 DEF | +10 HP
+    Passive      : Restores 4 HP every turn and cures status effects (3 Turns).
+--------------------------------------------------------------------------------
+[93] KAMPILAN NG SULTANATE (Imperial Scimitar)
+    Lore         : Gem-encrusted ceremonial sword carried by southern sultans during royal processions.
+    Stat Boosts  : +8 ATK | +2 DEF | +0 HP
+    Passive      : Deals +4 bonus damage against Hero/King cards (2 Turns).
+--------------------------------------------------------------------------------
+[94] AGIMAT NG MAYNILA (City Warding Emblem)
+    Lore         : Brass seal used by Rajah Matanda to bless city gates against naval blockades.
+    Stat Boosts  : +1 ATK | +10 DEF | +5 HP
+    Passive      : Creates a protective shield around unit, absorbing 10 damage (3 Turns).
+--------------------------------------------------------------------------------
+[95] SIBAT NI HANDIONG (Beast-Cleaving Lance)
+    Lore         : Long heavy lance built specifically to pierce the thick hide of giant monsters.
+    Stat Boosts  : +7 ATK | +3 DEF | +0 HP
+    Passive      : Ignores 50% of target card's Defense stat during attack calculation (2 Turns).
+--------------------------------------------------------------------------------
+[96] KALASAG NG DIWATA (Fairy Shield)
+    Lore         : Translucent shield crafted from compressed morning dew and ethereal light.
+    Stat Boosts  : +0 ATK | +10 DEF | +15 HP
+    Passive      : Completely immune to Poison, Bleed, and Sleep (3 Turns).
+--------------------------------------------------------------------------------
+[97] SULO NG MAYON (Flame Torch of Mayon)
+    Lore         : Everburning torch lit from the molten core of the world's most perfect cone volcano.
+    Stat Boosts  : +6 ATK | +2 DEF | +0 HP
+    Passive      : Attacks deal burn damage (+3 damage per turn for 2 turns) on hit (2 Turns).
+--------------------------------------------------------------------------------
+[98] TUNGKOD NG APO (Mountain Elder's Staff)
+    Lore         : Ancient petrified wood staff taken from the peak of Mount Apo.
+    Stat Boosts  : +2 ATK | +7 DEF | +10 HP
+    Passive      : Grants complete immunity to Paralysed and increases DEF by +3 (3 Turns).
+--------------------------------------------------------------------------------
+[99] BANDILA NG KKK (Blood Compact Standard)
+    Lore         : Red banner woven during the secret blood compact of Katipunan founders.
+    Stat Boosts  : +4 ATK | +4 DEF | +5 HP
+    Passive      : Increases ATK of all allied units by +3 (2 Turns).
+--------------------------------------------------------------------------------
+[100] GITING NG LAHI (Ancestral Soul Stone)
+    Lore         : Radiant crystal containing the combined spirit and memory of all historical defenders.
+    Stat Boosts  : +5 ATK | +5 DEF | +15 HP
+    Passive      : Provides complete immunity to Poison, Sleep, Paralysed, and Vampiric Bleed (3 Turns).
+--------------------------------------------------------------------------------

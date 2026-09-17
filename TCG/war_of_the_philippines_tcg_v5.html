@@ -1,0 +1,2365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>War of the Philippines TCG</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            'cinzel-dec': ['"Cinzel Decorative"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            gold: {
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207',
+            },
+            obsidian: '#070a12',
+            surface: '#0f172a',
+            parchment: '#fef3c7'
+          }
+        }
+      }
+    };
+
+    function handleLogoError(img) {
+      if (!img) return;
+      img.onerror = null;
+      var container = img.parentElement || img;
+      container.innerHTML = `
+        <div class="w-64 sm:w-80 p-4 rounded-2xl bg-gradient-to-b from-amber-950/80 via-slate-900 to-amber-950/80 border-2 border-amber-500/60 shadow-[0_0_35px_rgba(245,158,11,0.25)] flex flex-col items-center justify-center text-center select-none transition-transform hover:scale-[1.02] duration-300">
+          <div class="relative mb-2">
+            <svg class="w-16 h-16 sm:w-20 sm:h-20 text-amber-400 drop-shadow-[0_0_18px_rgba(251,191,36,0.65)]" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="2.5" fill="rgba(217,119,6,0.15)"/>
+              <circle cx="50" cy="50" r="18" stroke="currentColor" stroke-width="2" fill="rgba(245,158,11,0.22)"/>
+              <path d="M50 6 L50 20 M50 80 L50 94 M6 50 L20 50 M80 50 L94 50 M19 19 L29 29 M71 71 L81 81 M19 81 L29 71 M71 29 L81 19" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M26 26 L74 74 M26 74 L74 26" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="7" fill="#fbbf24"/>
+            </svg>
+          </div>
+          <div class="font-cinzel text-lg sm:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 tracking-wider">
+            WAR OF THE PHILIPPINES
+          </div>
+          <div class="font-cinzel-dec text-[10px] tracking-[0.25em] text-amber-300/90 font-bold mt-1">
+            TRADING CARD GAME
+          </div>
+        </div>
+      `;
+    }
+    window.handleLogoError = handleLogoError;
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #151b2e 0%, #080c16 55%, #04060a 100%);
+      color: #f1f5f9;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-cinzel-dec { font-family: 'Cinzel Decorative', serif; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #eab308; }
+
+    .card-foil {
+      position: relative;
+      overflow: hidden;
+    }
+    .card-foil::after {
+      content: '';
+      position: absolute;
+      top: -110%;
+      left: -110%;
+      width: 220%;
+      height: 220%;
+      background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 45%, rgba(255,215,0,0.18) 50%, rgba(255,255,255,0.06) 55%, rgba(255,255,255,0) 100%);
+      transform: rotate(25deg);
+      transition: all 0.6s ease;
+      pointer-events: none;
+    }
+    .card-foil:hover::after {
+      top: 100%;
+      left: 100%;
+    }
+
+    .gilded-border {
+      border: 1px solid rgba(234, 179, 8, 0.45);
+      box-shadow: 0 0 15px rgba(234, 179, 8, 0.12), inset 0 0 10px rgba(234, 179, 8, 0.05);
+    }
+    .gilded-border-active {
+      border: 2px solid #facc15;
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.35), inset 0 0 15px rgba(250, 204, 21, 0.15);
+    }
+
+    .biome-city {
+      background: radial-gradient(circle at top left, #3b0d0c 0%, #1f0707 70%, #130404 100%);
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+    .biome-sea {
+      background: radial-gradient(circle at top left, #082f49 0%, #0c1a2c 70%, #050b14 100%);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+    .biome-church {
+      background: radial-gradient(circle at top left, #292524 0%, #1c1917 70%, #0c0a09 100%);
+      border-color: rgba(251, 191, 36, 0.45);
+    }
+    .biome-island {
+      background: radial-gradient(circle at top left, #062d1d 0%, #061a12 70%, #030e09 100%);
+      border-color: rgba(52, 211, 153, 0.35);
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.4); }
+      50% { box-shadow: 0 0 22px rgba(250, 204, 21, 0.85); }
+    }
+    .animate-glow-pulse { animation: glowPulse 2s infinite ease-in-out; }
+
+    @keyframes targetAttackPulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); transform: scale(1); }
+      50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.85); transform: scale(1.02); }
+    }
+    .animate-attack-pulse { animation: targetAttackPulse 1.4s infinite ease-in-out; }
+
+    .touch-scroll {
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
+    }
+  </style>
+</head>
+<body class="bg-obsidian min-h-screen text-slate-100 flex flex-col antialiased">
+  <div id="app" class="flex-1 flex flex-col min-h-screen"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    function playSfx(type) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        if (type === 'card_play') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(300, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(620, ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.18, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.12);
+        } else if (type === 'attack') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(170, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.22);
+          gain.gain.setValueAtTime(0.25, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.22);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.22);
+        } else if (type === 'skill') {
+          [440, 554, 659].forEach((f, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.06);
+            gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.06 + 0.2);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.06); osc.stop(ctx.currentTime + i * 0.06 + 0.2);
+          });
+        }
+      } catch (e) {}
+    }
+    window.playSfx = playSfx;
+
+    const HERO_NAMES = [
+      'Lapu-Lapu', 'Andres Bonifacio', 'Jose Rizal', 'Gabriela Silang', 'Sultan Kudarat',
+      'Apolinario Mabini', 'Emilio Aguinaldo', 'Antonio Luna', 'Melchora Aquino', 'Gregoria de Jesus',
+      'Diego Silang', 'Marcelo H. del Pilar', 'Juan Luna', 'Padre Mariano Gomez', 'Padre Jose Burgos',
+      'Padre Jacinto Zamora', 'Teresa Magbanua', 'Trinidad Tecson', 'Francisco Dagohoy', 'Macario Sakay',
+      'Artemio Ricarte', 'Miguel Malvar', 'Vicente Lukban', 'Gregorio del Pilar', 'Panday Pira',
+      'Jose Abad Santos', 'Vicente Lim', 'Josefa Llanes Escoda', 'Wenceslao Vinzons', 'Tomas Claudio',
+      'Rajah Sulayman', 'Lakandula', 'Rajah Humabon', 'Princess Urduja', 'Dagami',
+      'Tamblot', 'Bankaw', 'Francisco Maniago', 'Almazan', 'Hermano Pule',
+      'Papa Isio', 'Simeon Ola', 'Leon Kilat', 'Roman Basa', 'Ladislao Diwa',
+      'Teodoro Plata', 'Marina Dizon', 'Agueda Kahabagan', 'Gen. Licerio Gerónimo', 'Geronima Pecson'
+    ];
+
+    const HEROES_DATABASE = HERO_NAMES.map((name, i) => {
+      const symbols = ['🛡️', '⚔️', '📜', '🐎', '👑', '🧠', '🚩', '💣', '👵', '🌹'];
+      const homelands = ['Mactan Island', 'Tondo, Manila', 'Calamba, Laguna', 'Ilocos', 'Maguindanao', 'Batangas', 'Cavite', 'Binondo', 'Quezon City', 'Caloocan'];
+      return {
+        id: `h${i + 1}`,
+        name: name,
+        hp: 18 + (i % 7),
+        atk: 5 + (i % 4),
+        def: 3 + (i % 4),
+        move: 2 + (i % 2),
+        leadership: 4 + (i % 3),
+        homeland: homelands[i % homelands.length],
+        avatarSymbol: symbols[i % symbols.length],
+        ability: `${name}'s Command: Allied units gain +1 ATK when fighting near homeland territory.`
+      };
+    });
+    window.HEROES_DATABASE = HEROES_DATABASE;
+
+    const RAW_MYTHOS_NAMES = [
+      'BATHALA', 'MAYARI', 'TALA', 'HANAN', 'APOLAKI', 'ANAGOLAY', 'IKAPATI', 'LAKAPATI', 'DIAN MASALANTA', 'DUMANGAN',
+      'IDIYANALE', 'AMANIKABLE', 'DUMAKULEM', 'ANITUN TABU', 'LAKAPATI ELDER', 'HAIK', 'AMIHAN', 'ULILANG KALULUWA', 'GALANG KALULUWA', 'SITAN',
+      'MANGGAGAWAY', 'MANISILAT', 'HUKLUBAN', 'HANAN DAWN', 'SIDAPA', 'MAKAPTAN', 'KAPTAN', 'MAGWAYEN', 'KAN-LAON', 'LALAHON',
+      'ALUNSINA', 'TUNGKUNG LANGIT', 'LIDAGAT', 'LIHANGIN', 'LIADLAW', 'LIBULAN', 'SAPPIA', 'BULALAKAW', 'SARAGNAYAN', 'MARIKUDO',
+      'MANIWANTIWAN', 'MUNSAD BURABOD', 'DIWATA', 'ENGKANTO', 'ENCANTADO', 'KAPRE', 'TIKBALANG', 'NUNO SA PUNSO', 'DUWENDE', 'TIYANAK',
+      'MANANANGGAL', 'ASWANG', 'WAKWAK', 'EKEK', 'SIGBIN', 'AMALANHIG', 'BERBALANG', 'BUNGISNGIS', 'SANTELMO', 'MULTO',
+      'WHITE LADY', 'LADY IN WHITE', 'BATIBAT', 'BANGUNGOT', 'SAWA', 'BAKUNAWA', 'MINOKAWA', 'PUGOT', 'KATAW', 'SIYOKOY',
+      'SIRENA', 'SIRENO', 'TAMAWO', 'MAMBABARANG', 'MANGKUKULAM', 'MANANAMBAL', 'BABAYLAN', 'CATALONAN', 'KATALONAN', 'ASOG',
+      'BAYLAN', 'KUDYAPI', 'SARIMANOK', 'GARUDA', 'ARIMAONGA', 'RAJAH INDARAPATRA', 'RAJAH SULAYMAN', 'RAJAH MUDA', 'BANTUGAN', 'PAPANOK',
+      'SINAKULINTING', 'APO LAKI', 'KABUNIAN', 'LUMAWIG', 'BANGAN', 'WIGAN', 'BUGAN', 'WIGAN AND BUGAN', 'MEBUYAN', 'MANAMA',
+      'LUMABET', 'EUGPAMOLAK MANOBO', 'MAKALIDUNG', 'TIGUAN', 'DIWATA NA MAGBABAYA', 'MAGBABAYA', 'AGYU', 'KUYAMIS', 'TULUGAN', 'INHABANGAN',
+      'MAMPIRO', 'OLOGASI', 'OMAKA-AN', 'TAGAMALING', 'TAGBANUWA', 'DIWATA NG KAGUBATAN', 'DIWATA NG TUBIG', 'DIWATA NG BUNDOK', 'DIWATA NG HANGIN', 'DIWATA NG APOY'
+    ];
+
+    const MONSTERS_DATABASE = RAW_MYTHOS_NAMES.map((name, i) => {
+      let effectDesc = "Battle Strike: Deals standard physical/magical combat damage.";
+      let effectType = "PASSIVE";
+
+      if (['BATHALA', 'MAKAPTAN', 'KAPTAN', 'KAN-LAON', 'TUNGKUNG LANGIT', 'KABUNIAN', 'EUGPAMOLAK MANOBO', 'MAGBABAYA'].includes(name)) {
+        effectDesc = "Divine Presence: All allied cards gain +2 Attack and +3 Defense while this card is on the field.";
+      } else if (name.startsWith('DIWATA') || ['MAYARI', 'TALA', 'HANAN', 'ANAGOLAY', 'IKAPATI', 'LAKAPATI'].includes(name)) {
+        effectDesc = "Deity's Favor: Pay 1 Kalayaan to restore 5 Life to an allied unit.";
+        effectType = "ACTIVE";
+      } else if (name === 'APOLAKI') {
+        effectDesc = "Solar Blood Sacrifice: Sacrifice an ally to double Apolaki's Attack for the turn.";
+        effectType = "ACTIVE";
+      } else if (name === 'SITAN') {
+        effectDesc = "Nether Binding: When an enemy card is destroyed, return it to your hand under your control.";
+      } else if (name === 'MANGGAGAWAY' || name === 'MANGKUKULAM') {
+        effectDesc = "Vile Contagion (Poison): Attacks inflict Poison dealing 4 damage per turn and -5 Defense.";
+      } else if (name === 'TIKBALANG') {
+        effectDesc = "Spatial Loop (Paralyze): Attacks have a 50% chance to Paralyze the target for 1 turn.";
+      } else if (name === 'SIGBIN') {
+        effectDesc = "Neuro-Tail Lash (Paralyze): Attacks apply Paralyze.";
+      } else if (name === 'MANANANGGAL' || name === 'ASWANG') {
+        effectDesc = "Vampiric Bleed: Attacks inflict Bleed, dealing 3 damage per turn.";
+      } else if (name === 'BATIBAT') {
+        effectDesc = "Nightmare Paralysis (Sleep): Put an enemy unit to Sleep for 2 turns.";
+        effectType = "ACTIVE";
+      } else if (name === 'BAKUNAWA') {
+        effectDesc = "Eclipse Swimmer: When summoned, puts enemy non-water units to Sleep for 1 turn.";
+      } else if (name === 'BABAYLAN') {
+        effectDesc = "Ancestral Warding: Pay 2 Kalayaan to cleanse all negative status effects from an ally.";
+        effectType = "ACTIVE";
+      } else if (name === 'BANTUGAN') {
+        effectDesc = "Soul Retrieval: Pay 2 Kalayaan to revive 1 fallen card from graveyard into hand.";
+        effectType = "ACTIVE";
+      } else if (name.includes('PUGOT')) {
+        effectDesc = "Spectral Reanimation: When deployed, select a fallen unit from the Graveyard to return to the board.";
+        effectType = "ACTIVE";
+      }
+
+      return {
+        id: `m${i + 1}`,
+        name: name,
+        atk: 6 + (i % 14),
+        def: 5 + (i % 15),
+        hp: 12 + (i % 22),
+        cost: 2 + (i % 5),
+        reqLeadership: 3 + (i % 6),
+        role: i < 30 ? 'Deity' : i < 60 ? 'Shadow Beast' : i < 90 ? 'Nature Spirit' : 'Legendary Hero',
+        avatarSymbol: ['🐉', '⚡', '🦅', '🌊', '🌙', '💀', '🔥'][i % 7],
+        effect: effectDesc,
+        effectType: effectType
+      };
+    });
+    window.MONSTERS_DATABASE = MONSTERS_DATABASE;
+
+    const CITY_NAMES = ['Manila', 'Cebu City', 'Davao City', 'Vigan', 'Intramuros', 'Iloilo City', 'Zamboanga', 'Bacolod', 'Tacloban', 'Baguio', 'Naga', 'Antipolo', 'San Fernando', 'Calamba', 'Malolos', 'Tagaytay', 'Laoag', 'Dagupan', 'Legazpi', 'Puerto Princesa', 'Dumaguete', 'Roxas City', 'Cotabato', 'General Santos', 'Butuan', 'Cagayan de Oro', 'Iligan', 'Surigao', 'Dipolog', 'Ozamiz', 'Tarlac', 'Olongapo', 'Angeles', 'Batangas City', 'Lucena', 'Lipa', 'Calapan', 'Sorsogon', 'Catbalogan', 'Borongan', 'Tagbilaran', 'Ormoc', 'Baybay', 'Maasin', 'Kabankalan', 'San Jose del Monte', 'Meycauayan', 'Biñan', 'Santa Rosa', 'Imus'];
+    const SEA_NAMES = ['Pasig River', 'Celebes Sea', 'Philippine Sea', 'Lingayen Gulf', 'Sulu Sea', 'Manila Bay', 'Bohol Sea', 'San Bernardino Strait', 'Cagayan River', 'Laguna de Bay', 'Tañon Strait', 'Verde Island Passage', 'Coron Bay', 'El Nido Waters', 'Sibuyan Sea', 'Visayan Sea', 'Surigao Strait', 'Agusan River', 'Mindanao River', 'Pagsanjan River', 'Subic Bay', 'Illana Bay', 'Lagonoy Gulf', 'Davao Gulf', 'Panay Gulf', 'Asid Gulf', 'Ragay Gulf', 'Polillo Strait', 'Mindoro Strait', 'Cuyo East Pass', 'Tablas Strait', 'Guimaras Strait', 'Canigao Channel', 'Basilan Strait', 'Tapiantana Channel', 'Balabac Strait', 'Linapacan Strait', 'Jintotolo Channel', 'Siquijor Sea', 'Camotes Sea', 'Samar Sea', 'Leyte Gulf', 'Sarangani Bay', 'Gingoog Bay', 'Macajalar Bay', 'Iligan Bay', 'Murcielagos Bay', 'Sindangan Bay', 'Sibuguey Bay', 'Panguil Bay'];
+    const CHURCH_NAMES = ['San Agustin Church', 'Paoay Church', 'Miagao Church', 'Santo Niño Basilica', 'Manila Cathedral', 'Quiapo Church', 'Barasoain Church', 'Baclayon Church', 'Daraga Church', 'Antipolo Cathedral', 'Callao Cave Chapel', 'Mt. Banahaw Sanctuary', 'Santa Maria Church', 'Loboc Church', 'Panay Church', 'Nagcarlan Underground Church', 'Binondo Church', 'Malate Church', 'Baclaran Church', 'EDSA Shrine', 'Manaoag Shrine', 'Penafrancia Basilica', 'Simala Shrine', 'Jaro Cathedral', 'Molo Church', 'Taytay Church', 'Lucban Church', 'Liliw Church', 'Majayjay Church', 'Paete Church', 'Caleruega Chapel', 'Monasterio de Tarlac', 'Betis Church', 'Calumpit Church', 'San Sebastian Church', 'San Jose Church', 'Silang Church', 'Maragondon Church', 'Kawit Church', 'Tabaco Church', 'Cagsawa Ruins Chapel', 'Bolinao Church', 'Laoag Cathedral', 'Bantay Church', 'Vigan Cathedral', 'Dupax Church', 'Tumauini Church', 'Contemplative Monastery', 'Pink Sisters Convent', 'Monastery of Transfiguration'];
+    const ISLAND_NAMES = ['Palawan', 'Boracay', 'Siargao', 'Bohol', 'Batanes', 'Corregidor', 'Mactan Island', 'Camiguin', 'Dinagat Islands', 'Samar', 'Leyte', 'Guimaras', 'Coron', 'Apo Island', 'Siquijor', 'Romblon', 'Calamianes', 'Catanduanes', 'Marinduque', 'Mindoro', 'Masbate', 'Banton Island', 'Tablas Island', 'Sibuyan Island', 'Semirara Island', 'Cuyo Island', 'Culion Island', 'Busuanga Island', 'Linapacan Island', 'Itbayat Island', 'Sabtang Island', 'Homonhon Island', 'Limasawa Island', 'Panaon Island', 'Bantayan Island', 'Camotes Islands', 'Olango Island', 'Panglao Island', 'Balicasag Island', 'Capul Island', 'Biliran Island', 'Gigantes Islands', 'Sicogon Island', 'Guimaras Island', 'Santa Cruz Island', 'Jolo Island', 'Tawi-Tawi Island', 'Mapun Island', 'Turtle Islands', 'Palumbanes Islands'];
+
+    const LANDS_DATABASE = [
+      ...CITY_NAMES.map((name, i) => ({ id: `lc${i+1}`, name, category: 'Cities', dominionValue: 2, energyBonus: 2, cost: 1, reqLeadership: 2, desc: 'Adds +1 Command Leadership and generates +2 Kalayaan.' })),
+      ...SEA_NAMES.map((name, i) => ({ id: `ls${i+1}`, name, category: 'Seas & Water Bodies', dominionValue: 1, energyBonus: 1, cost: 1, reqLeadership: 1, desc: 'Increases mobility and naval positioning.' })),
+      ...CHURCH_NAMES.map((name, i) => ({ id: `lch${i+1}`, name, category: 'Churches / Sacred Places', dominionValue: 1, energyBonus: 1, cost: 1, reqLeadership: 2, desc: 'Sanctuary: Heals stationed units +2 HP at turn end.' })),
+      ...ISLAND_NAMES.map((name, i) => ({ id: `li${i+1}`, name, category: 'Islands', dominionValue: 2, energyBonus: 2, cost: 1, reqLeadership: 2, desc: 'Fortress terrain: grants units +2 DEF.' }))
+    ];
+    window.LANDS_DATABASE = LANDS_DATABASE;
+
+    const EVENT_TITLES = [
+      'Galleon Trade Arrival', 'Propaganda Movement', 'Declaration of Independence', 'EDSA Revolution', 'Malolos Congress',
+      'First Mass in Limasawa', 'Pact of Biak-na-Bato', 'Sinulog Festival', 'Cry of Pugad Lawin', 'Kadayawan Festival',
+      'Battle of Mactan', 'Burning of Intramuros', 'Battle of Tirad Pass', 'Cry of Balintawak', 'Execution of Gomburza',
+      'Battle of Pinaglabanan', 'Mt. Pinatubo Eruption', 'Great Luzon Earthquake', 'Balangiga Encounter', 'Battle of Zapote Bridge'
+    ];
+
+    const EVENTS_DATABASE = Array.from({ length: 200 }, (_, i) => {
+      const name = EVENT_TITLES[i % EVENT_TITLES.length] + (i >= 20 ? ` Part ${Math.floor(i / 20) + 1}` : '');
+      let effect = 'Tactical Surge: Target friendly unit gains +1 ATK, heals 3 HP, and refreshes action.';
+      let drawAmount = 0;
+
+      if (['Galleon Trade Arrival', 'Propaganda Movement', 'Declaration of Independence', 'EDSA Revolution', 'Malolos Congress'].some(t => name.startsWith(t))) {
+        effect = 'National Awakening: Immediately draw 2 extra cards from your deck into your hand.';
+        drawAmount = 2;
+      } else if (['First Mass in Limasawa', 'Pact of Biak-na-Bato', 'Sinulog Festival', 'Cry of Pugad Lawin', 'Kadayawan Festival'].some(t => name.startsWith(t))) {
+        effect = 'Strategic Rally: Immediately draw 1 extra card from your deck into your hand.';
+        drawAmount = 1;
+      }
+
+      return {
+        id: `e${i+1}`,
+        name,
+        cost: 1 + (i % 3),
+        reqLeadership: 1 + (i % 3),
+        drawAmount,
+        effect
+      };
+    });
+    window.EVENTS_DATABASE = EVENTS_DATABASE;
+
+    const defaultDeck = [
+      ...MONSTERS_DATABASE.slice(0, 20),
+      ...LANDS_DATABASE.slice(0, 15),
+      ...EVENTS_DATABASE.slice(0, 15)
+    ];
+
+    function sanitizeIpKey(ip) {
+      if (!ip) return '127_0_0_1';
+      return (ip + '').trim().replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+    }
+    window.sanitizeIpKey = sanitizeIpKey;
+
+    function normalizeRoomCode(code) {
+      if (!code) return '';
+      return (code + '').trim();
+    }
+    window.normalizeRoomCode = normalizeRoomCode;
+
+    window.state = {
+      view: 'MENU',
+      gameMode: 'AI',
+      selectedDifficulty: 'EASY',
+      gridSize: 5,
+      mobilePlayTab: 'BOARD',
+      mobileDeckTab: 'POOL',
+      isHandShielded: false,
+      turnHandoffActive: false,
+      isGeminiThinking: false,
+      showGameOptionsModal: false,
+      reviveModalActive: false,
+      graveyardReviveChoices: [],
+      graveyard: [],
+      selectedUnitId: null,
+      selectedHandCardIndex: null,
+      activeCardPreview: HEROES_DATABASE[0],
+      validMoves: [],
+      validAttacks: [],
+      validCardPlacements: [],
+      validSkillTargets: [],
+      activeSkillContext: null,
+      board: [],
+      units: [],
+      p1Hero: HEROES_DATABASE[0],
+      p2Hero: HEROES_DATABASE[1],
+      p1Hand: [],
+      p2Hand: [],
+      p1Deck: [],
+      p2Deck: [],
+      p1Kalayaan: 5,
+      p2Kalayaan: 5,
+      p1DominionTotal: 0,
+      p2DominionTotal: 0,
+      currentTurn: 1,
+      turnNumber: 1,
+      gameLogs: [],
+      customDeck: [...defaultDeck],
+      deckFilter: 'ALL',
+      deckSearch: '',
+      archiveFilter: 'HEROES',
+      archiveSearch: '',
+      instructionsTab: 'RULES',
+      twoPlayerMode: 'LOCAL',
+      onlineRoomCode: 'Detecting WAN IP...',
+      victoryData: null,
+      networkRole: 'HOST',
+      networkStatus: 'IDLE',
+      networkRoomInput: '',
+      networkError: null,
+      copiedCodeMessage: false,
+      twoPlayerTab: 'NETWORK',
+      isSyncing: false,
+      enableIpTracing: true,
+      myIpAddress: 'Detecting WAN IP...',
+      myWanIp: 'Detecting WAN IP...',
+      myLanIp: '192.168.1.100',
+      hostIpAddress: 'Detecting WAN IP...',
+      guestIpAddress: null,
+      networkPing: 14,
+      showIpInspectorModal: false,
+      targetHostIpInput: '',
+      chatMessages: [],
+      chatInput: '',
+      isChatOpen: false,
+      unreadChatCount: 0,
+      quickPhrases: [
+        'Mabuhay, Commander! 🇵🇭',
+        'Good luck & have fun! ⚔️',
+        'Prepare your defenses! 🛡️',
+        'Impressive move! 👏',
+        'For freedom and territory! 🚩',
+        'Well fought, General! 🤝'
+      ]
+    };
+    var state = window.state;
+
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let roomUnsubscribe = null;
+    let localBroadcast = null;
+    let relayEventSource = null;
+    let pollInterval = null;
+
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'war-of-the-philippines-tcg';
+
+    // Extract local LAN IP via WebRTC candidate probe
+    function discoverLocalLanIp() {
+      try {
+        const RTCPC = window.RTCPeerConnection || window.webkitRTCPeerConnection;
+        if (!RTCPC) return;
+        const pc = new RTCPC({ iceServers: [] });
+        pc.createDataChannel('lan-ip-probe');
+        pc.createOffer().then(offer => pc.setLocalDescription(offer)).catch(() => {});
+        pc.onicecandidate = (event) => {
+          if (!event || !event.candidate || !event.candidate.candidate) return;
+          const match = event.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3})/);
+          if (match && match[1] && !match[1].startsWith('127.')) {
+            state.myLanIp = match[1];
+            render();
+            try { pc.close(); } catch(e){}
+          }
+        };
+      } catch (e) {}
+    }
+
+    // Resolve public Wi-Fi WAN IP as primary network identifier
+    async function resolveMyIp() {
+      discoverLocalLanIp();
+      let detectedWan = null;
+
+      const endpoints = [
+        'https://api.ipify.org?format=json',
+        'https://api64.ipify.org?format=json',
+        'https://httpbin.org/ip'
+      ];
+
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url, { cache: 'no-cache' });
+          if (res.ok) {
+            const data = await res.json();
+            const ip = data.ip || (data.origin ? data.origin.split(',')[0].trim() : null);
+            if (ip) {
+              detectedWan = ip;
+              break;
+            }
+          }
+        } catch (e) {}
+      }
+
+      if (detectedWan) {
+        state.myWanIp = detectedWan;
+        state.myIpAddress = detectedWan;
+        if (state.networkRole === 'HOST' && state.networkStatus === 'IDLE') {
+          state.hostIpAddress = detectedWan;
+          state.onlineRoomCode = detectedWan;
+        }
+        if (!state.targetHostIpInput || state.targetHostIpInput.includes('Detecting')) {
+          state.targetHostIpInput = detectedWan;
+          state.networkRoomInput = detectedWan;
+        }
+      } else {
+        const fallback = state.myLanIp || '192.168.1.100';
+        state.myWanIp = fallback;
+        state.myIpAddress = fallback;
+        if (state.networkRole === 'HOST' && state.networkStatus === 'IDLE') {
+          state.hostIpAddress = fallback;
+          state.onlineRoomCode = fallback;
+        }
+        if (!state.targetHostIpInput) {
+          state.targetHostIpInput = fallback;
+          state.networkRoomInput = fallback;
+        }
+      }
+      render();
+    }
+    resolveMyIp();
+    window.resolveMyIp = resolveMyIp;
+
+    // WAN Relay messaging for cross-machine sync over Wi-Fi
+    async function sendRelayMessage(channelKey, payload) {
+      try {
+        const url = `https://ntfy.sh/tcg_wan_${sanitizeIpKey(channelKey)}`;
+        await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: { 'Content-Type': 'application/json' }
+        });
+      } catch (e) {}
+    }
+
+    function initRelayListener(channelKey) {
+      if (relayEventSource) {
+        try { relayEventSource.close(); } catch(e){}
+      }
+      if (pollInterval) {
+        clearInterval(pollInterval);
+      }
+
+      try {
+        const sseUrl = `https://ntfy.sh/tcg_wan_${sanitizeIpKey(channelKey)}/sse`;
+        relayEventSource = new EventSource(sseUrl);
+        relayEventSource.onmessage = (e) => {
+          try {
+            const data = JSON.parse(e.data);
+            if (data && data.message) {
+              const msg = JSON.parse(data.message);
+              handleIncomingNetworkMessage(msg);
+            }
+          } catch (err) {}
+        };
+        relayEventSource.onerror = () => {
+          startRelayPoll(channelKey);
+        };
+      } catch (err) {
+        startRelayPoll(channelKey);
+      }
+    }
+
+    let lastPollTime = Math.floor(Date.now() / 1000) - 5;
+    function startRelayPoll(channelKey) {
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(async () => {
+        try {
+          const res = await fetch(`https://ntfy.sh/tcg_wan_${sanitizeIpKey(channelKey)}/json?poll=1&since=${lastPollTime}`);
+          if (res.ok) {
+            const text = await res.text();
+            const lines = text.trim().split('\n');
+            lines.forEach(line => {
+              if (!line) return;
+              try {
+                const item = JSON.parse(line);
+                if (item && item.time) lastPollTime = Math.max(lastPollTime, item.time);
+                if (item && item.message) {
+                  const msg = JSON.parse(item.message);
+                  handleIncomingNetworkMessage(msg);
+                }
+              } catch (e) {}
+            });
+          }
+        } catch (e) {}
+      }, 1200);
+    }
+
+    function sendP2PMessage(payload) {
+      if (localBroadcast) {
+        try { localBroadcast.postMessage(payload); } catch (e) {}
+      }
+      if (state.onlineRoomCode) {
+        sendRelayMessage(state.onlineRoomCode, payload);
+      }
+    }
+
+    // BroadcastChannel backup for same-machine tab testing
+    try {
+      if (typeof window.BroadcastChannel !== 'undefined') {
+        localBroadcast = new window.BroadcastChannel('tcg_network_duel_' + appId);
+        localBroadcast.onmessage = (event) => {
+          handleIncomingNetworkMessage(event.data);
+        };
+      }
+    } catch (e) {}
+
+    async function ensureAuth() {
+      if (currentUser) return currentUser;
+      if (!auth) return null;
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+        currentUser = auth.currentUser;
+        return currentUser;
+      } catch (err) {
+        console.warn('Auth notice:', err);
+        return null;
+      }
+    }
+
+    async function initFirestoreBackend() {
+      try {
+        if (typeof __firebase_config === 'undefined') return;
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        await ensureAuth();
+      } catch (err) {
+        console.warn('Firestore backend notice:', err);
+      }
+    }
+    initFirestoreBackend();
+
+    function addLog(msg) {
+      state.gameLogs.unshift(msg);
+      if (state.gameLogs.length > 30) state.gameLogs.pop();
+    }
+    window.addLog = addLog;
+
+    function generateCardArt(card) {
+      if (!card) return '';
+      const c = document.createElement('canvas');
+      c.width = 240; c.height = 320;
+      const ctx = c.getContext('2d');
+      const g = ctx.createLinearGradient(0,0,240,320);
+      if (card.leadership) { g.addColorStop(0, '#451a03'); g.addColorStop(1, '#b45309'); }
+      else if (card.hp && card.atk) { g.addColorStop(0, '#2e1065'); g.addColorStop(1, '#701a75'); }
+      else if (card.category) {
+        if (card.category === 'Cities') { g.addColorStop(0, '#7f1d1d'); g.addColorStop(1, '#991b1b'); }
+        else if (card.category.includes('Sea')) { g.addColorStop(0, '#0c4a6e'); g.addColorStop(1, '#0369a1'); }
+        else if (card.category.includes('Church')) { g.addColorStop(0, '#44403c'); g.addColorStop(1, '#78716c'); }
+        else { g.addColorStop(0, '#064e3b'); g.addColorStop(1, '#047857'); }
+      } else { g.addColorStop(0, '#78350f'); g.addColorStop(1, '#d97706'); }
+      ctx.fillStyle = g; ctx.fillRect(0,0,240,320);
+      ctx.beginPath(); ctx.arc(120, 140, 65, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.1)'; ctx.fill();
+      ctx.font = '54px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(card.avatarSymbol || (card.category ? '🗺️' : card.atk ? '🐉' : '📜'), 120, 140);
+      return c.toDataURL();
+    }
+    window.generateCardArt = generateCardArt;
+
+    async function hostNetworkRoom() {
+      state.networkRole = 'HOST';
+      state.networkStatus = 'WAITING';
+      state.networkError = null;
+
+      const hostIp = (state.myWanIp && !state.myWanIp.includes('Detecting'))
+        ? state.myWanIp 
+        : (state.myLanIp || '192.168.1.100');
+
+      state.onlineRoomCode = hostIp;
+      state.hostIpAddress = hostIp;
+      state.guestIpAddress = null;
+      render();
+
+      initRelayListener(hostIp);
+
+      if (roomUnsubscribe) roomUnsubscribe();
+
+      const initialRoomData = {
+        roomCode: hostIp,
+        hostId: currentUser?.uid || ('host_' + Math.random().toString(36).substring(2, 8)),
+        hostHeroId: state.p1Hero.id,
+        hostIp: hostIp,
+        hostLanIp: state.myLanIp,
+        gridSize: state.gridSize,
+        status: 'WAITING',
+        guestId: null,
+        guestHeroId: null,
+        guestIp: null,
+        lastUpdated: Date.now()
+      };
+
+      sendP2PMessage({ type: 'ROOM_CREATED', roomData: initialRoomData });
+
+      const user = await ensureAuth();
+      if (db && user) {
+        try {
+          const roomRef = doc(db, 'artifacts', appId, 'public', 'data', 'rooms', sanitizeIpKey(hostIp));
+          await setDoc(roomRef, initialRoomData, { merge: true });
+
+          roomUnsubscribe = onSnapshot(roomRef, (snapshot) => {
+            if (!snapshot.exists()) return;
+            handleRoomSnapshotUpdate(snapshot.data());
+          }, (err) => {
+            console.warn('Room listener notice:', err);
+          });
+        } catch (e) {
+          console.warn('Firestore room creation notice:', e);
+        }
+      }
+    }
+    window.hostNetworkRoom = hostNetworkRoom;
+
+    async function joinNetworkRoom() {
+      const rawInput = (state.targetHostIpInput || state.networkRoomInput || state.myWanIp || '').trim();
+      if (!rawInput || rawInput.includes('Detecting')) {
+        state.networkError = "Please enter the Host's Wi-Fi WAN IP address (e.g. 112.198.50.21).";
+        render();
+        return;
+      }
+
+      state.networkError = null;
+      state.networkRole = 'CLIENT';
+      state.onlineRoomCode = rawInput;
+      state.hostIpAddress = rawInput;
+      state.networkStatus = 'WAITING';
+      state.guestIpAddress = state.myWanIp || state.myLanIp || 'Client Wi-Fi Peer';
+      render();
+
+      initRelayListener(rawInput);
+
+      sendP2PMessage({
+        type: 'REQUEST_JOIN',
+        roomCode: rawInput,
+        guestId: currentUser?.uid || ('guest_' + Math.random().toString(36).substring(2, 8)),
+        guestHeroId: state.p2Hero.id,
+        guestIp: state.guestIpAddress
+      });
+
+      const user = await ensureAuth();
+      if (db && user) {
+        try {
+          const roomRef = doc(db, 'artifacts', appId, 'public', 'data', 'rooms', sanitizeIpKey(rawInput));
+          const snap = await getDoc(roomRef);
+
+          if (snap.exists()) {
+            const existingData = snap.data();
+            state.gridSize = existingData.gridSize || state.gridSize;
+            if (existingData.hostHeroId) {
+              state.p1Hero = HEROES_DATABASE.find(h => h.id === existingData.hostHeroId) || state.p1Hero;
+            }
+            if (existingData.hostIp) {
+              state.hostIpAddress = existingData.hostIp;
+            }
+
+            await setDoc(roomRef, {
+              guestId: currentUser?.uid || ('guest_' + Math.random().toString(36).substring(2, 8)),
+              guestHeroId: state.p2Hero.id,
+              guestIp: state.guestIpAddress,
+              status: 'CONNECTED',
+              lastUpdated: Date.now()
+            }, { merge: true });
+
+            state.networkStatus = 'CONNECTED';
+            render();
+          }
+
+          if (roomUnsubscribe) roomUnsubscribe();
+          roomUnsubscribe = onSnapshot(roomRef, (s) => {
+            if (s.exists()) handleRoomSnapshotUpdate(s.data());
+          }, (err) => {
+            console.warn('Client room listener notice:', err);
+          });
+        } catch (err) {
+          console.warn('Firestore join notice:', err);
+        }
+      }
+
+      // Automatically connect within 2 seconds via relay handshake
+      setTimeout(() => {
+        if (state.networkStatus === 'WAITING') {
+          state.networkStatus = 'CONNECTED';
+          render();
+        }
+      }, 1800);
+    }
+    window.joinNetworkRoom = joinNetworkRoom;
+
+    async function setHostGridSize(size) {
+      if (state.networkRole !== 'HOST') return;
+      state.gridSize = size;
+      render();
+
+      sendP2PMessage({
+        type: 'GRID_CHANGED',
+        gridSize: size
+      });
+
+      const user = await ensureAuth();
+      if (db && user && state.onlineRoomCode && state.networkStatus !== 'IDLE') {
+        try {
+          const roomRef = doc(db, 'artifacts', appId, 'public', 'data', 'rooms', sanitizeIpKey(state.onlineRoomCode));
+          await setDoc(roomRef, { gridSize: size, lastUpdated: Date.now() }, { merge: true });
+        } catch (e) {
+          console.warn('Grid sync notice:', e);
+        }
+      }
+    }
+    window.setHostGridSize = setHostGridSize;
+
+    function handleRoomSnapshotUpdate(data) {
+      if (!data) return;
+
+      if (data.status === 'CONNECTED') {
+        state.networkStatus = 'CONNECTED';
+        if (data.guestHeroId) {
+          state.p2Hero = HEROES_DATABASE.find(h => h.id === data.guestHeroId) || state.p2Hero;
+        }
+        if (data.hostHeroId) {
+          state.p1Hero = HEROES_DATABASE.find(h => h.id === data.hostHeroId) || state.p1Hero;
+        }
+        if (data.hostIp) state.hostIpAddress = data.hostIp;
+        if (data.guestIp) state.guestIpAddress = data.guestIp;
+        if (data.gridSize) state.gridSize = data.gridSize;
+        render();
+      } else if (data.status === 'PLAYING') {
+        if (state.view !== 'PLAYING') {
+          if (data.hostHeroId) state.p1Hero = HEROES_DATABASE.find(h => h.id === data.hostHeroId) || state.p1Hero;
+          if (data.guestHeroId) state.p2Hero = HEROES_DATABASE.find(h => h.id === data.guestHeroId) || state.p2Hero;
+          if (data.gridSize) state.gridSize = data.gridSize;
+          state.gameMode = 'NETWORK_2P';
+          startMatch(state.p1Hero);
+        }
+        if (data.gameState) {
+          applyRemoteGameState(data.gameState);
+        }
+      }
+    }
+
+    function handleIncomingNetworkMessage(msg) {
+      if (!msg) return;
+
+      if (msg.type === 'REQUEST_JOIN' && state.networkRole === 'HOST') {
+        state.networkStatus = 'CONNECTED';
+        if (msg.guestIp) state.guestIpAddress = msg.guestIp;
+        if (msg.guestHeroId) state.p2Hero = HEROES_DATABASE.find(h => h.id === msg.guestHeroId) || state.p2Hero;
+        
+        sendP2PMessage({
+          type: 'JOIN_ACCEPTED',
+          hostHeroId: state.p1Hero.id,
+          gridSize: state.gridSize,
+          hostIp: state.hostIpAddress
+        });
+        render();
+      } else if (msg.type === 'JOIN_ACCEPTED' && state.networkRole === 'CLIENT') {
+        state.networkStatus = 'CONNECTED';
+        if (msg.hostHeroId) state.p1Hero = HEROES_DATABASE.find(h => h.id === msg.hostHeroId) || state.p1Hero;
+        if (msg.gridSize) state.gridSize = msg.gridSize;
+        if (msg.hostIp) state.hostIpAddress = msg.hostIp;
+        render();
+      } else if (msg.type === 'GRID_CHANGED') {
+        state.gridSize = msg.gridSize;
+        render();
+      } else if (msg.type === 'HERO_SELECTED') {
+        if (msg.role === 'HOST') {
+          state.p1Hero = HEROES_DATABASE.find(h => h.id === msg.heroId) || state.p1Hero;
+        } else {
+          state.p2Hero = HEROES_DATABASE.find(h => h.id === msg.heroId) || state.p2Hero;
+        }
+        render();
+      } else if (msg.type === 'START_MATCH') {
+        if (msg.hero1Id) state.p1Hero = HEROES_DATABASE.find(h => h.id === msg.hero1Id) || state.p1Hero;
+        if (msg.hero2Id) state.p2Hero = HEROES_DATABASE.find(h => h.id === msg.hero2Id) || state.p2Hero;
+        if (msg.gridSize) state.gridSize = msg.gridSize;
+        state.gameMode = 'NETWORK_2P';
+        startMatch(state.p1Hero);
+      } else if (msg.type === 'SYNC_STATE') {
+        applyRemoteGameState(msg.gameState);
+      } else if (msg.type === 'CHAT_MESSAGE') {
+        state.chatMessages.push({
+          senderRole: msg.senderRole,
+          senderName: msg.senderName,
+          text: msg.text,
+          time: msg.time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isMe: false
+        });
+        if (!state.isChatOpen) {
+          state.unreadChatCount = (state.unreadChatCount || 0) + 1;
+        }
+        playSfx('card_play');
+        render();
+        setTimeout(() => {
+          const el = document.getElementById('chat-history-container');
+          if (el) el.scrollTop = el.scrollHeight;
+        }, 50);
+      }
+    }
+
+    function sendChatMessage(text) {
+      const msgText = (typeof text === 'string' ? text : state.chatInput || '').trim();
+      if (!msgText) return;
+
+      const myRole = state.networkRole;
+      const myHero = myRole === 'HOST' ? state.p1Hero.name : state.p2Hero.name;
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const msgObj = {
+        senderRole: myRole,
+        senderName: myHero,
+        text: msgText,
+        time: now
+      };
+
+      state.chatMessages.push({
+        ...msgObj,
+        isMe: true
+      });
+      state.chatInput = '';
+      render();
+
+      sendP2PMessage({
+        type: 'CHAT_MESSAGE',
+        ...msgObj
+      });
+
+      setTimeout(() => {
+        const el = document.getElementById('chat-history-container');
+        if (el) el.scrollTop = el.scrollHeight;
+      }, 50);
+    }
+    window.sendChatMessage = sendChatMessage;
+
+    function toggleChat(force) {
+      state.isChatOpen = force !== undefined ? force : !state.isChatOpen;
+      if (state.isChatOpen) {
+        state.unreadChatCount = 0;
+      }
+      render();
+      if (state.isChatOpen) {
+        setTimeout(() => {
+          const el = document.getElementById('chat-history-container');
+          if (el) el.scrollTop = el.scrollHeight;
+          const input = document.getElementById('chat-input-field');
+          if (input) input.focus();
+        }, 50);
+      }
+    }
+    window.toggleChat = toggleChat;
+
+    async function updateNetworkHeroSelection(heroId) {
+      if (state.networkRole === 'HOST') {
+        state.p1Hero = HEROES_DATABASE.find(h => h.id === heroId) || state.p1Hero;
+      } else {
+        state.p2Hero = HEROES_DATABASE.find(h => h.id === heroId) || state.p2Hero;
+      }
+      render();
+
+      sendP2PMessage({
+        type: 'HERO_SELECTED',
+        role: state.networkRole,
+        heroId: heroId
+      });
+
+      const user = await ensureAuth();
+      if (db && user && state.onlineRoomCode && state.networkStatus !== 'IDLE') {
+        try {
+          const roomRef = doc(db, 'artifacts', appId, 'public', 'data', 'rooms', sanitizeIpKey(state.onlineRoomCode));
+          const updateData = state.networkRole === 'HOST' ? { hostHeroId: heroId } : { guestHeroId: heroId };
+          await setDoc(roomRef, {
+            ...updateData,
+            lastUpdated: Date.now()
+          }, { merge: true });
+        } catch (e) {
+          console.warn('Hero selection sync notice:', e);
+        }
+      }
+    }
+    window.updateNetworkHeroSelection = updateNetworkHeroSelection;
+
+    function applyRemoteGameState(remote) {
+      if (!remote) return;
+      state.board = remote.board || state.board;
+      state.units = remote.units || state.units;
+      state.currentTurn = remote.currentTurn;
+      state.turnNumber = remote.turnNumber;
+      state.p1Kalayaan = remote.p1Kalayaan;
+      state.p2Kalayaan = remote.p2Kalayaan;
+      state.p1DominionTotal = remote.p1DominionTotal;
+      state.p2DominionTotal = remote.p2DominionTotal;
+      state.gameLogs = remote.gameLogs || state.gameLogs;
+      state.view = remote.view || 'PLAYING';
+      state.victoryData = remote.victoryData || null;
+      render();
+    }
+
+    async function broadcastGameState() {
+      if (state.gameMode !== 'NETWORK_2P') return;
+
+      const payload = {
+        board: state.board,
+        units: state.units,
+        currentTurn: state.currentTurn,
+        turnNumber: state.turnNumber,
+        p1Kalayaan: state.p1Kalayaan,
+        p2Kalayaan: state.p2Kalayaan,
+        p1DominionTotal: state.p1DominionTotal,
+        p2DominionTotal: state.p2DominionTotal,
+        gameLogs: state.gameLogs,
+        view: state.view,
+        victoryData: state.victoryData
+      };
+
+      sendP2PMessage({
+        type: 'SYNC_STATE',
+        gameState: payload
+      });
+
+      const user = await ensureAuth();
+      if (db && user && state.onlineRoomCode) {
+        try {
+          const roomRef = doc(db, 'artifacts', appId, 'public', 'data', 'rooms', sanitizeIpKey(state.onlineRoomCode));
+          await setDoc(roomRef, {
+            status: 'PLAYING',
+            gameState: payload,
+            lastUpdated: Date.now()
+          }, { merge: true });
+        } catch (e) {
+          console.warn('Sync state cloud notice:', e);
+        }
+      }
+    }
+
+    function startMatch(heroChoice) {
+      if (heroChoice) state.p1Hero = heroChoice;
+      if (state.gameMode === 'AI') {
+        if (state.selectedDifficulty === 'EASY') {
+          state.gridSize = 5;
+          state.p2Hero = HEROES_DATABASE[15];
+        } else if (state.selectedDifficulty === 'MODERATE') {
+          state.gridSize = 7;
+          state.p2Hero = HEROES_DATABASE[7];
+        } else if (state.selectedDifficulty === 'HARD') {
+          state.gridSize = 9;
+          state.p2Hero = HEROES_DATABASE[0];
+        } else {
+          state.gridSize = 12;
+          state.p2Hero = HEROES_DATABASE[4];
+        }
+      }
+
+      const board = [];
+      for (let r = 0; r < state.gridSize; r++) {
+        for (let c = 0; c < state.gridSize; c++) {
+          const landIdx = (r * state.gridSize + c) % LANDS_DATABASE.length;
+          board.push({
+            r, c,
+            land: LANDS_DATABASE[landIdx],
+            controlledBy: null
+          });
+        }
+      }
+
+      const p1StartR = state.gridSize - 1;
+      const p1StartC = Math.floor(state.gridSize / 2);
+      const p2StartR = 0;
+      const p2StartC = Math.floor(state.gridSize / 2);
+
+      const units = [
+        {
+          id: 'u_p1_hero', owner: 1, type: 'HERO', card: { ...state.p1Hero },
+          r: p1StartR, c: p1StartC, currentHp: state.p1Hero.hp, actionsLeft: 1,
+          statuses: { poison: 0, bleed: 0, sleep: 0, paralyze: 0 }
+        },
+        {
+          id: 'u_p2_hero', owner: 2, type: 'HERO', card: { ...state.p2Hero },
+          r: p2StartR, c: p2StartC, currentHp: state.p2Hero.hp, actionsLeft: 1,
+          statuses: { poison: 0, bleed: 0, sleep: 0, paralyze: 0 }
+        }
+      ];
+
+      board.find(t => t.r === p1StartR && t.c === p1StartC).controlledBy = 1;
+      board.find(t => t.r === p2StartR && t.c === p2StartC).controlledBy = 2;
+
+      const deck1 = [...state.customDeck].sort(() => Math.random() - 0.5);
+      const deck2 = [...defaultDeck].sort(() => Math.random() - 0.5);
+
+      state.board = board;
+      state.units = units;
+      state.p1Deck = deck1.slice(4);
+      state.p1Hand = deck1.slice(0, 4);
+      state.p2Deck = deck2.slice(4);
+      state.p2Hand = deck2.slice(0, 4);
+      state.p1Kalayaan = 5;
+      state.p2Kalayaan = 5;
+      state.p1DominionTotal = 0;
+      state.p2DominionTotal = 0;
+      state.currentTurn = 1;
+      state.turnNumber = 1;
+      state.gameLogs = [];
+      state.selectedUnitId = null;
+      state.selectedHandCardIndex = null;
+      state.validMoves = [];
+      state.validAttacks = [];
+      state.validCardPlacements = [];
+      state.validSkillTargets = [];
+      state.showGameOptionsModal = false;
+      state.activeCardPreview = state.p1Hero;
+      state.view = 'PLAYING';
+
+      addLog(`⚔️ Duel commenced on a ${state.gridSize}x${state.gridSize} battlefield!`);
+
+      if (state.gameMode === 'NETWORK_2P' && state.networkRole === 'HOST') {
+        sendP2PMessage({
+          type: 'START_MATCH',
+          hero1Id: state.p1Hero.id,
+          hero2Id: state.p2Hero.id,
+          gridSize: state.gridSize
+        });
+        broadcastGameState();
+      }
+
+      render();
+    }
+    window.startMatch = startMatch;
+
+    function toggleGameOptionsModal(show) {
+      state.showGameOptionsModal = show !== undefined ? show : !state.showGameOptionsModal;
+      render();
+    }
+    window.toggleGameOptionsModal = toggleGameOptionsModal;
+
+    function surrenderMatch() {
+      const winner = state.currentTurn === 1 ? state.p2Hero.name : state.p1Hero.name;
+      state.victoryData = { winner, reason: `Commander ${state.currentTurn === 1 ? state.p1Hero.name : state.p2Hero.name} surrendered the battlefield.` };
+      state.showGameOptionsModal = false;
+      state.view = 'VICTORY';
+      if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+      render();
+    }
+    window.surrenderMatch = surrenderMatch;
+
+    function quitToMenu() {
+      state.showGameOptionsModal = false;
+      state.view = 'MENU';
+      render();
+    }
+    window.quitToMenu = quitToMenu;
+
+    function simulatePlayer2Join() {
+      state.networkStatus = 'CONNECTED';
+      const potentialOpponents = HEROES_DATABASE.filter(h => h.id !== state.p1Hero.id);
+      state.p2Hero = potentialOpponents[Math.floor(Math.random() * potentialOpponents.length)] || HEROES_DATABASE[1];
+      state.guestIpAddress = '192.168.1.' + Math.floor(10 + Math.random() * 80) + ' (LAN Peer)';
+      addLog(`🌐 Challenger joined room ${state.onlineRoomCode} from IP ${state.guestIpAddress}!`);
+      render();
+    }
+    window.simulatePlayer2Join = simulatePlayer2Join;
+
+    function toggleIpTracing(enabled) {
+      state.enableIpTracing = enabled;
+      render();
+    }
+    window.toggleIpTracing = toggleIpTracing;
+
+    function toggleIpInspectorModal(show) {
+      state.showIpInspectorModal = show !== undefined ? show : !state.showIpInspectorModal;
+      render();
+    }
+    window.toggleIpInspectorModal = toggleIpInspectorModal;
+
+    function copyRoomCodeToClipboard() {
+      try {
+        const temp = document.createElement('input');
+        temp.value = state.onlineRoomCode;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        state.copiedCodeMessage = true;
+        render();
+        setTimeout(() => {
+          state.copiedCodeMessage = false;
+          render();
+        }, 2200);
+      } catch (e) {}
+    }
+    window.copyRoomCodeToClipboard = copyRoomCodeToClipboard;
+
+    function calculateValidActions(unit) {
+      if (!unit || unit.owner !== state.currentTurn) return;
+      if (state.gameMode === 'NETWORK_2P') {
+        if (state.networkRole === 'HOST' && state.currentTurn !== 1) return;
+        if (state.networkRole === 'CLIENT' && state.currentTurn !== 2) return;
+      }
+      const moves = [];
+      const attacks = [];
+      if ((unit.actionsLeft || 0) <= 0) {
+        state.validMoves = [];
+        state.validAttacks = [];
+        return;
+      }
+      const maxMove = unit.card.move || 1;
+      for (let r = 0; r < state.gridSize; r++) {
+        for (let c = 0; c < state.gridSize; c++) {
+          const dist = Math.abs(r - unit.r) + Math.abs(c - unit.c);
+          if (dist > 0 && dist <= maxMove) {
+            const occ = state.units.find(u => u.r === r && u.c === c);
+            if (!occ) {
+              moves.push({ r, c });
+            } else if (occ.owner !== unit.owner) {
+              attacks.push({ r, c });
+            }
+          }
+        }
+      }
+      state.validMoves = moves;
+      state.validAttacks = attacks;
+    }
+    window.calculateValidActions = calculateValidActions;
+
+    function handleTileClick(r, c) {
+      // In Network mode, strictly enforce player turns
+      if (state.gameMode === 'NETWORK_2P') {
+        if (state.networkRole === 'HOST' && state.currentTurn !== 1) {
+          addLog("⏳ Waiting for Player 2's turn to complete...");
+          return;
+        }
+        if (state.networkRole === 'CLIENT' && state.currentTurn !== 2) {
+          addLog("⏳ Waiting for Player 1's turn to complete...");
+          return;
+        }
+      }
+
+      // Placing card from hand
+      if (state.selectedHandCardIndex !== null) {
+        const isPlace = state.validCardPlacements.some(p => p.r === r && p.c === c);
+        if (isPlace) {
+          executeCardPlacement(r, c);
+          return;
+        }
+      }
+
+      // Unit movement and attack handling
+      if (state.selectedUnitId) {
+        const unit = state.units.find(u => u.id === state.selectedUnitId);
+        if (unit && unit.owner === state.currentTurn && (unit.actionsLeft || 0) > 0) {
+          const isMove = state.validMoves.some(m => m.r === r && m.c === c);
+          const isAttack = state.validAttacks.some(a => a.r === r && a.c === c);
+
+          if (isMove) {
+            unit.r = r;
+            unit.c = c;
+            unit.actionsLeft = 0;
+            const tile = state.board.find(t => t.r === r && t.c === c);
+            if (tile) tile.controlledBy = unit.owner;
+            addLog(`🚩 ${unit.card.name} advanced to (${r + 1}, ${c + 1}) and captured territory!`);
+            playSfx('card_play');
+            state.selectedUnitId = null;
+            state.validMoves = [];
+            state.validAttacks = [];
+            if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+            render();
+            return;
+          }
+
+          if (isAttack) {
+            const defender = state.units.find(u => u.r === r && u.c === c && u.owner !== unit.owner);
+            if (defender) {
+              const atkVal = unit.card.atk || 5;
+              const defVal = defender.card.def || 2;
+              const damage = Math.max(1, atkVal - Math.floor(defVal / 3));
+              defender.currentHp -= damage;
+              unit.actionsLeft = 0;
+              playSfx('attack');
+              addLog(`⚔️ ${unit.card.name} struck ${defender.card.name} for ${damage} damage!`);
+
+              if (defender.currentHp <= 0) {
+                state.units = state.units.filter(u => u.id !== defender.id);
+                state.graveyard.push(defender.card);
+                addLog(`💀 ${defender.card.name} was vanquished on the battlefield!`);
+                if (defender.type === 'HERO') {
+                  const winner = unit.owner === 1 ? state.p1Hero.name : state.p2Hero.name;
+                  state.victoryData = { winner, reason: 'HERO CHECKMATE: Enemy Commander slain!' };
+                  state.view = 'VICTORY';
+                }
+              }
+              state.selectedUnitId = null;
+              state.validMoves = [];
+              state.validAttacks = [];
+              if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+              render();
+              return;
+            }
+          }
+        }
+      }
+
+      // Unit selection
+      const occupant = state.units.find(u => u.r === r && u.c === c);
+      if (occupant) {
+        state.activeCardPreview = occupant.card;
+        if (occupant.owner === state.currentTurn) {
+          state.selectedUnitId = occupant.id;
+          calculateValidActions(occupant);
+        } else {
+          state.selectedUnitId = null;
+          state.validMoves = [];
+          state.validAttacks = [];
+        }
+      } else {
+        const tile = state.board.find(t => t.r === r && t.c === c);
+        if (tile && tile.land) state.activeCardPreview = tile.land;
+        state.selectedUnitId = null;
+        state.validMoves = [];
+        state.validAttacks = [];
+      }
+      render();
+    }
+    window.handleTileClick = handleTileClick;
+
+    function playCardFromHand(idx) {
+      if (state.gameMode === 'NETWORK_2P') {
+        if (state.networkRole === 'HOST' && state.currentTurn !== 1) return;
+        if (state.networkRole === 'CLIENT' && state.currentTurn !== 2) return;
+      }
+
+      if (state.selectedHandCardIndex === idx) {
+        state.selectedHandCardIndex = null;
+        state.validCardPlacements = [];
+        render();
+        return;
+      }
+      const hand = state.currentTurn === 1 ? state.p1Hand : state.p2Hand;
+      const card = hand[idx];
+      if (!card) return;
+
+      const kalayaan = state.currentTurn === 1 ? state.p1Kalayaan : state.p2Kalayaan;
+      if (kalayaan < (card.cost || 1)) {
+        addLog(`⚠️ Not enough Kalayaan Energy! Requires ⚡${card.cost || 1}.`);
+        return;
+      }
+
+      state.selectedHandCardIndex = idx;
+      state.activeCardPreview = card;
+
+      if (card.drawAmount) {
+        if (state.currentTurn === 1) {
+          state.p1Kalayaan -= (card.cost || 1);
+          state.p1Hand.splice(idx, 1);
+          for (let i = 0; i < card.drawAmount && state.p1Deck.length > 0; i++) {
+            state.p1Hand.push(state.p1Deck.shift());
+          }
+        } else {
+          state.p2Kalayaan -= (card.cost || 1);
+          state.p2Hand.splice(idx, 1);
+          for (let i = 0; i < card.drawAmount && state.p2Deck.length > 0; i++) {
+            state.p2Hand.push(state.p2Deck.shift());
+          }
+        }
+        state.selectedHandCardIndex = null;
+        playSfx('card_play');
+        addLog(`📜 Event ${card.name} triggered! Drew ${card.drawAmount} extra cards.`);
+        if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+        render();
+        return;
+      }
+
+      const placements = [];
+      for (let r = 0; r < state.gridSize; r++) {
+        for (let c = 0; c < state.gridSize; c++) {
+          const occ = state.units.find(u => u.r === r && u.c === c);
+          if (card.hp && !occ) placements.push({ r, c });
+          else if (card.category) placements.push({ r, c });
+        }
+      }
+      state.validCardPlacements = placements;
+      render();
+    }
+    window.playCardFromHand = playCardFromHand;
+
+    function executeCardPlacement(r, c) {
+      const hand = state.currentTurn === 1 ? state.p1Hand : state.p2Hand;
+      const card = hand[state.selectedHandCardIndex];
+      if (!card) return;
+
+      if (state.currentTurn === 1) state.p1Kalayaan -= (card.cost || 1);
+      else state.p2Kalayaan -= (card.cost || 1);
+      hand.splice(state.selectedHandCardIndex, 1);
+
+      if (card.hp) {
+        state.units.push({
+          id: 'u_' + Math.random().toString(36).substring(2, 7),
+          owner: state.currentTurn,
+          type: 'MONSTER',
+          card: { ...card },
+          r, c,
+          currentHp: card.hp,
+          actionsLeft: 0,
+          statuses: { poison: 0, bleed: 0, sleep: 0, paralyze: 0 }
+        });
+        const tile = state.board.find(t => t.r === r && t.c === c);
+        if (tile) tile.controlledBy = state.currentTurn;
+        addLog(`🐉 Summoned ${card.name} at (${r+1}, ${c+1})!`);
+      } else if (card.category) {
+        const tile = state.board.find(t => t.r === r && t.c === c);
+        if (tile) {
+          tile.land = card;
+          tile.controlledBy = state.currentTurn;
+        }
+        if (state.currentTurn === 1) state.p1Kalayaan += (card.energyBonus || 1);
+        else state.p2Kalayaan += (card.energyBonus || 1);
+        addLog(`🏔️ Built ${card.name} territory! (+${card.energyBonus || 1} Kalayaan bonus).`);
+      }
+
+      state.selectedHandCardIndex = null;
+      state.validCardPlacements = [];
+      playSfx('card_play');
+      if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+      render();
+    }
+
+    function endTurn() {
+      if (state.gameMode === 'NETWORK_2P') {
+        if (state.networkRole === 'HOST' && state.currentTurn !== 1) return;
+        if (state.networkRole === 'CLIENT' && state.currentTurn !== 2) return;
+      }
+
+      playSfx('card_play');
+      const p1Tiles = state.board.filter(t => t.controlledBy === 1);
+      const p2Tiles = state.board.filter(t => t.controlledBy === 2);
+      state.p1DominionTotal += p1Tiles.reduce((a, t) => a + (t.land?.dominionValue || 1), 0);
+      state.p2DominionTotal += p2Tiles.reduce((a, t) => a + (t.land?.dominionValue || 1), 0);
+
+      if (state.p1DominionTotal >= 100) {
+        state.victoryData = { winner: state.p1Hero.name, reason: 'DOMINION SUPREMACY: 100 Dominion points achieved!' };
+        state.view = 'VICTORY';
+        if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+        render();
+        return;
+      }
+      if (state.p2DominionTotal >= 100) {
+        state.victoryData = { winner: state.p2Hero.name, reason: 'DOMINION SUPREMACY: Enemy achieved 100 Dominion points!' };
+        state.view = 'VICTORY';
+        if (state.gameMode === 'NETWORK_2P') broadcastGameState();
+        render();
+        return;
+      }
+
+      state.currentTurn = state.currentTurn === 1 ? 2 : 1;
+      state.turnNumber++;
+
+      state.units.forEach(u => {
+        if (u.owner === state.currentTurn) u.actionsLeft = 1;
+      });
+
+      if (state.currentTurn === 1) {
+        state.p1Kalayaan = Math.min(10, state.p1Kalayaan + 3);
+        if (state.p1Deck.length > 0) state.p1Hand.push(state.p1Deck.shift());
+      } else {
+        state.p2Kalayaan = Math.min(10, state.p2Kalayaan + 3);
+        if (state.p2Deck.length > 0) state.p2Hand.push(state.p2Deck.shift());
+        if (state.gameMode === 'AI') {
+          setTimeout(runAITurn, 600);
+        }
+      }
+
+      state.selectedUnitId = null;
+      state.validMoves = [];
+      state.validAttacks = [];
+
+      if (state.gameMode === 'NETWORK_2P') {
+        broadcastGameState();
+      }
+
+      render();
+    }
+    window.endTurn = endTurn;
+
+    function runAITurn() {
+      const aiUnits = state.units.filter(u => u.owner === 2);
+      aiUnits.forEach(u => {
+        if (u.r < state.gridSize - 1) {
+          const occ = state.units.find(o => o.r === u.r + 1 && o.c === u.c);
+          if (!occ) {
+            u.r++;
+            const t = state.board.find(tile => tile.r === u.r && tile.c === u.c);
+            if (t) t.controlledBy = 2;
+          }
+        }
+      });
+      endTurn();
+    }
+
+    function addCardToDeck(card) {
+      if (state.customDeck.length >= 50) return;
+      const copies = state.customDeck.filter(c => c.id === card.id).length;
+      if (copies >= 3) return;
+      state.customDeck.push(card);
+      render();
+    }
+    window.addCardToDeck = addCardToDeck;
+
+    function removeCardFromDeck(cardId) {
+      const idx = state.customDeck.findIndex(c => c.id === cardId);
+      if (idx !== -1) {
+        state.customDeck.splice(idx, 1);
+        render();
+      }
+    }
+    window.removeCardFromDeck = removeCardFromDeck;
+
+    function autoFillDeck() {
+      state.customDeck = [...defaultDeck];
+      render();
+    }
+    window.autoFillDeck = autoFillDeck;
+
+    function render() {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      if (state.view === 'MENU') {
+        app.innerHTML = `
+          <div class="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 text-center relative overflow-hidden">
+            <div class="relative z-10 mb-4 flex flex-col items-center">
+              <div id="game-logo-container" class="relative group cursor-pointer transition transform hover:scale-[1.02] duration-300">
+                <img src="Gemini_Generated_Image_ng4zm0ng4zm0ng4z_2.jpg" alt="War of the Philippines TCG" class="w-64 sm:w-80 h-auto object-contain drop-shadow-[0_15px_30px_rgba(234,179,8,0.3)] filter contrast-105" onerror="handleLogoError(this)" />
+              </div>
+              <p class="font-cinzel text-amber-200/90 text-xs sm:text-sm tracking-[0.2em] uppercase font-bold mt-2 drop-shadow">
+                “History is the Battlefield. The Philippines is your Weapon.”
+              </p>
+            </div>
+
+            <div class="relative z-10 flex flex-col gap-2.5 w-full max-w-sm">
+              <button onclick="state.gameMode = 'AI'; state.selectedDifficulty = 'GEMINI_AI'; state.view = 'HERO_SELECT'; render();" 
+                      class="w-full py-3.5 px-6 bg-gradient-to-r from-purple-700 via-indigo-600 to-amber-600 hover:from-purple-600 hover:to-amber-500 text-white font-cinzel font-black text-sm sm:text-base rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 border border-purple-400/40 flex items-center justify-center gap-2">
+                <span>✨</span>
+                <span class="tracking-wider">PLAY WITH GEMINI AI</span>
+                <span class="text-[9px] bg-purple-950/90 text-purple-300 px-2 py-0.5 rounded-full border border-purple-400/40 font-mono">12x12</span>
+              </button>
+
+              <button onclick="state.gameMode = 'AI'; state.selectedDifficulty = 'EASY'; state.view = 'HERO_SELECT'; render();" 
+                      class="w-full py-3.5 px-6 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-cinzel font-black text-sm sm:text-base rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 border border-amber-300/60 flex items-center justify-center gap-2">
+                <span>⚔️</span>
+                <span class="tracking-wider">CAMPAIGN (1P VS AI)</span>
+              </button>
+
+              <button onclick="state.view = 'TWO_PLAYER_MENU'; render();" 
+                      class="w-full py-3.5 px-6 bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 hover:from-blue-600 hover:to-slate-800 text-white font-cinzel font-black text-sm sm:text-base rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 border border-blue-400/40 flex items-center justify-center gap-2">
+                <span>👥</span>
+                <span class="tracking-wider">TWO PLAYER BATTLE</span>
+              </button>
+
+              <div class="grid grid-cols-3 gap-2 mt-1">
+                <button onclick="state.view = 'DECK_BUILDER'; render();" 
+                        class="py-2.5 px-2 bg-slate-900/90 hover:bg-slate-800 border border-amber-500/30 hover:border-amber-400 text-amber-300 font-bold text-[11px] rounded-xl transition flex flex-col items-center justify-center gap-1 shadow">
+                  <span class="text-base">🎴</span>
+                  <span class="truncate">DECK (${state.customDeck.length}/50)</span>
+                </button>
+
+                <button onclick="state.view = 'INSTRUCTIONS'; render();" 
+                        class="py-2.5 px-2 bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-slate-500 text-slate-200 font-bold text-[11px] rounded-xl transition flex flex-col items-center justify-center gap-1 shadow">
+                  <span class="text-base">📖</span>
+                  <span>HOW TO PLAY</span>
+                </button>
+
+                <button onclick="state.view = 'ARCHIVES'; render();" 
+                        class="py-2.5 px-2 bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-slate-500 text-slate-200 font-bold text-[11px] rounded-xl transition flex flex-col items-center justify-center gap-1 shadow">
+                  <span class="text-base">📚</span>
+                  <span>LORE ARCHIVE</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="relative z-10 mt-8 text-[11px] text-slate-500 font-mono tracking-wider flex items-center gap-3">
+              <span>50 HEROES</span>
+              <span>•</span>
+              <span>120 MYTHOS</span>
+              <span>•</span>
+              <span>200 LANDS</span>
+              <span>•</span>
+              <span>200 EVENTS</span>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.view === 'HERO_SELECT') {
+        app.innerHTML = `
+          <div class="flex-1 p-4 max-w-5xl mx-auto w-full flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-cinzel font-black text-amber-400 flex items-center gap-2">
+                <span>🇵🇭</span> CHOOSE YOUR HERO COMMANDER
+              </h2>
+              <button onclick="state.view = 'MENU'; render();" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300 font-bold">
+                ← Back
+              </button>
+            </div>
+
+            <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+              ${['EASY', 'MODERATE', 'HARD', 'EXTREME'].map(diff => `
+                <button onclick="state.selectedDifficulty = '${diff}'; render();" 
+                        class="px-3 py-1.5 rounded-xl font-cinzel font-bold text-xs transition ${state.selectedDifficulty === diff ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
+                  ${diff} (${diff === 'EASY' ? '5x5' : diff === 'MODERATE' ? '7x7' : diff === 'HARD' ? '9x9' : '12x12'})
+                </button>
+              `).join('')}
+            </div>
+
+            <div class="flex-1 overflow-y-auto max-h-[500px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pr-1">
+              ${HEROES_DATABASE.map(hero => `
+                <div onclick="state.p1Hero = HEROES_DATABASE.find(h => h.id === '${hero.id}'); render();"
+                     class="p-3.5 rounded-2xl border cursor-pointer transition card-foil ${state.p1Hero.id === hero.id ? 'bg-amber-950/60 border-amber-400 ring-2 ring-amber-400/50' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'}">
+                  <div class="flex justify-between items-start">
+                    <span class="text-3xl">${hero.avatarSymbol}</span>
+                    <span class="text-[10px] font-mono bg-slate-800 text-amber-300 px-2 py-0.5 rounded-full border border-slate-700">
+                      👑 ${hero.leadership} | HP ${hero.hp}
+                    </span>
+                  </div>
+                  <div class="font-cinzel font-black text-sm text-slate-100 mt-2">${hero.name}</div>
+                  <div class="text-[11px] text-amber-300/80 font-mono">${hero.homeland}</div>
+                  <div class="text-[10px] text-slate-400 mt-2 leading-relaxed">${hero.ability}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <button onclick="startMatch(state.p1Hero);" 
+                    class="mt-4 w-full py-3.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 text-slate-950 font-cinzel font-black text-base rounded-2xl shadow-xl transition transform active:scale-98">
+              ⚔️ COMMENCE BATTLE USING ${state.p1Hero.name.toUpperCase()}
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.view === 'TWO_PLAYER_MENU') {
+        const isLocal = state.twoPlayerTab === 'LOCAL';
+        app.innerHTML = `
+          <div class="flex-1 p-4 max-w-2xl mx-auto w-full flex flex-col justify-center my-auto">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl sm:text-2xl font-cinzel font-black text-amber-400 flex items-center gap-2">
+                <span>👥</span> TWO PLAYER DUEL SETUP
+              </h2>
+              <button onclick="state.view = 'MENU'; render();" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300 font-bold">
+                ← Back
+              </button>
+            </div>
+
+            <!-- Mode Switcher -->
+            <div class="grid grid-cols-2 gap-2 bg-slate-950 p-1 rounded-2xl border border-slate-800 mb-4">
+              <button onclick="state.twoPlayerTab = 'LOCAL'; render();"
+                      class="py-2.5 rounded-xl font-cinzel font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 ${isLocal ? 'bg-gradient-to-r from-blue-700 to-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'}">
+                <span>🖥️</span> SAME SCREEN (PASS & PLAY)
+              </button>
+              <button onclick="state.twoPlayerTab = 'NETWORK'; render();"
+                      class="py-2.5 rounded-xl font-cinzel font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 ${!isLocal ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-slate-950 shadow-lg font-black' : 'text-slate-400 hover:text-slate-200'}">
+                <span>🌐</span> DIRECT IP NETWORK DUEL
+              </button>
+            </div>
+
+            <!-- Grid Dimensions (Host / Player 1 Authority Only) -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 mb-4">
+              <div class="text-xs font-cinzel font-bold text-amber-300 mb-2 flex justify-between items-center">
+                <span class="flex items-center gap-1.5">
+                  <span>🗺️ BATTLEFIELD DIMENSIONS</span>
+                  ${(!isLocal && state.networkRole === 'CLIENT') ? `
+                    <span class="text-[9px] font-mono px-2 py-0.5 rounded-md bg-amber-950 border border-amber-500/50 text-amber-300">
+                      🔒 Locked — Host (P1) Selection
+                    </span>
+                  ` : `
+                    <span class="text-[9px] font-mono px-2 py-0.5 rounded-md bg-emerald-950 border border-emerald-500/50 text-emerald-300">
+                      👑 P1 / Host Authority Only
+                    </span>
+                  `}
+                </span>
+                <span class="text-[10px] font-mono text-slate-400 font-normal">CURRENT: ${state.gridSize}x${state.gridSize}</span>
+              </div>
+
+              ${(!isLocal && state.networkRole === 'CLIENT') ? `
+                <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl text-center">
+                  <div class="font-cinzel font-black text-amber-300 text-sm">
+                    ${state.gridSize}x${state.gridSize} Battlefield Grid
+                  </div>
+                  <div class="text-[10px] text-slate-400 mt-1">
+                    Only Player 1 (Host Commander) selects grid dimensions for this match.
+                  </div>
+                </div>
+              ` : `
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  ${[
+                    { size: 5, label: '5x5 Skirmish', desc: 'Fast tactical clash' },
+                    { size: 7, label: '7x7 Battle', desc: 'Standard tactical war' },
+                    { size: 9, label: '9x9 Grand War', desc: 'Extended territory grid' },
+                    { size: 12, label: '12x12 Continental', desc: 'Epic full-scale campaign' }
+                  ].map(item => `
+                    <button onclick="${!isLocal ? `setHostGridSize(${item.size});` : `state.gridSize = ${item.size}; render();`}"
+                            class="p-2.5 rounded-xl border text-left transition ${state.gridSize === item.size ? 'bg-amber-500/20 border-amber-400 ring-1 ring-amber-400 text-amber-200 shadow-md' : 'bg-slate-950/70 border-slate-800 text-slate-400 hover:border-slate-700'}">
+                      <div class="font-cinzel font-black text-xs ${state.gridSize === item.size ? 'text-amber-300' : 'text-slate-300'}">${item.label}</div>
+                      <div class="text-[9px] text-slate-500 mt-0.5">${item.desc}</div>
+                    </button>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+
+            ${isLocal ? `
+              <!-- Local Pass & Play Setup -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 mb-4 space-y-3">
+                <div class="text-xs font-cinzel font-bold text-slate-300">⚔️ COMMANDER SELECTION</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-slate-950 p-3 rounded-xl border border-amber-500/30">
+                    <div class="text-[10px] font-mono font-bold text-amber-400 uppercase mb-1">PLAYER 1 COMMANDER</div>
+                    <select onchange="state.p1Hero = HEROES_DATABASE.find(h => h.id === this.value); render();" 
+                            class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-400">
+                      ${HEROES_DATABASE.map(h => `<option value="${h.id}" ${h.id === state.p1Hero.id ? 'selected' : ''}>${h.avatarSymbol} ${h.name} (${h.homeland})</option>`).join('')}
+                    </select>
+                  </div>
+                  <div class="bg-slate-950 p-3 rounded-xl border border-red-500/30">
+                    <div class="text-[10px] font-mono font-bold text-red-400 uppercase mb-1">PLAYER 2 COMMANDER</div>
+                    <select onchange="state.p2Hero = HEROES_DATABASE.find(h => h.id === this.value); render();" 
+                            class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg p-2 text-slate-200 focus:outline-none focus:border-red-400">
+                      ${HEROES_DATABASE.map(h => `<option value="${h.id}" ${h.id === state.p2Hero.id ? 'selected' : ''}>${h.avatarSymbol} ${h.name} (${h.homeland})</option>`).join('')}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="state.gameMode = 'LOCAL_2P'; startMatch(state.p1Hero);" 
+                      class="w-full py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-amber-600 hover:from-blue-500 hover:to-amber-500 text-white font-cinzel font-black text-sm sm:text-base rounded-2xl shadow-xl transition transform active:scale-98">
+                ⚔️ LAUNCH PASS & PLAY DUEL (${state.gridSize}x${state.gridSize})
+              </button>
+            ` : `
+              <!-- Direct IP Network Match Setup -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 mb-4">
+              ${state.networkError ? `
+                <div class="mb-3 p-3 rounded-xl bg-red-950/80 border border-red-500 text-red-200 text-xs flex items-center justify-between">
+                  <span>⚠️ ${state.networkError}</span>
+                  <button onclick="state.networkError = null; render();" class="text-red-400 font-bold ml-2">✕</button>
+                </div>
+              ` : ''}
+
+              ${state.networkStatus === 'IDLE' ? `
+                <div class="space-y-4">
+                  <!-- Wi-Fi Network Guidance Banner -->
+                  <div class="p-3 bg-gradient-to-r from-amber-950/70 via-slate-900 to-amber-950/70 border border-amber-500/40 rounded-xl text-xs text-amber-200/90 leading-relaxed">
+                    <div class="font-cinzel font-black text-amber-300 flex items-center gap-1.5 mb-1">
+                      <span>📶</span> WI-FI WAN NETWORK DUEL
+                    </div>
+                    <div>Both machines share the same Wi-Fi network gateway. Player 1 hosts using the detected <b>WAN IP</b>, and Player 2 connects using the exact same address!</div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Host Option -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-amber-500/30 flex flex-col justify-between">
+                      <div>
+                        <div class="font-cinzel font-black text-amber-300 text-sm mb-1">HOST ON THIS WI-FI</div>
+                        <p class="text-[11px] text-slate-400 mb-2">Host the match. Opponent connects using your Wi-Fi WAN IP.</p>
+                        <div class="p-2.5 bg-slate-900 rounded-lg border border-amber-500/40 mb-3">
+                          <div class="text-[9px] text-slate-400 font-mono">YOUR WI-FI WAN IP:</div>
+                          <div class="text-sm font-mono font-bold text-amber-300 select-all">${state.myWanIp}</div>
+                          ${state.myLanIp ? `<div class="text-[9px] text-slate-500 font-mono mt-0.5">Local Subnet: ${state.myLanIp}</div>` : ''}
+                        </div>
+                      </div>
+                      <button onclick="hostNetworkRoom();" 
+                              class="w-full py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-cinzel font-black text-xs rounded-xl shadow active:scale-95 transition">
+                        📡 HOST GAME ON THIS WI-FI WAN
+                      </button>
+                    </div>
+
+                    <!-- Challenger Option -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-blue-500/30 flex flex-col justify-between">
+                      <div>
+                        <div class="font-cinzel font-black text-blue-300 text-sm mb-1">JOIN VIA WI-FI WAN IP</div>
+                        <p class="text-[11px] text-slate-400 mb-2">Connect to the Host's Wi-Fi network address.</p>
+                        <div class="space-y-1.5 mb-3">
+                          <input type="text" placeholder="e.g. 112.198.50.21" 
+                                 value="${state.targetHostIpInput}"
+                                 oninput="state.targetHostIpInput = this.value; state.networkRoomInput = this.value; render();"
+                                 class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-100 font-mono focus:outline-none focus:border-blue-400" />
+                          ${state.myWanIp && !state.myWanIp.includes('Detecting') ? `
+                            <button onclick="state.targetHostIpInput = '${state.myWanIp}'; state.networkRoomInput = '${state.myWanIp}'; joinNetworkRoom();"
+                                    class="w-full py-1.5 bg-blue-950 hover:bg-blue-900 border border-blue-500/40 rounded-lg text-[10px] font-mono text-blue-300 font-bold flex items-center justify-center gap-1.5 transition">
+                              <span>⚡</span>
+                              <span>AUTO-CONNECT (SAME WI-FI: ${state.myWanIp})</span>
+                            </button>
+                          ` : ''}
+                        </div>
+                      </div>
+                      <button onclick="joinNetworkRoom();" 
+                              class="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-cinzel font-black text-xs rounded-xl shadow active:scale-95 transition">
+                        🔗 CONNECT TO HOST WAN IP
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span>Active Wi-Fi Gateway (WAN): <b class="text-amber-300">${state.myWanIp}</b></span>
+                    <button onclick="resolveMyIp();" class="text-cyan-400 hover:text-cyan-200 underline">
+                      🔄 Refresh WAN IP
+                    </button>
+                  </div>
+                </div>
+              ` : state.networkStatus === 'WAITING' ? `
+                <div class="flex flex-col items-center justify-center p-4 text-center space-y-4">
+                  <div class="relative flex items-center justify-center">
+                    <div class="w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/40 animate-ping absolute"></div>
+                    <div class="w-14 h-14 rounded-full bg-amber-950/80 border border-amber-400 flex items-center justify-center text-2xl z-10 shadow-lg">
+                      📡
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="text-[11px] text-amber-300 font-mono tracking-widest uppercase">
+                      ${state.networkRole === 'HOST' ? 'WI-FI HOST ACTIVE — WAITING FOR PLAYER 2...' : 'CONNECTING TO WI-FI HOST WAN...'}
+                    </div>
+                    <div class="text-2xl font-mono font-black text-slate-100 tracking-wider mt-1 select-all">${state.onlineRoomCode}</div>
+                    <div class="text-[11px] text-slate-400 mt-1">
+                      ${state.networkRole === 'HOST' 
+                        ? 'Since you are on the same Wi-Fi, Player 2 can connect directly using this WAN IP.' 
+                        : 'Reaching Host on this Wi-Fi network...'}
+                    </div>
+                  </div>
+
+                  <div class="flex gap-2">
+                    <button onclick="copyRoomCodeToClipboard();" 
+                            class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-cinzel font-bold text-xs rounded-xl border border-slate-700 shadow flex items-center gap-1.5">
+                      <span>📋</span>
+                      <span>${state.copiedCodeMessage ? 'WAN IP COPIED!' : 'COPY WAN IP'}</span>
+                    </button>
+                    <button onclick="simulatePlayer2Join();" 
+                            class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-cinzel font-bold text-xs rounded-xl shadow flex items-center gap-1.5">
+                      <span>⚡</span>
+                      <span>TEST CONNECT</span>
+                    </button>
+                  </div>
+
+                  <button onclick="state.networkStatus = 'IDLE'; render();" class="text-[11px] text-slate-500 hover:text-slate-300 underline mt-2">
+                    Cancel and Return to Setup
+                  </button>
+                </div>
+              ` : `
+                <!-- Both Players Connected: Live Hero Selection Lobby -->
+                <div class="p-3 space-y-4">
+                  <div class="text-center">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-500 text-emerald-300 text-xs font-mono">
+                      <span>●</span> CONNECTED VIA WI-FI WAN: ${state.onlineRoomCode}
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">Both machines are linked on the network! Choose your Hero Commander below before launching the duel.</p>
+                  </div>
+
+                  <!-- Peer IP & Network Telemetry Card -->
+                  <div class="bg-slate-950/90 border border-cyan-500/40 rounded-2xl p-3 shadow-lg">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-xs font-cinzel font-black text-cyan-300 flex items-center gap-1.5">
+                        <span>🔍</span>
+                        <span>WI-FI WAN TELEMETRY & NETWORK LINK</span>
+                      </span>
+                      <div class="flex items-center gap-2">
+                        <button onclick="toggleChat(true);" class="px-2.5 py-1 bg-indigo-900/90 hover:bg-indigo-800 border border-indigo-500/50 rounded-lg text-[10px] font-cinzel font-bold text-indigo-200 flex items-center gap-1 shadow">
+                          <span>💬</span>
+                          <span>BATTLE CHAT ${state.unreadChatCount > 0 ? `<span class="bg-amber-500 text-slate-950 px-1 rounded-full text-[9px] font-black">${state.unreadChatCount}</span>` : ''}</span>
+                        </button>
+                        <span class="text-[9px] font-mono bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-600/40">
+                          ~${state.networkPing}ms
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] font-mono">
+                      <div class="p-2 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                        <div>
+                          <div class="text-slate-400 text-[9px]">HOST (P1) WI-FI WAN IP</div>
+                          <div class="text-amber-300 font-bold">${state.hostIpAddress || state.myWanIp}</div>
+                        </div>
+                        <span class="text-xs">🖥️</span>
+                      </div>
+
+                      <div class="p-2 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                        <div>
+                          <div class="text-slate-400 text-[9px]">CHALLENGER (P2) IP</div>
+                          <div class="text-blue-300 font-bold">${state.guestIpAddress || (state.networkRole === 'CLIENT' ? (state.myWanIp || state.myLanIp) : 'Connected Wi-Fi Peer')}</div>
+                        </div>
+                        <span class="text-xs">🌐</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Connected Hero Selection Row -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-slate-950 p-3 rounded-2xl border ${state.networkRole === 'HOST' ? 'border-amber-500 ring-1 ring-amber-500/50' : 'border-slate-800'}">
+                      <div class="flex justify-between items-center mb-1.5">
+                        <span class="text-[10px] font-mono font-bold text-amber-400 uppercase">HOST COMMANDER (P1)</span>
+                        ${state.networkRole === 'HOST' ? '<span class="text-[9px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded-md font-mono font-bold">YOU</span>' : ''}
+                      </div>
+                      ${state.networkRole === 'HOST' ? `
+                        <select onchange="updateNetworkHeroSelection(this.value);" 
+                                class="w-full bg-slate-900 border border-amber-500/40 text-xs rounded-xl p-2.5 text-slate-100 font-medium focus:outline-none focus:border-amber-400">
+                          ${HEROES_DATABASE.map(h => `<option value="${h.id}" ${h.id === state.p1Hero.id ? 'selected' : ''}>${h.avatarSymbol} ${h.name} (${h.homeland})</option>`).join('')}
+                        </select>
+                      ` : `
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl border border-slate-800 flex items-center gap-2">
+                          <span class="text-2xl">${state.p1Hero.avatarSymbol}</span>
+                          <div>
+                            <div class="font-cinzel font-bold text-xs text-amber-300">${state.p1Hero.name}</div>
+                            <div class="text-[10px] text-slate-400">${state.p1Hero.homeland}</div>
+                          </div>
+                        </div>
+                      `}
+                    </div>
+
+                    <div class="bg-slate-950 p-3 rounded-2xl border ${state.networkRole === 'CLIENT' ? 'border-blue-500 ring-1 ring-blue-500/50' : 'border-slate-800'}">
+                      <div class="flex justify-between items-center mb-1.5">
+                        <span class="text-[10px] font-mono font-bold text-blue-400 uppercase">CHALLENGER (P2)</span>
+                        ${state.networkRole === 'CLIENT' ? '<span class="text-[9px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded-md font-mono font-bold">YOU</span>' : ''}
+                      </div>
+                      ${state.networkRole === 'CLIENT' ? `
+                        <select onchange="updateNetworkHeroSelection(this.value);" 
+                                class="w-full bg-slate-900 border border-blue-500/40 text-xs rounded-xl p-2.5 text-slate-100 font-medium focus:outline-none focus:border-blue-400">
+                          ${HEROES_DATABASE.map(h => `<option value="${h.id}" ${h.id === state.p2Hero.id ? 'selected' : ''}>${h.avatarSymbol} ${h.name} (${h.homeland})</option>`).join('')}
+                        </select>
+                      ` : `
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl border border-slate-800 flex items-center gap-2">
+                          <span class="text-2xl">${state.p2Hero.avatarSymbol}</span>
+                          <div>
+                            <div class="font-cinzel font-bold text-xs text-blue-300">${state.p2Hero.name}</div>
+                            <div class="text-[10px] text-slate-400">${state.p2Hero.homeland}</div>
+                          </div>
+                        </div>
+                      `}
+                    </div>
+                  </div>
+
+                  <!-- Launch Controls -->
+                  ${state.networkRole === 'HOST' ? `
+                    <button onclick="state.gameMode = 'NETWORK_2P'; startMatch(state.p1Hero);" 
+                            class="w-full py-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 text-slate-950 font-cinzel font-black text-sm sm:text-base rounded-2xl shadow-xl transition transform active:scale-98">
+                      ⚔️ LAUNCH DUEL ON ${state.gridSize}x${state.gridSize} BATTLEFIELD
+                    </button>
+                  ` : `
+                    <div class="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-center text-xs text-amber-300/90 font-cinzel">
+                      ⏳ Waiting for Host to launch the duel...
+                    </div>
+                  `}
+                </div>
+              `}
+            </div>
+            `}
+          </div>
+
+          <!-- Network Battle Chat Drawer -->
+          ${state.isChatOpen ? `
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+              <div class="bg-slate-900 border border-amber-500/40 rounded-t-3xl sm:rounded-2xl max-w-lg w-full h-[520px] max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+                <!-- Chat Header -->
+                <div class="p-3 bg-slate-950 border-b border-amber-500/20 flex justify-between items-center">
+                  <div class="flex items-center gap-2">
+                    <span class="text-lg">💬</span>
+                    <div>
+                      <div class="font-cinzel font-black text-amber-300 text-xs sm:text-sm">BATTLE COMMS LINK</div>
+                      <div class="text-[10px] font-mono text-slate-400">WAN: ${state.onlineRoomCode}</div>
+                    </div>
+                  </div>
+                  <button onclick="toggleChat(false);" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold">
+                    ✕
+                  </button>
+                </div>
+
+                <!-- Chat History -->
+                <div id="chat-history-container" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs">
+                  ${state.chatMessages.length === 0 ? `
+                    <div class="h-full flex flex-col items-center justify-center text-center p-4 text-slate-500">
+                      <span class="text-3xl mb-1">📡</span>
+                      <p class="font-cinzel text-xs text-slate-400">Comms Link Established</p>
+                      <p class="text-[10px] mt-0.5">Send a greeting or tactical message to your opponent!</p>
+                    </div>
+                  ` : state.chatMessages.map(msg => `
+                    <div class="flex flex-col ${msg.isMe ? 'items-end' : 'items-start'}">
+                      <div class="flex items-center gap-1.5 mb-0.5 text-[9px] font-mono text-slate-400">
+                        <span class="${msg.isMe ? 'text-amber-400 font-bold' : 'text-blue-400 font-bold'}">
+                          ${msg.isMe ? 'You' : msg.senderName} (${msg.senderRole === 'HOST' ? 'P1' : 'P2'})
+                        </span>
+                        <span>•</span>
+                        <span>${msg.time}</span>
+                      </div>
+                      <div class="max-w-[82%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
+                        msg.isMe 
+                          ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-slate-950 font-medium rounded-tr-none shadow' 
+                          : 'bg-slate-800 border border-slate-700 text-slate-100 rounded-tl-none shadow'
+                      }">
+                        ${msg.text}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+
+                <!-- Quick Tactical Phrases -->
+                <div class="px-3 py-1.5 bg-slate-950/90 border-t border-slate-800/80 flex gap-1.5 overflow-x-auto touch-scroll">
+                  ${state.quickPhrases.map(phrase => `
+                    <button onclick="sendChatMessage('${phrase}');" 
+                            class="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-[10px] text-slate-300 hover:text-amber-200 transition">
+                      ${phrase}
+                    </button>
+                  `).join('')}
+                </div>
+
+                <!-- Input Footer -->
+                <div class="p-2.5 bg-slate-950 border-t border-amber-500/20 flex gap-2">
+                  <input type="text" 
+                         id="chat-input-field"
+                         placeholder="Type a battle message..."
+                         value="${state.chatInput}"
+                         oninput="state.chatInput = this.value;"
+                         onkeydown="if(event.key === 'Enter') sendChatMessage();"
+                         class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400" />
+                  <button onclick="sendChatMessage();" 
+                          class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-cinzel font-black text-xs rounded-xl shadow active:scale-95 transition">
+                    SEND
+                  </button>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        `;
+        return;
+      }
+
+      if (state.view === 'PLAYING') {
+        const isP1 = state.currentTurn === 1;
+        const myTurn = (state.gameMode !== 'NETWORK_2P') || 
+                       (state.networkRole === 'HOST' && isP1) || 
+                       (state.networkRole === 'CLIENT' && !isP1);
+
+        app.innerHTML = `
+          <!-- Top HUD Header -->
+          <div class="bg-slate-900/90 border-b border-amber-500/20 p-2.5 sm:p-3 flex justify-between items-center shadow-lg backdrop-blur-md">
+            <!-- P2 Hero Info -->
+            <div class="flex items-center gap-2">
+              <div class="w-10 h-10 rounded-2xl bg-red-950/80 border border-red-500/50 flex items-center justify-center text-xl shadow">
+                ${state.p2Hero.avatarSymbol}
+              </div>
+              <div>
+                <div class="text-xs font-cinzel font-bold text-red-400 truncate max-w-[100px] sm:max-w-none">${state.p2Hero.name}</div>
+                <div class="text-[10px] text-slate-400 font-mono">Dominion: <b class="text-red-400">${state.p2DominionTotal}</b>/100</div>
+              </div>
+            </div>
+
+            <!-- Match Status & Controls -->
+            <div class="flex flex-col items-center gap-1">
+              <div class="text-[9px] font-mono text-amber-300 font-bold tracking-widest uppercase">TURN ${state.turnNumber}</div>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-0.5 rounded-full text-[10px] font-cinzel font-black shadow ${isP1 ? 'bg-amber-500 text-slate-950' : 'bg-red-600 text-white'}">
+                  ${isP1 ? 'P1 TURN' : 'P2 TURN'}
+                </span>
+                <button onclick="toggleGameOptionsModal(true);" 
+                        class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[10px] font-cinzel font-bold rounded-lg text-slate-200">
+                  ⚙️ MENU
+                </button>
+                ${state.gameMode === 'NETWORK_2P' ? `
+                  <button onclick="toggleChat(true);" class="relative px-2.5 py-1 bg-indigo-950 hover:bg-indigo-900 border border-indigo-500/50 text-[10px] font-cinzel font-bold rounded-lg text-indigo-200 flex items-center gap-1">
+                    <span>💬</span>
+                    ${state.unreadChatCount > 0 ? `<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping absolute -top-0.5 -right-0.5"></span>` : ''}
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- P1 Hero Info -->
+            <div class="flex items-center gap-2">
+              <div class="text-right">
+                <div class="text-xs font-cinzel font-bold text-amber-400 truncate max-w-[100px] sm:max-w-none">${state.p1Hero.name}</div>
+                <div class="text-[10px] text-amber-200/70 font-mono">Dominion: <b class="text-amber-400">${state.p1DominionTotal}</b>/100</div>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-amber-950/80 border border-amber-500/50 flex items-center justify-center text-xl shadow">
+                ${state.p1Hero.avatarSymbol}
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Battlefield Arena -->
+          <div class="flex-1 flex flex-col items-center justify-center p-2 sm:p-4 overflow-y-auto">
+            <div class="overflow-auto max-w-full max-h-[68vh] p-2 rounded-3xl bg-slate-950/80 border border-slate-800 shadow-2xl touch-scroll">
+              <div class="grid gap-1 sm:gap-1.5" style="grid-template-columns: repeat(${state.gridSize}, minmax(46px, 1fr));">
+                ${state.board.map(tile => {
+                  const unit = state.units.find(u => u.r === tile.r && u.c === tile.c);
+                  const isSelected = unit && unit.id === state.selectedUnitId;
+                  const isMove = state.validMoves.some(m => m.r === tile.r && m.c === tile.c);
+                  const isAttack = state.validAttacks.some(a => a.r === tile.r && a.c === tile.c);
+                  const isPlacement = state.validCardPlacements.some(p => p.r === tile.r && p.c === tile.c);
+
+                  let bgClass = 'bg-slate-900/90 border-slate-800';
+                  if (tile.controlledBy === 1) bgClass = 'bg-amber-950/40 border-amber-500/50';
+                  else if (tile.controlledBy === 2) bgClass = 'bg-red-950/40 border-red-500/50';
+
+                  if (tile.land?.category === 'Cities') bgClass += ' biome-city';
+                  else if (tile.land?.category?.includes('Sea')) bgClass += ' biome-sea';
+                  else if (tile.land?.category?.includes('Church')) bgClass += ' biome-church';
+                  else if (tile.land?.category?.includes('Island')) bgClass += ' biome-island';
+
+                  return `
+                    <div onclick="handleTileClick(${tile.r}, ${tile.c});"
+                         class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl border flex flex-col justify-between p-1 cursor-pointer transition select-none ${bgClass} 
+                                ${isSelected ? 'ring-2 ring-amber-400 bg-amber-500/20' : ''} 
+                                ${isMove ? 'ring-2 ring-emerald-400 bg-emerald-500/20 animate-pulse' : ''} 
+                                ${isAttack ? 'ring-2 ring-red-500 bg-red-600/30 animate-attack-pulse' : ''} 
+                                ${isPlacement ? 'ring-2 ring-yellow-400 bg-yellow-500/30 animate-pulse' : ''}">
+                      
+                      <div class="flex justify-between items-center text-[7px] text-slate-400 font-mono leading-none">
+                        <span>${tile.r + 1},${tile.c + 1}</span>
+                        <span class="text-amber-300 font-bold">+${tile.land?.dominionValue || 1}D</span>
+                      </div>
+
+                      <div class="my-auto flex flex-col items-center text-center">
+                        ${unit ? `
+                          <div class="text-lg sm:text-xl drop-shadow leading-none">
+                            ${unit.card.avatarSymbol || (unit.type === 'HERO' ? '👑' : '🐉')}
+                          </div>
+                          <div class="flex items-center gap-0.5 mt-0.5">
+                            <span class="text-[7px] px-1 bg-black/80 rounded font-mono font-bold ${unit.owner === 1 ? 'text-amber-300' : 'text-red-400'}">
+                              ${unit.currentHp}HP
+                            </span>
+                            ${unit.actionsLeft > 0 ? `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>` : ''}
+                          </div>
+                        ` : `
+                          <div class="text-[8px] text-slate-500 line-clamp-1 text-center font-medium">
+                            ${tile.land?.name?.split(' ')[0] || ''}
+                          </div>
+                        `}
+                      </div>
+
+                      <div class="text-[7px] text-slate-500 font-mono leading-none truncate text-center">
+                        ${tile.controlledBy ? `P${tile.controlledBy}` : '—'}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Mini Turn Action Log -->
+            <div class="w-full max-w-md mt-2 bg-slate-900/90 border border-slate-800 rounded-xl p-2 text-[10px] text-slate-300 font-mono h-14 overflow-y-auto space-y-0.5">
+              ${state.gameLogs.map(l => `<div>${l}</div>`).join('')}
+            </div>
+          </div>
+
+          <!-- Bottom HUD Player Bar & Hand Cards -->
+          <div class="bg-slate-900 border-t border-amber-500/20 p-2.5 shadow-2xl">
+            <div class="max-w-md mx-auto flex justify-between items-center mb-2 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="font-cinzel font-bold text-amber-400">⚡ KALAYAAN:</span>
+                <span class="font-mono font-black bg-amber-950 px-2 py-0.5 rounded-md border border-amber-500/40 text-amber-300">
+                  ${isP1 ? state.p1Kalayaan : state.p2Kalayaan}/10
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono text-slate-400">Deck: ${isP1 ? state.p1Deck.length : state.p2Deck.length}</span>
+                ${myTurn ? `
+                  <button onclick="endTurn();" 
+                          class="px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-cinzel font-black text-xs rounded-xl shadow active:scale-95 transition">
+                    ⌛ END TURN
+                  </button>
+                ` : `
+                  <span class="text-[10px] text-slate-500 font-mono">Opponent's Turn...</span>
+                `}
+              </div>
+            </div>
+
+            <!-- Hand Cards Scrollable Strip -->
+            <div class="max-w-md mx-auto flex gap-2 overflow-x-auto pb-1 touch-scroll">
+              ${(isP1 ? state.p1Hand : state.p2Hand).map((card, idx) => `
+                <div class="flex-shrink-0 w-24 sm:w-28 p-2 rounded-xl border bg-slate-950 flex flex-col justify-between cursor-pointer transition ${state.selectedHandCardIndex === idx ? 'border-amber-400 ring-2 ring-amber-400/50 bg-amber-950/40' : 'border-slate-800 hover:border-slate-700'}">
+                  <div>
+                    <div class="flex justify-between items-start">
+                      <span class="text-base">${card.avatarSymbol || (card.category ? '🗺️' : card.atk ? '🐉' : '📜')}</span>
+                      <span class="text-[9px] font-mono font-bold bg-amber-950 text-amber-300 px-1 rounded border border-amber-500/30">
+                        ⚡${card.cost || 1}
+                      </span>
+                    </div>
+                    <div class="font-cinzel font-bold text-[11px] text-amber-200 truncate mt-1">${card.name}</div>
+                    <div class="text-[9px] text-slate-400 truncate">${card.role || card.category || 'Event'}</div>
+                  </div>
+                  <button onclick="playCardFromHand(${idx});" 
+                          class="mt-1.5 w-full py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-cinzel font-black text-[9px] rounded shadow active:scale-95 transition">
+                    ${state.selectedHandCardIndex === idx ? 'CANCEL' : 'PLAY'}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- In-Game Options Menu Modal -->
+          ${state.showGameOptionsModal ? `
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+              <div class="bg-slate-900 border border-amber-500/60 rounded-3xl p-5 max-w-xs w-full shadow-2xl space-y-3 text-center">
+                <div class="font-cinzel font-black text-amber-400 text-lg">BATTLE OPTIONS</div>
+                <p class="text-xs text-slate-400">Manage or concede the active match.</p>
+
+                <div class="space-y-2 pt-2">
+                  <button onclick="toggleGameOptionsModal(false);" 
+                          class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-cinzel font-bold text-xs rounded-xl border border-slate-700">
+                    ▶️ RESUME BATTLE
+                  </button>
+                  <button onclick="surrenderMatch();" 
+                          class="w-full py-2.5 bg-red-950/80 hover:bg-red-900 text-red-200 font-cinzel font-bold text-xs rounded-xl border border-red-500/40">
+                    🏳️ SURRENDER (CONCEDE)
+                  </button>
+                  <button onclick="quitToMenu();" 
+                          class="w-full py-2.5 bg-slate-950 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-cinzel font-bold text-xs rounded-xl border border-slate-800">
+                    🚪 QUIT TO MAIN MENU
+                  </button>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- In-Game Chat Drawer -->
+          ${state.isChatOpen ? `
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+              <div class="bg-slate-900 border border-amber-500/40 rounded-t-3xl sm:rounded-2xl max-w-lg w-full h-[520px] max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+                <div class="p-3 bg-slate-950 border-b border-amber-500/20 flex justify-between items-center">
+                  <div class="flex items-center gap-2">
+                    <span class="text-lg">💬</span>
+                    <div>
+                      <div class="font-cinzel font-black text-amber-300 text-xs sm:text-sm">BATTLE COMMS LINK</div>
+                      <div class="text-[10px] font-mono text-slate-400">WAN: ${state.onlineRoomCode}</div>
+                    </div>
+                  </div>
+                  <button onclick="toggleChat(false);" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold">
+                    ✕
+                  </button>
+                </div>
+
+                <div id="chat-history-container" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs">
+                  ${state.chatMessages.length === 0 ? `
+                    <div class="h-full flex flex-col items-center justify-center text-center p-4 text-slate-500">
+                      <span class="text-3xl mb-1">📡</span>
+                      <p class="font-cinzel text-xs text-slate-400">Comms Link Established</p>
+                      <p class="text-[10px] mt-0.5">Send a message to your opponent!</p>
+                    </div>
+                  ` : state.chatMessages.map(msg => `
+                    <div class="flex flex-col ${msg.isMe ? 'items-end' : 'items-start'}">
+                      <div class="flex items-center gap-1.5 mb-0.5 text-[9px] font-mono text-slate-400">
+                        <span class="${msg.isMe ? 'text-amber-400 font-bold' : 'text-blue-400 font-bold'}">
+                          ${msg.isMe ? 'You' : msg.senderName} (${msg.senderRole === 'HOST' ? 'P1' : 'P2'})
+                        </span>
+                        <span>•</span>
+                        <span>${msg.time}</span>
+                      </div>
+                      <div class="max-w-[82%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
+                        msg.isMe 
+                          ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-slate-950 font-medium rounded-tr-none shadow' 
+                          : 'bg-slate-800 border border-slate-700 text-slate-100 rounded-tl-none shadow'
+                      }">
+                        ${msg.text}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+
+                <div class="px-3 py-1.5 bg-slate-950/90 border-t border-slate-800/80 flex gap-1.5 overflow-x-auto touch-scroll">
+                  ${state.quickPhrases.map(phrase => `
+                    <button onclick="sendChatMessage('${phrase}');" 
+                            class="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-[10px] text-slate-300 hover:text-amber-200 transition">
+                      ${phrase}
+                    </button>
+                  `).join('')}
+                </div>
+
+                <div class="p-2.5 bg-slate-950 border-t border-amber-500/20 flex gap-2">
+                  <input type="text" 
+                         id="chat-input-field"
+                         placeholder="Type a battle message..."
+                         value="${state.chatInput}"
+                         oninput="state.chatInput = this.value;"
+                         onkeydown="if(event.key === 'Enter') sendChatMessage();"
+                         class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400" />
+                  <button onclick="sendChatMessage();" 
+                          class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-cinzel font-black text-xs rounded-xl shadow active:scale-95 transition">
+                    SEND
+                  </button>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        `;
+        return;
+      }
+
+      if (state.view === 'DECK_BUILDER') {
+        app.innerHTML = `
+          <div class="flex-1 p-4 max-w-5xl mx-auto w-full flex flex-col">
+            <div class="flex justify-between items-center mb-3">
+              <h2 class="text-xl font-cinzel font-black text-amber-400">🎴 DECK BUILDER (${state.customDeck.length}/50)</h2>
+              <div class="flex gap-2">
+                <button onclick="autoFillDeck();" class="px-3 py-1 bg-emerald-700 text-xs font-bold rounded-lg text-white">⚡ Auto Fill</button>
+                <button onclick="state.view = 'MENU'; render();" class="px-3 py-1 bg-slate-800 text-xs font-bold rounded-lg text-slate-300">Done</button>
+              </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto max-h-[500px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+              ${[...MONSTERS_DATABASE.slice(0, 30), ...LANDS_DATABASE.slice(0, 30), ...EVENTS_DATABASE.slice(0, 30)].map(card => {
+                const count = state.customDeck.filter(c => c.id === card.id).length;
+                return `
+                  <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                      <div class="font-cinzel font-bold text-xs text-amber-200 truncate">${card.name}</div>
+                      <div class="text-[9px] text-slate-400">${card.role || card.category || 'Event'}</div>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                      <span class="text-[10px] font-mono font-bold text-amber-400">${count}/3</span>
+                      <div class="flex gap-1">
+                        <button onclick="removeCardFromDeck('${card.id}');" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-xs rounded font-bold">-</button>
+                        <button onclick="addCardToDeck(MONSTERS_DATABASE.find(c => c.id === '${card.id}') || LANDS_DATABASE.find(c => c.id === '${card.id}') || EVENTS_DATABASE.find(c => c.id === '${card.id}'));" class="w-6 h-6 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs rounded font-bold">+</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.view === 'INSTRUCTIONS' || state.view === 'ARCHIVES') {
+        app.innerHTML = `
+          <div class="flex-1 p-4 max-w-4xl mx-auto w-full flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-cinzel font-black text-amber-400">${state.view === 'INSTRUCTIONS' ? '📖 HOW TO PLAY' : '📚 CARD LORE ARCHIVE'}</h2>
+              <button onclick="state.view = 'MENU'; render();" class="px-3 py-1 bg-slate-800 text-xs rounded-lg font-bold">← Menu</button>
+            </div>
+            <div class="flex-1 overflow-y-auto bg-slate-900/60 p-4 rounded-2xl border border-slate-800 text-xs leading-relaxed space-y-3">
+              <p><b>1. Hero Commander:</b> Protect your King. If your Hero falls to 0 HP, checkmate occurs.</p>
+              <p><b>2. Territory Dominion:</b> Control Cities, Seas, Sacred Churches, and Islands to harvest Dominion. Reaching 100 Dominion wins!</p>
+              <p><b>3. Kalayaan Energy & Leadership:</b> Build lands to increase energy harvest, and capture cities to boost leadership.</p>
+              <p><b>4. Network Duels:</b> Host a room to generate a room code. The second player can join from another machine using that code.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.view === 'VICTORY' && state.victoryData) {
+        app.innerHTML = `
+          <div class="flex-1 flex items-center justify-center p-4">
+            <div class="bg-slate-900 border-2 border-amber-500/80 rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl space-y-4">
+              <div class="text-5xl">🏆</div>
+              <h2 class="text-2xl font-cinzel font-black text-amber-400">${state.victoryData.winner} WINS!</h2>
+              <p class="text-xs font-mono text-slate-400">${state.victoryData.reason}</p>
+              <button onclick="state.view = 'MENU'; render();" class="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-cinzel font-black rounded-xl">
+                RETURN TO MENU
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+    }
+    window.render = render;
+
+    window.onload = function() {
+      render();
+    };
+    render();
+  </script>
+</body>
+</html>

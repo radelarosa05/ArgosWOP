@@ -1,0 +1,334 @@
+ARGOS: ANG HARI SA PROPESIYA
+THE SIX GUARDIANS + ARGOS & LUNA
+TCG CARD LORE AND STATUS
+
+
+I. ALDRIN DEL ROSARIO
+FIRE GUARDIAN
+Blessed by: Gugurang — Bathala ng Apoy
+Sacred Weapon: Sibat ni Panganoron
+
+ATK: 18
+DEF: 16
+LIFE: 28
+
+LORE:
+Aldrin Del Rosario was chosen by Gugurang to carry the flame that can either protect the world or reduce it to ashes. Within his body burns the Apoy ng Panganoron, a divine flame said to have been born from the heart of an ancient volcano.
+
+Aldrin is not merely a warrior of fire. He is the Guardian of willpower, courage, and destruction. The hotter his resolve burns, the stronger Panganoron becomes.
+
+But Gugurang gave him one warning:
+
+"Ang apoy na hindi kayang kontrolin ng puso ay apoy na sisira sa sariling tahanan."
+
+When the Kalibata awakens, Aldrin must decide whether his sacred flame will become the world's salvation—or its final inferno.
+
+SPECIAL ATTACK:
+PANGANORON: HUKOM NG APOY
+Aldrin raises the Sibat ni Panganoron toward the heavens. A colossal pillar of divine fire descends upon his enemy.
+
+Effect: Deal +8 damage to one enemy. If the enemy is already damaged, the attack becomes +10 damage instead.
+
+
+II. ACE GARCIA
+WIND / AIR GUARDIAN
+Blessed by: Sibol — Bathala ng Hangin
+Sacred Weapons: Habagat & Amihan
+
+ATK: 16
+DEF: 14
+LIFE: 25
+
+LORE:
+Ace Garcia is the Guardian whom no enemy can truly catch.
+
+Blessed by Sibol, Ace possesses dominion over the two great winds: Habagat, the furious southern wind, and Amihan, the cold and gentle breath of the north.
+
+His twin Ringblades are more than weapons. Each blade contains the spirit of one wind. Habagat grants overwhelming force, while Amihan grants impossible speed.
+
+Ace fights without standing still.
+
+To his enemies, there is never one Ace.
+
+There are hundreds.
+
+And by the time they realize which one is real, the battle is already over.
+
+SPECIAL ATTACK:
+DALAWANG HANGIN: BAGYONG WALANG HANGGAN
+Ace throws Habagat and Amihan in opposite directions. The two Ringblades create a spiraling storm that closes around the enemy.
+
+Effect: Deal 7 damage and reduce the enemy's DEF by 5 for the next turn.
+
+
+III. DANIEL MADRIGAL
+EARTH GUARDIAN
+Blessed by: Taliyak — Bathala ng Lupa
+Sacred Armor: Baluti ni Carpio
+
+ATK: 12
+DEF: 28
+LIFE: 38
+
+LORE:
+Daniel Madrigal does not need a weapon.
+
+He is the fortress.
+
+Chosen by Taliyak, Daniel carries the ancient Baluti ni Carpio, a divine armor connected to the bones and foundations of the earth itself.
+
+Every strike against the armor feeds its power.
+
+Every step Daniel takes makes the ground remember who its Guardian is.
+
+He is the slowest of the six Guardians—but once Daniel takes his position, moving him becomes almost impossible.
+
+The ancient prophecy calls him:
+
+"Ang Pader na Hindi Guguho."
+
+When the other Guardians fall, Daniel remains.
+
+When the battlefield is destroyed, Daniel stands upon its ruins.
+
+SPECIAL ATTACK:
+PUSO NG LUPA
+Daniel drives his fist into the ground, causing enormous stone pillars to erupt beneath his enemies.
+
+Effect: Deal 6 damage and gain +8 DEF until the beginning of your next turn.
+
+
+IV. JESSIE DANAO
+WATER GUARDIAN
+Blessed by: Amanikable — Bathala ng Karagatan
+Sacred Weapons: Alon & Daluyong
+
+ATK: 15
+DEF: 19
+LIFE: 32
+
+LORE:
+Jessie Danao carries two mysterious orbs known as Alon and Daluyong.
+
+The blue orb, Alon, represents the calmness of the sea—the healing waters, gentle rain, and endless cycle of life.
+
+The red orb, Daluyong, represents the wrath of the ocean—the storm, the tsunami, and the fury of Amanikable.
+
+Jessie alone can command both.
+
+His greatest strength is not the ability to destroy.
+
+It is the ability to change.
+
+Water can become a shield.
+
+A weapon.
+
+A storm.
+
+A healer.
+
+Or an unstoppable wave.
+
+The ancient texts describe Jessie as:
+
+"Ang Tahimik na Dagat bago ang Daluyong."
+
+SPECIAL ATTACK:
+ALON AT DALUYONG: GALIT NG KARAGATAN
+Jessie combines the two orbs. A massive tidal serpent emerges and crashes upon the enemy.
+
+Effect: Deal 8 damage. If Jessie has lost LIFE, restore 4 LIFE after the attack.
+
+
+V. ALICE BELMONTE
+LIGHT GUARDIAN
+Blessed by: Mayari — Bathala ng Liwanag at Buwan
+Sacred Weapon: Sinag — Moon Staff
+
+ATK: 14
+DEF: 21
+LIFE: 30
+
+LORE:
+Alice Belmonte was chosen by Mayari to become the bearer of Sinag, the Moon Staff.
+
+Unlike ordinary light, Alice's power does not burn.
+
+It reveals.
+
+It exposes the darkness hidden within the hearts of men and illuminates paths where none appear to exist.
+
+Sinag draws its strength from the moon, changing with the phases of the celestial body.
+
+During the full moon, Alice becomes one of the most powerful Guardians alive.
+
+But the true purpose of her blessing is not destruction.
+
+She was chosen to guide the Argos.
+
+Where Raven walks into darkness, Alice is the light that ensures he does not lose himself.
+
+SPECIAL ATTACK:
+SINAG: LIWANAG NG KABILUGAN
+Alice raises Sinag and summons the full moon above the battlefield. A beam of divine lunar light strikes the enemy while surrounding her allies.
+
+Effect: Deal 6 damage and restore 5 LIFE to an allied Guardian.
+
+
+VI. DERRICK BAUTISTA
+DARK GUARDIAN
+Blessed by: Sakulag — Bathala ng Dilim, Lason at Takot
+Sacred Weapon: Pangil ng Pitong Lason
+
+ATK: 19
+DEF: 12
+LIFE: 23
+
+LORE:
+Derrick Bautista is the Guardian whom even the other Guardians fear.
+
+Blessed by Sakulag, he carries Pangil ng Pitong Lason, a divine dagger containing seven supernatural poisons.
+
+Each poison attacks something different.
+
+The flesh.
+
+The blood.
+
+The mind.
+
+The senses.
+
+The soul.
+
+And the deepest fears of its victim.
+
+Derrick does not fight like a warrior.
+
+He hunts.
+
+He waits in the shadows.
+
+He strikes once.
+
+And then he disappears.
+
+The blessing of Sakulag comes with a terrible price: the more Derrick uses the power of darkness, the more the darkness begins to recognize him as one of its own.
+
+SPECIAL ATTACK:
+PANGIL NG PITONG LASON
+Derrick disappears into the shadows before striking the enemy with all seven poisons.
+
+Effect: Deal 7 damage and inflict Poison. The poisoned enemy loses 2 LIFE at the beginning of its next two turns.
+
+
+VII. RAVEN CRUZ
+THE ARGOS — HARI SA PROPESIYA
+Role: The Chosen King
+Sacred Title: Argos
+Weapon: The Eye of Argos / Divine Power of the Prophecy
+
+ATK: 20
+DEF: 24
+LIFE: 40
+
+LORE:
+Raven Cruz was never supposed to become a king.
+
+He was simply a young man living an ordinary life—until the awakening of the mysterious eye changed everything.
+
+The ancient prophecy speaks of a being known as the Argos.
+
+Not a god.
+
+Not a Guardian.
+
+Not a servant of the old powers.
+
+But the one who stands above them.
+
+Raven's awakening connects him to a power older than the six blessings. Through the Eye of Argos, he can see fragments of the past, possible futures, and the hidden truth behind the coming Kalibata.
+
+The six Guardians were blessed by the Bathala.
+
+Raven was chosen by something even the Bathala fear.
+
+His greatest battle will not be against Kalibata.
+
+It will be against the question:
+
+"If he possesses the power to become a god, will he remain human?"
+
+SPECIAL ATTACK:
+ARGOS: PANINGIN NG TADHANA
+Raven opens the Eye of Argos and sees the enemy's next move before it happens.
+
+Effect: Raven deals 10 damage and ignores 5 DEF from the target.
+
+PASSIVE — HARI SA PROPESIYA:
+Once per battle, when Raven would be defeated, he remains at 1 LIFE instead.
+
+
+VIII. AQUILA
+THE LUNA
+Role: The Moon / Keeper of the Argos
+Sacred Title: Luna
+Connection: Raven's destined counterpart
+
+ATK: 15
+DEF: 23
+LIFE: 36
+
+LORE:
+Aquila is the Luna—the one destined to walk beside the Argos.
+
+Where Raven represents the will to change destiny, Aquila represents the force that keeps that destiny from consuming him.
+
+Her connection to the moon allows her to sense the movements of the supernatural world long before the Guardians themselves recognize the danger.
+
+She is neither servant nor subordinate to Raven.
+
+She is his balance.
+
+When Raven becomes consumed by the power of Argos, Aquila is the one capable of calling him back.
+
+The ancient prophecy contains a forgotten verse:
+
+"Kapag nagising ang mata ng hari, hahanapin niya ang liwanag ng buwan."
+
+For without the Luna, the Argos may become powerful enough to save the world—but lose himself in the process.
+
+SPECIAL ATTACK:
+LUNA: HALIK NG BUWAN
+Aquila summons the power of the moon and surrounds an ally with a silver lunar barrier.
+
+Effect: Restore 8 LIFE to one allied character and give that character +5 DEF until the next turn.
+
+PASSIVE — LIWANAG NG LUNA:
+When Raven is on the battlefield, Aquila gains +3 ATK and +3 DEF.
+
+
+POWER HIERARCHY
+
+Character                    ATK   DEF   LIFE   Combat Role
+Aldrin Del Rosario           18    16    28     Damage / Burst
+Ace Garcia                   16    14    25     Speed / Debuff
+Daniel Madrigal              12    28    38     Tank / Defender
+Jessie Danao                 15    19    32     Sustain / Versatility
+Alice Belmonte               14    21    30     Support / Healing
+Derrick Bautista             19    12    23     Assassin / Poison
+Raven Cruz                   20    24    40     Legendary / Boss
+Aquila                       15    23    36     Support / Protector
+
+
+BATTLEFIELD IDENTITIES
+
+Aldrin = Burst Damage
+Ace = Speed & Control
+Daniel = Tank
+Jessie = Sustain & Versatility
+Alice = Support & Healing
+Derrick = Assassin & Poison
+Aquila = Protection & Recovery
+Raven = Legendary Finisher / Leader

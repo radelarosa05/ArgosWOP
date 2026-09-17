@@ -1,0 +1,309 @@
+================================================================================
+                  PHILIPPINE HEROES CARD GAME DATABASE                         
+================================================================================
+Rules & Constraints:
+  - Attack Range  : 0 - 20
+  - Defense Range : 0 - 30
+  - Hero/King Card Format: Removing a player's Hero ends the game.
+================================================================================
+
+[1] LAPU-LAPU - Chieftain of Mactan
+    Lore   : The proud datu of Mactan who stood against foreign invasion, felling Magellan on the shores of his homeland with unmatched martial strength.
+    ATK    : 20
+    DEF    : 18
+    Effect : Beachhead Decimation: Deals double damage when attacking non-Hero units with higher DEF than ATK.
+--------------------------------------------------------------------------------
+[2] ANDRES BONIFACIO - Father of the Katipunan
+    Lore   : Supreme leader of the Katipunan whose furious battle cry broke centuries of colonial rule through raw, unyielding resolve.
+    ATK    : 19
+    DEF    : 12
+    Effect : Cry of Revolution (Sacrifice): Sacrifice 2 allied cards to double his ATK for 1 turn.
+--------------------------------------------------------------------------------
+[3] JOSE RIZAL - The Enlightened Polymath
+    Lore   : Armed with a pen sharper than any sword, his revolutionary writings awakened the national consciousness of a captive people.
+    ATK    : 4
+    DEF    : 22
+    Effect : Awakened Will: Upon defeat, return 1 non-Hero unit from your Graveyard to your Hand.
+--------------------------------------------------------------------------------
+[4] GABRIELA SILANG - Joan of Arc of Ilocos
+    Lore   : Taking command after her husband's murder, she charged fearlessly on horseback as the fiery general of the Ilocano resistance.
+    ATK    : 15
+    DEF    : 16
+    Effect : Last Stand (Sacrifice): Sacrifice 2 allied cards to double her ATK for 1 turn.
+--------------------------------------------------------------------------------
+[5] SULTAN KUDARAT - Lord of Mindanao
+    Lore   : The formidable Sultan of Mindanao who united rival clans and repelled foreign conquest across the south for over five decades.
+    ATK    : 17
+    DEF    : 25
+    Effect : Citadel Defense: Immune to Poison, Sleep, and Paralysed status effects.
+--------------------------------------------------------------------------------
+[6] APOLINARIO MABINI - The Sublime Paralytic
+    Lore   : The sublime mind behind the Philippine Republic whose intellect and legal strategy guided the revolution despite his paralysis.
+    ATK    : 2
+    DEF    : 28
+    Effect : Mind Over Body: Permanently afflicted with Paralysed (cannot attack). Increases all allied cards' DEF by +5 while active on the field.
+--------------------------------------------------------------------------------
+[7] EMILIO AGUINALDO - First President of the Republic
+    Lore   : First president of the Philippine Republic who led army forces through complex campaigns across Luzon.
+    ATK    : 14
+    DEF    : 18
+    Effect : Commanding Order: Once per turn, select 1 allied unit; it recovers from Sleep or Paralysed immediately.
+--------------------------------------------------------------------------------
+[8] ANTONIO LUNA - The Fiery Tactician
+    Lore   : A fiery military genius who forged raw revolutionary recruits into a disciplined force through strict tactics and fearless leadership.
+    ATK    : 18
+    DEF    : 15
+    Effect : Ruthless Counter: Inflicts Paralysed for 1 turn on any enemy unit that damages him.
+--------------------------------------------------------------------------------
+[9] MELCHORA AQUINO - Tandang Sora / Mother of Balintawak
+    Lore   : Mother of the Revolution who turned her home into a secret sanctuary and field hospital for wounded Katipuneros.
+    ATK    : 0
+    DEF    : 30
+    Effect : Battlefield Care: At the start of your turn, revive 1 dead card from your Graveyard to your Hand.
+--------------------------------------------------------------------------------
+[10] GREGORIA DE JESUS - Lakambini of the Katipunan
+    Lore   : The Lakambini of the Katipunan who risked her life guarding secret revolutionary documents, seals, and armaments.
+    ATK    : 8
+    DEF    : 22
+    Effect : Keeper of Secrets: Prevents enemy status effects (Poison, Sleep, Paralysed) from affecting adjacent allied units.
+--------------------------------------------------------------------------------
+[11] DIEGO SILANG - Ilocano Rebel Leader
+    Lore   : A charismatic visionary who established an autonomous Ilocano state before being struck down by assassins.
+    ATK    : 14
+    DEF    : 12
+    Effect : Martial Vengeance: If defeated, doubles the ATK of Gabriela Silang if she is on the field or in your Hand.
+--------------------------------------------------------------------------------
+[12] MARCELO H. DEL PILAR - The Great Propagandist
+    Lore   : Master propagandist and editor of La Solidaridad who waged a relentless literary war against colonial abuse.
+    ATK    : 6
+    DEF    : 18
+    Effect : Deceptive Propaganda: Inflicts Sleep on 1 target enemy non-Hero unit for 2 turns.
+--------------------------------------------------------------------------------
+[13] JUAN LUNA - Master of the Canvas
+    Lore   : Master painter whose striking canvases captured the suffering and fiery spirit of the Filipino struggle.
+    ATK    : 9
+    DEF    : 14
+    Effect : Spoliarium Strike: Instantly sends 1 non-Hero enemy card with 5 DEF or lower to the Graveyard.
+--------------------------------------------------------------------------------
+[14] PADRE MARIANO GOMEZ - Martyr Priest of Cavite
+    Lore   : Eldest of the martyred priests whose unjust execution galvanized the entire archipelago toward national identity.
+    ATK    : 3
+    DEF    : 24
+    Effect : Solemn Sacrifice: When sent to the Graveyard, revive 1 non-Hero card from your Graveyard to your Hand.
+--------------------------------------------------------------------------------
+[15] PADRE JOSE BURGOS - Reformist Cleric
+    Lore   : An outspoken advocate for native clergy whose reformist writings made him a prime target of colonial authorities.
+    ATK    : 5
+    DEF    : 20
+    Effect : Voice of Reform: Removes Paralysed and Sleep status from all allied cards upon deployment.
+--------------------------------------------------------------------------------
+[16] PADRE JACINTO ZAMORA - Patriot Priest
+    Lore   : A dedicated defender of indigenous rights whose martyrdom transformed him into an enduring symbol of resistance.
+    ATK    : 4
+    DEF    : 21
+    Effect : Silent Resolve: When defeated, inflicts Paralysed on the attacker for 2 turns.
+--------------------------------------------------------------------------------
+[17] TERESA MAGBANUA - Joan of Arc of the Visayas
+    Lore   : The Joan of Arc of the Visayas, an expert markswoman and cavalry officer who won successive battles against invaders.
+    ATK    : 16
+    DEF    : 14
+    Effect : Vanguard Rush: Can launch an attack immediately on the turn she is deployed.
+--------------------------------------------------------------------------------
+[18] TRINIDAD TECSON - Mother of Biak-na-Bato
+    Lore   : Mother of Biak-na-Bato who fought in blood-soaked trenches and organized field medical care for wounded rebels.
+    ATK    : 12
+    DEF    : 22
+    Effect : Trench Medic: Restores 5 DEF to 1 damaged allied card at the end of each turn.
+--------------------------------------------------------------------------------
+[19] FRANCISCO DAGOHOY - Leader of the Longest Revolt
+    Lore   : Leader of the longest rebellion in Philippine history, holding the mountain strongholds of Bohol for 85 years.
+    ATK    : 16
+    DEF    : 26
+    Effect : Indomitable Rebellion: Immune to Paralysed and gains +1 DEF for every turn he remains on the field.
+--------------------------------------------------------------------------------
+[20] MACARIO SAKAY - The Last Katipunero General
+    Lore   : The last Katipunero general who maintained guerrilla resistance in the mountains of Southern Luzon long after others fell.
+    ATK    : 17
+    DEF    : 11
+    Effect : Mountain Guerrilla: Cannot be targeted by enemy card effects or skills during the first turn he enters play.
+--------------------------------------------------------------------------------
+[21] ARTEMIO RICARTE - The Uncompromising General
+    Lore   : A fierce Katipunan general who refused ever taking an oath of allegiance to foreign occupiers, enduring decades in exile.
+    ATK    : 15
+    DEF    : 19
+    Effect : Unbroken Spirit: Immune to Sleep and cannot be forced to return to the Hand by enemy card effects.
+--------------------------------------------------------------------------------
+[22] MIGUEL MALVAR - The Last Surrendering General
+    Lore   : The steadfast general who assumed command of revolutionary forces, holding out as the final main general to surrender.
+    ATK    : 16
+    DEF    : 20
+    Effect : Enduring Resistance (Sacrifice): Sacrifice 2 allied cards to double his ATK for 1 turn.
+--------------------------------------------------------------------------------
+[23] VICENTE LUKBAN - Master of Samar Guerrillas
+    Lore   : Master of mountain guerrilla tactics who engineered the famous resistance victory in Samar.
+    ATK    : 17
+    DEF    : 13
+    Effect : Ambush Trap: Inflicts Poison (3 damage per turn for 2 turns) on any enemy card that attacks him.
+--------------------------------------------------------------------------------
+[24] GREGORIO DEL PILAR - Hero of Tirad Pass
+    Lore   : The boy general who made a heroic final stand at Tirad Pass to secure the retreat of his commander-in-chief.
+    ATK    : 13
+    DEF    : 27
+    Effect : Narrow Pass Stand: Intercepts and absorbs all direct attacks targeted at adjacent allied cards.
+--------------------------------------------------------------------------------
+[25] PANDAY PIRA - First Cannon-maker
+    Lore   : Master blacksmith of Pampanga who forged heavy artillery and brass cannons for defenders across Luzon.
+    ATK    : 8
+    DEF    : 25
+    Effect : Artillery Forge: Grants +3 ATK to adjacent allied non-Hero units every turn.
+--------------------------------------------------------------------------------
+[26] JOSE ABAD SANTOS - Martyr of Judicial Integrity
+    Lore   : Chief Justice who chose execution over collaborating with wartime occupiers, embodying legal integrity.
+    ATK    : 1
+    DEF    : 30
+    Effect : Unshakeable Oath: While on the field, your other units are immune to Poison and Sleep.
+--------------------------------------------------------------------------------
+[27] VICENTE LIM - The West Point Tactician
+    Lore   : The first West Point graduate of the Philippines who organized tenacious defensive lines during WWII.
+    ATK    : 15
+    DEF    : 23
+    Effect : Tactical Fortification: All adjacent cards receive +3 DEF.
+--------------------------------------------------------------------------------
+[28] JOSEFA LLANES ESCODA - Heroine of the Resistance
+    Lore   : Heroine of the underground resistance who smuggled food, medicine, and critical supplies to prisoners of war.
+    ATK    : 2
+    DEF    : 26
+    Effect : Underground Supply: Revives 1 dead non-Hero unit from your Graveyard to your Hand once every 3 turns.
+--------------------------------------------------------------------------------
+[29] WENCESLAO VINZONS - Bicol Guerrilla Leader
+    Lore   : Youth leader who organized one of the earliest guerrilla units in Bicol, harassing enemy forces from mountain hideouts.
+    ATK    : 14
+    DEF    : 15
+    Effect : Guerrilla Raid: Inflicts Paralysed on 1 enemy card for 1 turn upon entering the field.
+--------------------------------------------------------------------------------
+[30] TOMAS CLAUDIO - World War I Hero
+    Lore   : The first Filipino soldier to sacrifice his life on European battlefields during World War I.
+    ATK    : 13
+    DEF    : 12
+    Effect : Vanguard Charge: Sacrifices 5 DEF to gain +5 ATK for 1 turn.
+--------------------------------------------------------------------------------
+[31] RAJAH SULAYMAN - Defender of Maynila
+    Lore   : Ruler of Maynila who chose to burn his own kingdom to the ground rather than submit to foreign domination.
+    ATK    : 18
+    DEF    : 16
+    Effect : Scorched Earth: Deals 3 flat damage to all non-Hero enemy units on the field when played.
+--------------------------------------------------------------------------------
+[32] LAKANDULA - Paramount Ruler of Tondo
+    Lore   : Paramount ruler of Tondo who mobilized regional alliances to defend his people's ancestral rights.
+    ATK    : 12
+    DEF    : 24
+    Effect : Alliance Shield: Increases the DEF of all allied non-Hero units by +2.
+--------------------------------------------------------------------------------
+[33] RAJAH HUMABON - Chieftain of Cebu
+    Lore   : Pre-colonial chieftain of Cebu who forged early diplomatic pacts to secure his island realm.
+    ATK    : 11
+    DEF    : 17
+    Effect : Diplomatic Pact: Renders 1 selected enemy card unable to attack for 1 turn.
+--------------------------------------------------------------------------------
+[34] PRINCESS URDUJA - Amazon Warrior Queen
+    Lore   : Warrior queen of Pangasinan who commanded an elite corps of female fighters and defeated all challengers in single combat.
+    ATK    : 19
+    DEF    : 18
+    Effect : Trial of Combat: Disables all active skills and effects of the target enemy card during battle.
+--------------------------------------------------------------------------------
+[35] DAGAMI - Chieftain of Leyte
+    Lore   : Chieftain of Leyte who led an early armed resistance against foreign tax collectors and garrisons.
+    ATK    : 15
+    DEF    : 13
+    Effect : Fierce Retaliation: Counterattacks with full ATK whenever damaged by a physical strike.
+--------------------------------------------------------------------------------
+[36] TAMBLOT - Babaylan of Bohol
+    Lore   : Native babaylan who rallied the people of Bohol to break free from colonial religious dominance.
+    ATK    : 10
+    DEF    : 19
+    Effect : Ancestral Curse: Inflicts Poison (4 damage per turn for 2 turns) on 1 target enemy unit.
+--------------------------------------------------------------------------------
+[37] BANKAW - Chieftain of Limasawa
+    Lore   : Aged chieftain of Limasawa who led an uprising to protect traditional ancestral spiritual beliefs.
+    ATK    : 11
+    DEF    : 17
+    Effect : Spiritual Chant: Inflicts Sleep on 1 enemy card for 1 turn.
+--------------------------------------------------------------------------------
+[38] FRANCISCO MANIAGO - Leader of the Pampanga Revolt
+    Lore   : Leader of the Pampanga revolt who shut down river transport networks to force fair treatment for his people.
+    ATK    : 13
+    DEF    : 18
+    Effect : River Blockade: Inflicts Paralysed on up to 2 enemy non-Hero units for 1 turn.
+--------------------------------------------------------------------------------
+[39] ALMAZAN - King of the Ilocos Revolt
+    Lore   : Crowned king of the Ilocos revolt who led mountain warriors against fortified colonial outposts.
+    ATK    : 16
+    DEF    : 14
+    Effect : Crown Strike (Sacrifice): Sacrifice 2 allied cards to double his ATK for 1 turn.
+--------------------------------------------------------------------------------
+[40] HERMANO PULE - Founder of Cofradía de San José
+    Lore   : Religious reformer who founded a brotherhood in Tayabas and led thousands in armed defense of spiritual freedom.
+    ATK    : 12
+    DEF    : 21
+    Effect : Brotherhood Sanctuary: Revives 1 dead non-Hero card from your Graveyard to your Hand upon entering play.
+--------------------------------------------------------------------------------
+[41] PAPA ISIO - Negros Mountain Rebel
+    Lore   : Millenarian leader who held out in the mountains of Negros, battling both Spanish and American forces.
+    ATK    : 15
+    DEF    : 20
+    Effect : Mountain Stronghold: Increases his own DEF by +4 when his HP drops below half.
+--------------------------------------------------------------------------------
+[42] SIMEON OLA - Bicol Guerrilla Commander
+    Lore   : Daring general who staged guerrilla ambushes throughout Bicol, standing as one of the last commanders to lay down arms.
+    ATK    : 16
+    DEF    : 15
+    Effect : Relentless Ambush: Deals 5 direct damage to an enemy card and inflicts Paralysed for 1 turn.
+--------------------------------------------------------------------------------
+[43] LEON KILAT - Legendary Cebuano Commander
+    Lore   : Legendary revolutionary leader in Cebu whose martial speed and mystical reputation struck fear into opposing lines.
+    ATK    : 18
+    DEF    : 10
+    Effect : Lightning Strike: Bypasses defending front-line cards to directly attack enemy back-line support units.
+--------------------------------------------------------------------------------
+[44] ROMAN BASA - Second Katipunan President
+    Lore   : Second President of the Katipunan who organized secret smuggling channels for revolutionary literature.
+    ATK    : 9
+    DEF    : 20
+    Effect : Secret Courier: Draws 1 extra card from your deck when a card is revived from the Graveyard.
+--------------------------------------------------------------------------------
+[45] LADISLAO DIWA - Co-founder of the Katipunan
+    Lore   : One of the three founding members of the Katipunan who personally recruited early revolutionary cells in Cavite.
+    ATK    : 11
+    DEF    : 17
+    Effect : Recruitment Call: Revives 1 low-tier non-Hero card from your Graveyard to your Hand.
+--------------------------------------------------------------------------------
+[46] TEODORO PLATA - Katipunan Pioneer
+    Lore   : Co-founder of the secret society who managed internal logistics and arms procurement during the revolution's birth.
+    ATK    : 10
+    DEF    : 16
+    Effect : Logistics Supply: Increases the ATK of all allied non-Hero units by +2.
+--------------------------------------------------------------------------------
+[47] MARINA DIZON - Katipunan Women's Wing Leader
+    Lore   : Fearless officer of the Katipunan women's wing who initiated new members and kept secret financial records.
+    ATK    : 5
+    DEF    : 23
+    Effect : Guard Duty: Negates the first attack made against this card each round.
+--------------------------------------------------------------------------------
+[48] AGUEDA KAHABAGAN - The Tagalog Joan of Arc
+    Lore   : The only official female general of the Philippine Army, famed for charging into combat dressed in white while wielding a rifle and bolos.
+    ATK    : 17
+    DEF    : 15
+    Effect : Fearless Charge (Sacrifice): Sacrifice 2 allied cards to double her ATK for 1 turn.
+--------------------------------------------------------------------------------
+[49] GEN. LICERIO GERÓNIMO - Commander of the Tiradores
+    Lore   : Commander of the famous Tiradores de la Muerte (Sharpshooters of Death) who led troops at the Battle of San Mateo.
+    ATK    : 18
+    DEF    : 16
+    Effect : Deadly Marksmanship: Inflicts Vampiric Bleed (3 damage per turn for 3 turns) on target enemy card while healing Gerónimo.
+--------------------------------------------------------------------------------
+[50] GERONIMA PECSON - Pioneer Educator & Humanitarian
+    Lore   : Pioneer educator and humanitarian who fortified the nation's cultural and educational foundation through civil service.
+    ATK    : 0
+    DEF    : 29
+    Effect : Humanitarian Grace: Cleanses all status conditions (Poison, Sleep, Paralysed, Bleed) from all allied units upon deployment.
+--------------------------------------------------------------------------------
