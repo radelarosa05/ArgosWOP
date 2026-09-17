@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<art_style id="argos-leader-cinematic" version="1.0">
+  <reference>TCG/assets/cards/h1.png</reference>
+  <reference>TCG/assets/cards/fh_argos_raven.png</reference>
+  <composition>Portrait-oriented trading card art; centered heroic subject; readable silhouette; atmospheric background; clear focal light.</composition>
+  <palette>Obsidian navy, jungle teal, volcanic red, moon gold, parchment highlights.</palette>
+  <lighting>Warm gold rim light against deep cinematic shadows; subtle mythic glow behind the subject.</lighting>
+  <finish>Painterly cinematic fantasy realism with crisp face and costume detail, restrained background texture, no modern logos or text in the artwork.</finish>
+  <prompt_template>Philippine mythic fantasy card illustration of {SUBJECT}, {ROLE}, inspired by the archipelago's landscape and folklore, centered heroic portrait, dark cinematic obsidian and teal atmosphere, warm gold rim light, dramatic readable silhouette, painterly high-detail trading-card art, no text, no watermark.</prompt_template>
+  <negative_prompt>photorealistic celebrity, modern clothing, flat icon, chibi, blurry subject, illegible face, watermark, logo, typography, oversaturated neon, copied existing artwork</negative_prompt>
+</art_style>

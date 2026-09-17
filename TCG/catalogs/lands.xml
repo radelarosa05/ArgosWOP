@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<land_catalog name="War of the Philippines TCG Lands" version="1.0" artStyle="argos-leader-cinematic">
+  <!-- category controls placement flavor; dominionValue and energyBonus drive the economy. -->
+  <land id="lc1"><name>Manila</name><category>Cities</category><dominion>2</dominion><energy>2</energy><cost>1</cost><leadership>2</leadership><desc>Urban command center. Generates +2 Dominion and +2 Kalayaan.</desc><lore>Manila is a crossroads of commerce, resistance, and command at the heart of the archipelago.</lore><image>assets/cards/lc1.svg</image></land>
+  <land id="ls1"><name>Pasig River</name><category>Seas &amp; Water Bodies</category><dominion>1</dominion><energy>1</energy><cost>1</cost><leadership>1</leadership><desc>Maritime lane. Generates +1 Dominion and supports water movement.</desc><lore>The Pasig links communities and carries the pressure of the city toward the bay.</lore><image>assets/cards/ls1.svg</image></land>
+  <land id="lch1"><name>San Agustin Church</name><category>Churches / Sacred Places</category><dominion>1</dominion><energy>1</energy><cost>1</cost><leadership>2</leadership><desc>Sanctuary. Generates +1 Dominion and heals stationed units at turn end.</desc><lore>Sacred ground becomes a refuge when the surrounding city is shaken by war.</lore><image>assets/cards/lch1.svg</image></land>
+  <land id="li1"><name>Palawan</name><category>Islands</category><dominion>2</dominion><energy>2</energy><cost>1</cost><leadership>2</leadership><desc>Island fortress. Generates +2 Dominion and grants stationed units +2 DEF.</desc><lore>Palawan's long coast and hidden routes make it a natural fortress between seas.</lore><image>assets/cards/li1.svg</image></land>
+</land_catalog>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relic_catalog name="War of the Philippines TCG Relics" version="1.0" artStyle="argos-leader-cinematic">
+  <!-- Equipment records use permanent stat boosts plus a timed passive. -->
+  <relic id="eq1"><name>Kalayaan Banner</name><subTitle>Standard of the Revolution</subTitle><atkBoost>2</atkBoost><defBoost>1</defBoost><hpBoost>3</hpBoost><duration>3</duration><cost>2</cost><leadership>2</leadership><passive>Allied units on adjacent tiles gain +1 DEF.</passive><lore>A crimson banner carried through smoke and rain, turning scattered resistance into a single cause.</lore><image>assets/cards/eq1.svg</image></relic>
+  <relic id="eq2"><name>Arnis of the Ancestors</name><subTitle>Close-Quarter Discipline</subTitle><atkBoost>3</atkBoost><defBoost>0</defBoost><hpBoost>2</hpBoost><duration>2</duration><cost>2</cost><leadership>3</leadership><passive>Physical attacks gain +1 damage against wounded enemies.</passive><lore>Every strike carries the memory of generations who trained with wood, steel, and patient precision.</lore><image>assets/cards/eq2.svg</image></relic>
+  <relic id="eq3"><name>Agimat of Protection</name><subTitle>Inherited Ward</subTitle><atkBoost>0</atkBoost><defBoost>4</defBoost><hpBoost>4</hpBoost><duration>3</duration><cost>3</cost><leadership>4</leadership><passive>Negates the first weather ailment applied to the bearer.</passive><lore>A talisman passed from hand to hand, keeping fear and hostile spirits from crossing the bearer’s shadow.</lore><image>assets/cards/eq3.svg</image></relic>
+</relic_catalog>

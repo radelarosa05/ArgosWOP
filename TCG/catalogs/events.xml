@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event_catalog name="War of the Philippines TCG Events" version="1.0" artStyle="argos-leader-cinematic">
+  <!-- Events are one-shot actions. dominionDamage and drawAmount are optional. -->
+  <event id="e1"><name>Battle of Mactan</name><cost>3</cost><leadership>3</leadership><dominionDamage>8</dominionDamage><drawAmount>0</drawAmount><effect>Launch a decisive beachhead assault and strip 8 enemy Dominion.</effect><lore>Lapu-Lapu's defense of Mactan became a symbol of indigenous command against an invading force.</lore><image>assets/cards/e1.svg</image></event>
+  <event id="e2"><name>Propaganda Movement</name><cost>2</cost><leadership>2</leadership><dominionDamage>0</dominionDamage><drawAmount>2</drawAmount><effect>Draw 2 cards. Knowledge becomes reinforcement.</effect><lore>Writers, printers, and reformers carried a campaign across oceans with words as their weapons.</lore><image>assets/cards/e2.svg</image></event>
+  <event id="e3"><name>Monsoon Reinforcements</name><cost>2</cost><leadership>3</leadership><dominionDamage>0</dominionDamage><drawAmount>1</drawAmount><effect>Draw 1 card and cleanse one weather ailment from an allied unit.</effect><lore>When the rains came, supply lines changed, but determined defenders learned to move with the storm.</lore><image>assets/cards/e3.svg</image></event>
+</event_catalog>
