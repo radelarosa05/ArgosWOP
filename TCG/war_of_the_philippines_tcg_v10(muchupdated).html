@@ -76,6 +76,21 @@
       outline: 2px dashed rgba(251, 191, 36, 0.9);
       outline-offset: -4px;
     }
+    .battle-art-rail { order: 1; }
+    .battle-board-column { order: 2; }
+    .battle-inspector-panel { order: 3; }
+    .hand-card-gallery {
+      scrollbar-color: rgba(245, 158, 11, 0.85) rgba(15, 23, 42, 0.9);
+      scrollbar-width: thin;
+    }
+    .hand-card-gallery::-webkit-scrollbar { height: 8px; }
+    .hand-card-gallery::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.9); border-radius: 999px; }
+    .hand-card-gallery::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.85); border-radius: 999px; }
+    @media (max-width: 1023px) {
+      .battle-art-rail { order: 1; }
+      .battle-board-column { order: 2; }
+      .battle-inspector-panel { order: 3; }
+    }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #0b0f19; }
@@ -739,7 +754,7 @@
       logoContrast: 140,
       logoBrightness: 98,
       imageExtension: '.png',
-      xmlSourceUrl: 'cards.xml',
+      xmlSourceUrl: 'catalogs/cards.xml',
       graveyard: [],
       selectedUnitId: null,
       selectedTile: null,
@@ -863,7 +878,8 @@
             role: el.querySelector("role")?.textContent || "Deity",
             avatarSymbol: el.querySelector("symbol")?.textContent || "🐉",
             effect: el.querySelector("effect")?.textContent || "Standard combat strike.",
-            lore: el.querySelector("lore")?.textContent || ""
+            lore: el.querySelector("lore")?.textContent || "",
+            imageUrl: el.querySelector("image")?.textContent || ""
           });
         });
 
@@ -878,7 +894,8 @@
             cost: parseInt(el.querySelector("cost")?.textContent || "1", 10),
             reqLeadership: parseInt(el.querySelector("leadership")?.textContent || "1", 10),
             desc: el.querySelector("desc")?.textContent || "",
-            lore: el.querySelector("lore")?.textContent || ""
+            lore: el.querySelector("lore")?.textContent || "",
+            imageUrl: el.querySelector("image")?.textContent || ""
           });
         });
 
@@ -892,7 +909,8 @@
             drawAmount: parseInt(el.querySelector("draw")?.textContent || "0", 10),
             dominionDamage: parseInt(el.querySelector("dominionDamage")?.textContent || "0", 10),
             effect: el.querySelector("effect")?.textContent || "",
-            lore: el.querySelector("lore")?.textContent || ""
+            lore: el.querySelector("lore")?.textContent || "",
+            imageUrl: el.querySelector("image")?.textContent || ""
           });
         });
 
@@ -911,7 +929,8 @@
             cost: parseInt(el.querySelector("cost")?.textContent || "1", 10),
             reqLeadership: parseInt(el.querySelector("leadership")?.textContent || "1", 10),
             avatarSymbol: el.querySelector("symbol")?.textContent || "🛡️",
-            effect: el.querySelector("effect")?.textContent || ""
+            effect: el.querySelector("effect")?.textContent || "",
+            imageUrl: el.querySelector("image")?.textContent || ""
           });
         });
 
@@ -950,6 +969,49 @@
       }
     }
     window.loadCardsFromXmlUrl = loadCardsFromXmlUrl;
+
+    async function loadModularCatalogs() {
+      const sources = [
+        { url: 'catalogs/mythos.xml', selector: 'mythos', target: 'MONSTERS_DATABASE' },
+        { url: 'catalogs/relics.xml', selector: 'relic', target: 'EQUIPMENTS_DATABASE' },
+        { url: 'catalogs/events.xml', selector: 'event', target: 'EVENTS_DATABASE' },
+        { url: 'catalogs/lands.xml', selector: 'land', target: 'LANDS_DATABASE' }
+      ];
+      const replaceById = (target, records) => {
+        const current = Array.isArray(window[target]) ? [...window[target]] : [];
+        records.forEach(record => {
+          const index = current.findIndex(existing => existing.id === record.id);
+          if (index >= 0) current[index] = { ...current[index], ...record };
+          else current.push(record);
+        });
+        window[target] = current;
+      };
+
+      for (const source of sources) {
+        try {
+          const response = await fetch(source.url, { cache: 'no-cache' });
+          if (!response.ok) continue;
+          const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+          const records = [...xml.querySelectorAll(source.selector)].map(el => {
+            const value = name => el.querySelector(name)?.textContent || '';
+            const number = (name, fallback = 0) => parseInt(value(name) || String(fallback), 10);
+            if (source.selector === 'mythos') return { id: el.getAttribute('id'), name: value('name'), role: value('role'), atk: number('atk'), def: number('def'), hp: number('hp'), move: number('move', 2), cost: number('cost', 2), reqLeadership: number('leadership', 3), avatarSymbol: value('symbol') || '🐉', effect: value('effect'), lore: value('lore'), imageUrl: value('image') };
+            if (source.selector === 'land') return { id: el.getAttribute('id'), name: value('name'), category: value('category'), dominionValue: number('dominion', 1), energyBonus: number('energy', 1), cost: number('cost', 1), reqLeadership: number('leadership', 1), desc: value('desc'), lore: value('lore'), imageUrl: value('image') };
+            if (source.selector === 'event') return { id: el.getAttribute('id'), name: value('name'), cost: number('cost', 1), reqLeadership: number('leadership', 1), drawAmount: number('draw'), dominionDamage: number('dominionDamage'), effect: value('effect'), lore: value('lore'), imageUrl: value('image') };
+            return { id: el.getAttribute('id'), name: value('name'), subTitle: value('subTitle'), atkBoost: number('atkBoost'), defBoost: number('defBoost'), hpBoost: number('hpBoost'), duration: number('duration', 2), cost: number('cost', 1), reqLeadership: number('leadership', 1), passive: value('passive'), lore: value('lore'), imageUrl: value('image') };
+          });
+          replaceById(source.target, records);
+        } catch (error) {
+          console.info(`Modular catalog ${source.url} not reachable; embedded records remain active.`);
+        }
+      }
+      window.MONSTERS_DATABASE = window.MONSTERS_DATABASE || [];
+      window.LANDS_DATABASE = window.LANDS_DATABASE || [];
+      window.EVENTS_DATABASE = window.EVENTS_DATABASE || [];
+      window.EQUIPMENTS_DATABASE = window.EQUIPMENTS_DATABASE || [];
+      render();
+    }
+    window.loadModularCatalogs = loadModularCatalogs;
 
     function handleXmlFileUpload(event) {
       const file = event.target.files?.[0];
@@ -1326,6 +1388,76 @@
       render();
     }
     window.autoFillDeck = autoFillDeck;
+
+    function getCommanderDeckProfile(hero = state.p1Hero) {
+      const text = `${hero?.name || ''} ${hero?.title || ''} ${hero?.effect || ''} ${hero?.lore || ''}`.toLowerCase();
+      const profile = { label: 'Balanced Resistance', focus: 'Reliable frontline pressure', tags: [], weights: { mythos: 1, lands: 1, events: 1, relics: 1 } };
+      if ((hero?.atk || 0) >= 17 || /attack|strike|charge|ambush|assault|warrior|martial|offensive/.test(text)) {
+        profile.label = 'Vanguard Assault'; profile.focus = 'High-ATK Mythos, combat relics, and tempo events'; profile.tags.push('aggression'); profile.weights.mythos += 1.5; profile.weights.relics += 0.8;
+      }
+      if ((hero?.def || 0) >= 23 || /defen|shield|sanctuary|fortif|guard|immune|stronghold|bastion/.test(text)) {
+        profile.label = 'Citadel Defense'; profile.focus = 'Durable Mythos, defensive lands, and protection relics'; profile.tags.push('defense'); profile.weights.lands += 1.1; profile.weights.relics += 1.2;
+      }
+      if ((hero?.move || 0) >= 3 || /flying|wind|cavalry|rush|speed|guerrilla|mobility/.test(text)) {
+        profile.label = 'Mobile Raiding'; profile.focus = 'Fast Mythos, water lanes, and movement tactics'; profile.tags.push('mobility'); profile.weights.mythos += 0.9; profile.weights.lands += 0.7;
+      }
+      if (/heal|revive|restore|care|medic|supply|draw|command|leadership|allied/.test(text)) {
+        profile.label = profile.tags.includes('defense') ? 'Command Fortress' : 'Battlefield Logistics'; profile.focus = 'Support events, efficient lands, and resilient allies'; profile.tags.push('support'); profile.weights.events += 1.1; profile.weights.lands += 0.6;
+      }
+      return profile;
+    }
+
+    function scoreDeckCardForCommander(card, hero = state.p1Hero) {
+      const profile = getCommanderDeckProfile(hero);
+      const text = `${card.name || ''} ${card.role || ''} ${card.category || ''} ${card.effect || ''} ${card.desc || ''} ${card.passive || ''}`.toLowerCase();
+      let score = 0;
+      if (card.hp && card.atk) {
+        score = profile.weights.mythos * ((card.atk || 0) * 1.4 + (card.def || 0) * 0.8 + (card.hp || 0) * 0.45) - (card.cost || 1) * 1.2;
+        if (profile.tags.includes('aggression') && (card.atk || 0) >= 15) score += 12;
+        if (profile.tags.includes('defense') && (card.def || 0) >= 18) score += 12;
+        if (profile.tags.includes('mobility') && /flying|wind|water|sea|river|swift|ride/.test(text)) score += 14;
+        if (profile.tags.includes('support') && /heal|restore|revive|presence|favor|ward/.test(text)) score += 12;
+      } else if (card.category) {
+        score = profile.weights.lands * ((card.dominionValue || 1) * 8 + (card.energyBonus || 1) * 5);
+        if (profile.tags.includes('mobility') && /sea|water|river|island/.test(text)) score += 12;
+        if (profile.tags.includes('defense') && /church|island|city/.test(text)) score += 7;
+      } else if (card.id?.startsWith('eq')) {
+        score = profile.weights.relics * ((card.atkBoost || 0) * 3 + (card.defBoost || 0) * 2 + (card.hpBoost || 0));
+        if (profile.tags.includes('defense') && (card.defBoost || 0) >= 2) score += 10;
+        if (profile.tags.includes('aggression') && (card.atkBoost || 0) >= 2) score += 10;
+      } else {
+        score = profile.weights.events * ((card.drawAmount || 0) * 7 + (card.dominionDamage || 0) * 2 + 4);
+        if (profile.tags.includes('support') && /heal|restore|cleanse|draw|revive/.test(text)) score += 12;
+        if (profile.tags.includes('aggression') && card.dominionDamage) score += 10;
+      }
+      return score;
+    }
+
+    function getCommanderDeckSuggestions(hero = state.p1Hero, limit = 8) {
+      const pool = [...MONSTERS_DATABASE, ...LANDS_DATABASE, ...EVENTS_DATABASE, ...EQUIPMENTS_DATABASE];
+      return pool.map(card => ({ card, score: scoreDeckCardForCommander(card, hero) }))
+        .sort((a, b) => b.score - a.score || (a.card.cost || 1) - (b.card.cost || 1))
+        .slice(0, limit);
+    }
+    window.getCommanderDeckSuggestions = getCommanderDeckSuggestions;
+
+    function buildCommanderDeck() {
+      const profile = getCommanderDeckProfile(state.p1Hero);
+      const pool = [...MONSTERS_DATABASE, ...LANDS_DATABASE, ...EVENTS_DATABASE, ...EQUIPMENTS_DATABASE]
+        .map(card => ({ card, score: scoreDeckCardForCommander(card, state.p1Hero) }))
+        .sort((a, b) => b.score - a.score);
+      const deck = [];
+      pool.forEach(({ card }) => {
+        const copies = deck.filter(existing => existing.id === card.id).length;
+        if (copies < 3 && deck.length < 50) deck.push(card);
+      });
+      state.customDeck = deck;
+      state.activeCardPreview = deck[0] || state.p1Hero;
+      addLog(`🧠 Built a ${profile.label} deck for ${state.p1Hero.name}.`);
+      playSfx('skill');
+      render();
+    }
+    window.buildCommanderDeck = buildCommanderDeck;
 
     function setMobileDeckTab(tab) {
       state.mobileDeckTab = tab;
@@ -3179,7 +3311,7 @@
                     </div>
 
                     <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 text-[10px] text-slate-400 font-mono">
-                      Auto-load URL on startup: <b>cards.xml</b> (Requires running on a local server like VS Code Live Server).
+                      Auto-load URL on startup: <b>catalogs/cards.xml</b> (Requires running on a local server like VS Code Live Server).
                     </div>
                   </div>
 
@@ -3344,6 +3476,8 @@
         const inspectedCard = (!selectedUnit && !selectedHandCard && state.activeCardPreview) 
           ? state.activeCardPreview 
           : null;
+        const artCard = selectedUnit?.card || selectedHandCard || inspectedCard || meHero;
+        const artImageSrc = artCard ? (artCard.imageUrl || `${state.imageFolderPath}${artCard.id}${state.imageExtension || '.png'}`) : '';
 
         app.innerHTML = `
           <!-- Top Battlefield Status Bar -->
@@ -3428,10 +3562,33 @@
           </div>
 
           <!-- Main Battlefield Arena (Left Inspector Panel + Center Grid) -->
-          <div class="flex-1 flex flex-col lg:flex-row items-center lg:items-start justify-center p-2 sm:p-4 gap-3 overflow-y-auto max-w-7xl mx-auto w-full">
+          <div class="flex-1 flex flex-col lg:flex-row items-center lg:items-start justify-center p-3 sm:p-5 gap-4 lg:gap-5 overflow-y-auto max-w-[1600px] mx-auto w-full">
+            <!-- LEFT PANEL: Selected Card Art -->
+            <div class="battle-art-rail w-full lg:w-52 xl:w-60 shrink-0">
+              <div class="bg-slate-900/90 border border-cyan-500/30 rounded-2xl p-3 shadow-2xl lg:sticky lg:top-3">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+                  <span class="font-cinzel font-black text-[11px] text-cyan-300 flex items-center gap-1.5">
+                    <span>🖼️</span><span>CARD ART</span>
+                  </span>
+                  <span class="text-[8px] font-mono text-slate-500">FOCUS</span>
+                </div>
+                <div class="relative aspect-[3/4] overflow-hidden rounded-xl border border-cyan-500/40 bg-gradient-to-b from-cyan-950/50 via-slate-950 to-amber-950/30 shadow-inner">
+                  <img src="${artImageSrc}" alt="${artCard?.name || 'Selected card'}" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />
+                  <div class="hidden absolute inset-0 flex flex-col items-center justify-center gap-2 text-center p-3">
+                    <span class="text-6xl drop-shadow">${artCard?.avatarSymbol || '🃏'}</span>
+                    <span class="font-cinzel font-black text-sm text-amber-200">${artCard?.name || 'Select a card'}</span>
+                  </div>
+                  <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/95 via-black/60 to-transparent">
+                    <div class="font-cinzel font-black text-xs text-white truncate">${artCard?.name || 'Select a card'}</div>
+                    <div class="text-[9px] font-mono text-cyan-200/80 truncate">${artCard?.title || artCard?.role || artCard?.category || 'Battlefield focus'}</div>
+                  </div>
+                </div>
+                <div class="mt-2 text-[9px] text-slate-400 leading-snug">The selected unit, hand card, or inspected territory is shown here.</div>
+              </div>
+            </div>
             
             <!-- LEFT PANEL: Currently Selected Card / Unit Inspector -->
-            <div class="w-full lg:w-72 xl:w-80 flex flex-col bg-slate-900/90 border border-amber-500/30 rounded-2xl p-3 sm:p-3.5 shadow-2xl shrink-0">
+            <div class="battle-inspector-panel w-full lg:w-72 xl:w-80 flex flex-col bg-slate-900/90 border border-amber-500/30 rounded-2xl p-3 sm:p-3.5 shadow-2xl shrink-0">
               <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
                 <span class="font-cinzel font-black text-xs text-amber-300 flex items-center gap-1.5">
                   <span>🎯</span>
@@ -3776,7 +3933,7 @@
             </div>
 
             <!-- CENTER: Battlefield Grid & Logs -->
-            <div class="flex-1 flex flex-col items-center justify-center min-w-0 w-full">
+            <div class="battle-board-column flex-1 flex flex-col items-center justify-center min-w-0 w-full">
               <div class="overflow-auto max-w-full max-h-[60vh] p-2 rounded-3xl bg-slate-950/80 border border-slate-800 shadow-2xl touch-scroll">
                 <div class="grid gap-1 sm:gap-1.5" style="grid-template-columns: repeat(${state.gridSize}, minmax(46px, 1fr));">
                   ${displayedBoard.map(tile => {
@@ -3887,8 +4044,8 @@
           </div>
 
           <!-- Bottom Hand & Action Bar -->
-          <div class="bg-slate-900 border-t border-amber-500/20 p-2.5 shadow-2xl">
-            <div class="max-w-md mx-auto flex justify-between items-center mb-2 text-xs">
+          <div class="bg-slate-900/95 border-t border-amber-500/30 p-3 sm:p-4 shadow-2xl">
+            <div class="max-w-[1500px] mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2.5 mb-3 text-xs">
               <div class="flex items-center gap-2">
                 <span class="font-cinzel font-bold text-amber-400">⚡ KALAYAAN:</span>
                 <span class="font-mono font-black bg-amber-950 px-2.5 py-0.5 rounded-md border border-amber-500/40 text-amber-300">
@@ -3911,7 +4068,7 @@
               </div>
             </div>
 
-            <div class="max-w-md mx-auto flex gap-2 overflow-x-auto pb-1 touch-scroll relative">
+            <div class="max-w-[1500px] mx-auto hand-card-gallery flex gap-3 sm:gap-4 overflow-x-auto px-1.5 sm:px-2 pb-3 pt-1 touch-scroll relative snap-x snap-mandatory">
               ${!myTurn ? `
                 <div class="pointer-events-none absolute inset-0 bg-black/30 backdrop-blur-[0.5px] z-10 rounded-xl flex items-center justify-center text-xs font-cinzel font-bold text-amber-300/90 select-none">
                   <span class="bg-slate-950/90 px-3 py-1 rounded-full border border-amber-500/40 shadow">
@@ -3921,7 +4078,7 @@
               ` : ''}
 
               ${myHand.length === 0 ? `
-                <div class="w-full py-4 text-center text-xs text-slate-500 font-mono">
+                <div class="min-w-full py-8 text-center text-xs text-slate-500 font-mono">
                   Your hand is currently empty.
                 </div>
               ` : myHand.map((card, idx) => {
@@ -3931,19 +4088,19 @@
 
                 return `
                   <div onclick="selectHandCard(${idx});"
-                       class="flex-shrink-0 w-24 sm:w-28 p-2 rounded-xl border bg-slate-950 flex flex-col justify-between cursor-pointer transition ${isSelected ? 'border-amber-400 ring-2 ring-amber-400/50 bg-amber-950/40' : (canAfford ? 'border-slate-800 hover:border-amber-500/40' : 'border-slate-800/60 opacity-80')}">
+                       class="group flex-shrink-0 snap-start w-36 sm:w-44 lg:w-48 min-h-[230px] sm:min-h-[260px] p-2.5 rounded-2xl border bg-gradient-to-b from-slate-900 to-slate-950 flex flex-col justify-between cursor-pointer transition-all duration-200 ${isSelected ? 'border-amber-300 ring-2 ring-amber-400 shadow-[0_0_24px_rgba(245,158,11,0.32)] bg-amber-950/50 -translate-y-1' : (canAfford ? 'border-slate-700 hover:border-amber-400/80 hover:-translate-y-1 hover:shadow-lg' : 'border-slate-800/60 opacity-80')} ">
+                    <div class="relative h-28 sm:h-36 rounded-xl overflow-hidden border border-slate-700/80 bg-slate-950 mb-2">
+                      <img src="${card.imageUrl || `${state.imageFolderPath}${card.id}${state.imageExtension || '.png'}`}" alt="${card.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />
+                      <div class="hidden absolute inset-0 flex items-center justify-center text-4xl">${card.avatarSymbol || (card.category ? '🗺️' : card.atk ? '🐉' : card.atkBoost !== undefined ? '🛡️' : '📜')}</div>
+                      <span class="absolute top-1.5 right-1.5 text-[9px] font-mono font-bold ${canAfford ? 'bg-amber-950/95 text-amber-300 border-amber-500/60' : 'bg-red-950/95 text-red-300 border-red-500/60'} px-1.5 py-0.5 rounded-lg border shadow">⚡${cardCost}</span>
+                      <span class="absolute bottom-1.5 left-1.5 text-[9px] bg-black/75 text-slate-200 px-1.5 py-0.5 rounded-md">${card.category ? 'LAND' : card.hp ? 'MYTHOS' : card.atkBoost !== undefined ? 'RELIC' : 'EVENT'}</span>
+                    </div>
                     <div>
-                      <div class="flex justify-between items-start">
-                        <span class="text-base">${card.avatarSymbol || (card.category ? '🗺️' : card.atk ? '🐉' : card.atkBoost !== undefined ? '🛡️' : '📜')}</span>
-                        <span class="text-[9px] font-mono font-bold ${canAfford ? 'bg-amber-950 text-amber-300 border-amber-500/40' : 'bg-red-950 text-red-300 border-red-500/40'} px-1.5 py-0.5 rounded border">
-                          ⚡${cardCost}
-                        </span>
-                      </div>
-                      <div class="font-cinzel font-bold text-[11px] text-amber-200 truncate mt-1">${card.name}</div>
-                      <div class="text-[9px] text-slate-400 truncate">${card.role || card.category || (card.atkBoost !== undefined ? 'Relic' : 'Event')}</div>
+                      <div class="font-cinzel font-bold text-xs text-amber-200 truncate">${card.name}</div>
+                      <div class="text-[9px] text-slate-400 truncate mt-0.5">${card.role || card.category || (card.atkBoost !== undefined ? 'Relic' : 'Event')}</div>
                     </div>
                     <button onclick="event.stopPropagation(); handleHandCardButtonClick(${idx});" 
-                            class="mt-1.5 w-full py-1 ${canAfford ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-black' : 'bg-slate-800 text-slate-400 font-bold border border-slate-700'} font-cinzel text-[9px] rounded shadow active:scale-95 transition">
+                            class="mt-2 w-full py-2 ${canAfford ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-black' : 'bg-slate-800 text-slate-400 font-bold border border-slate-700'} font-cinzel text-[10px] rounded-lg shadow active:scale-95 transition">
                       ${isSelected 
                         ? (card.dominionDamage && canAfford ? '💥 LAUNCH' : (card.drawAmount && canAfford ? '📜 DRAW' : 'CANCEL'))
                         : (card.atkBoost !== undefined ? 'EQUIP' : (card.dominionDamage ? '💥 SIEGE' : (card.hp ? 'SUMMON' : card.category ? 'CLAIM' : 'CAST')))}
@@ -4434,6 +4591,8 @@
         const visiblePool = pool.slice(0, currentPage * pageSize);
         const hasMore = visiblePool.length < pool.length;
         const inspectedCard = state.activeCardPreview || state.customDeck[0] || MONSTERS_DATABASE[0];
+        const commanderProfile = getCommanderDeckProfile(state.p1Hero);
+        const commanderSuggestions = getCommanderDeckSuggestions(state.p1Hero, 6);
 
         app.innerHTML = `
           <div class="flex-1 p-2 sm:p-4 max-w-7xl mx-auto w-full flex flex-col gap-3">
@@ -4472,6 +4631,35 @@
                   <span>←</span>
                   <span>MENU</span>
                 </button>
+              </div>
+            </div>
+
+            <!-- Commander-aware deck intelligence -->
+            <div class="bg-gradient-to-r from-amber-950/70 via-slate-900 to-cyan-950/60 border border-amber-500/40 rounded-2xl p-3 sm:p-4 shadow-xl">
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-amber-300">COMMANDER INTELLIGENCE</span>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-400/50 text-amber-200 text-[10px] font-cinzel font-black">${state.p1Hero.avatarSymbol} ${state.p1Hero.name}</span>
+                    <span class="px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/50 text-cyan-300 text-[10px] font-mono">${commanderProfile.label}</span>
+                  </div>
+                  <div class="text-[11px] text-slate-300 mt-1">${commanderProfile.focus}. Suggested cards are scored from this commander's stats, title, abilities, and lore.</div>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                  <button onclick="state.view = 'HERO_SELECT'; render();" class="px-3 py-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 rounded-xl text-[10px] font-cinzel font-bold">CHANGE COMMANDER</button>
+                  <button onclick="buildCommanderDeck();" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-[10px] font-cinzel font-black shadow">BUILD SUGGESTED DECK</button>
+                </div>
+              </div>
+              <div class="mt-3 flex gap-2 overflow-x-auto pb-1 touch-scroll">
+                ${commanderSuggestions.map(({ card, score }) => `
+                  <button onclick="addCardToDeck('${card.id}');" class="min-w-[170px] text-left p-2 rounded-xl bg-slate-950/80 border border-slate-700 hover:border-amber-400/80 transition">
+                    <div class="flex items-center gap-2">
+                      <span class="text-xl">${card.avatarSymbol || (card.category ? '🗺️' : card.hp ? '🐉' : card.id?.startsWith('eq') ? '🛡️' : '📜')}</span>
+                      <span class="truncate text-[10px] font-cinzel font-black text-amber-200">${card.name}</span>
+                    </div>
+                    <div class="text-[9px] text-emerald-300 font-mono mt-1">MATCH ${Math.max(1, Math.round(score))} • ⚡${card.cost || 1}</div>
+                  </button>
+                `).join('')}
               </div>
             </div>
 
@@ -5153,7 +5341,8 @@
 
     window.onload = function() {
       // Attempt to load external cards.xml automatically if served via a local web server
-      loadCardsFromXmlUrl('cards.xml');
+      loadCardsFromXmlUrl('catalogs/cards.xml');
+      loadModularCatalogs();
       const sharedRoom = new URLSearchParams(window.location.search).get('room');
       if (sharedRoom) {
         state.twoPlayerTab = 'NETWORK';
